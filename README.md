@@ -1,2 +1,5 @@
 # Proyecto1ADD
-Proyecto 1 (Examen Parcial 2) 
+
+Análisis de Datos · Universidad del Istmo
+
+Estudios de Leverkusen y Cabo Verde. El contenido se incorpora en quince bloques de entrega.
