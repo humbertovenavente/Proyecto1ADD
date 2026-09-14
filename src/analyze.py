@@ -361,3 +361,129 @@ def leverkusen(df, ch):
         "late_sensitivity": sensitivity,
         "elo_sensitivity": elo_sens,
     }
+
+def national_ratings(codes, cut):
+    rows = []
+    for code in codes:
+        path = RAW / f"national/{code}.tsv"
+        valid = []
+        for line in path.read_text().splitlines():
+            f = line.split("\t")
+            if len(f) < 13:
+                continue
+            date = "-".join(f[:3])
+            if date < cut and f[0].isdigit() and code in f[3:5]:
+                idx = 10 if f[3] == code else 11
+                try:
+                    valid.append((date, int(f[idx])))
+                except ValueError:
+                    pass
+        assert valid, code
+        date, elo = valid[-1]
+        rows.append({"code": code, "elo": elo, "last_match": date, "cutoff": cut})
+    frame = pd.DataFrame(rows)
+    frame.to_csv(PROC / f"national_elo_{cut}.csv", index=False)
+    return frame.set_index("code").elo.to_dict()
+
+def qualify_world(groups, ratings, n, rng, forced=False, total=2.7):
+    # Mantiene solo los terceros y el grupo H, sin acumular doce torneos completos.
+    keys = list(groups)
+    third_rows = []
+    h = None
+    for key, teams in groups.items():
+        sim = group_sim(teams, ratings, n, rng, forced_cv=forced and key == "H", total=total)
+        third_rows.append(sim["stats"][np.arange(n), sim["order"][:, 2]].copy())
+        if key == "H":
+            h = sim
+        del sim
+    ci = h["teams"].index("CV")
+    pos = np.argmax(h["order"] == ci, axis=1) + 1
+    thirds = np.stack(third_rows, axis=1)
+    del third_rows
+    hi = keys.index("H")
+    tie = rng.random((n, 12))
+    accepted = np.zeros(n, dtype=bool)
+    for j in range(n):
+        rank = sorted(range(12), key=lambda k: (*thirds[j, k], tie[j, k]), reverse=True)
+        accepted[j] = hi in rank[:8]
+    qualified = (pos <= 2) | ((pos == 3) & accepted)
+    uruguay = None
+    for a, b, x, y in h["fixtures"]:
+        if {a, b} == {"UY", "ES"}:
+            uruguay = x >= y if a == "UY" else y >= x
+    return {
+        "position": pos,
+        "qualified": qualified,
+        "third_ok": accepted,
+        "uruguay_not_lose": uruguay,
+        "p_three_draws": h["p_three_draws"],
+    }
+
+def cape_verde():
+    groups = json.loads((ROOT / "data/groups_2026.json").read_text())
+    codes = sorted(set(sum(groups.values(), [])))
+    qual = ["CV", "CM", "AO", "LY", "SZ", "MU"]
+    r0 = national_ratings(qual, "2023-11-15")
+    r1 = national_ratings(codes, "2026-06-11")
+    rng = np.random.default_rng(SEED + 1)
+    q = group_sim(qual, r0, N, rng, double=True, home_adv=100)
+    direct = q["order"][:, 0] == 0
+    a = qualify_world(groups, r1, N, rng)
+    b = qualify_world(groups, r1, N, rng, forced=True)
+    rows = []
+    for code in ["AR", "EG", "CH", "EN", "ES"]:
+        pw, pd_, pl = probabilities(r1["CV"] - r1[code])
+        rows.append(
+            {
+                "opponent": code,
+                "elo": r1[code],
+                "p_win": float(pw),
+                "p_draw": float(pd_),
+                "p_advance": float(pw + pd_),
+            }
+        )
+    route = float(np.prod([x["p_advance"] for x in rows[1:]]))
+    full = route * rows[0]["p_advance"]
+    pd.DataFrame(rows).to_csv(PROC / "cape_verde_knockouts.csv", index=False)
+    pd.DataFrame(
+        {
+            "trial": np.arange(1, N + 1),
+            "direct_qualification": direct,
+            "group_position": a["position"],
+            "advance": a["qualified"],
+            "three_draws_position": b["position"],
+            "three_draws_advance": b["qualified"],
+        }
+    ).to_csv(OUT / "cape_verde_10000.csv", index=False)
+    scenarios = {
+        "grupo_sin_condicionar": summarize(a["qualified"]),
+        "tres_empates": summarize(b["qualified"]),
+        "uruguay_no_pierde_sin_condicionar_empates": summarize(
+            a["qualified"][a["uruguay_not_lose"]]
+        ),
+        "tres_empates_y_uruguay_no_pierde": summarize(
+            b["qualified"][b["uruguay_not_lose"]]
+        ),
+        "tres_empates_y_tercero": summarize(b["qualified"][b["position"] == 3]),
+    }
+    pthird = [float(np.mean(b["position"] == i)) for i in range(1, 5)]
+    # Réplica independiente del recorrido eliminatorio para comparar con el producto.
+    ko = (rng.random((N, 4)) < np.array([x["p_advance"] for x in rows[1:]])).all(axis=1)
+    return {
+        "qualifying": summarize(direct),
+        "qualifying_elo": r0,
+        "world_elo": r1,
+        "scenarios": scenarios,
+        "p_three_draws": b["p_three_draws"],
+        "positions_three_draws": pthird,
+        "knockouts": rows,
+        "title_given_pass_argentina": route,
+        "title_from_argentina": full,
+        "title_from_group_fixed_route": a["qualified"].mean() * full,
+        "title_from_qualifiers_fixed_route": direct.mean()
+        * a["qualified"].mean()
+        * full,
+        "knockout_mc": summarize(ko),
+        "total_goals_assumption": 2.7,
+        "n": N,
+    }
