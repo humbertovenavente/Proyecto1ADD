@@ -1,0 +1,2128 @@
+[
+  {
+    "title": "Portada",
+    "blocks": []
+  },
+  {
+    "title": "Resumen",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El campeonato invicto de Bayer Leverkusen en la Bundesliga 2023–2024 combina dos hechos diferentes: terminar con el dominio del Bayern Múnich y completar 34 jornadas sin derrotas. Entre 1964 y 2023, otros clubes ganaron 46.67 % de los campeonatos. La proporción baja a 21.05 % al considerar solamente 2005–2023. Estas frecuencias describen el pasado, pero no constituyen un pronóstico individual para Leverkusen."
+      },
+      {
+        "type": "p",
+        "text": "Elo es un sistema de puntuación de fuerza relativa, denominado por Arpad Elo. Un modelo de marcadores basado en el Elo de pretemporada estima una probabilidad de invicto de 9.264 × 10⁻⁷. Las 10 000 temporadas simuladas no produjeron ningún invicto, resultado compatible con la pequeña probabilidad calculada. El modelo histórico de derrotas de los campeones produce 1.06 % para cero derrotas. Las cifras difieren porque responden a preguntas y poblaciones distintas."
+      },
+      {
+        "type": "p",
+        "text": "El segundo estudio analiza a Cabo Verde en la eliminatoria africana y en el escenario mundialista planteado. La probabilidad simulada de clasificación directa es 12.88 %. Una vez en el grupo H, la probabilidad de avanzar es 23.36 %. Condicionar sus tres partidos a empates eleva esta última a 95.31 %. Superar después a Egipto, Suiza, Inglaterra y España, avanzando siempre por penales cuando hay empate, tiene probabilidad 0.06 %."
+      },
+      {
+        "type": "p",
+        "text": "Los resultados dependen de la valoración Elo escogida, de la distribución de goles y de supuestos de independencia. Los goles tardíos permiten estudiar la fragilidad del invicto, pero no separar de manera causal la suerte de la capacidad del equipo."
+      }
+    ]
+  },
+  {
+    "title": "Objetivos y organización",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Estimar las probabilidades solicitadas, comparar los modelos y explicar qué significa cada resultado. La primera parte estudia la Bundesliga y los cuatro rescates de Leverkusen. La segunda desarrolla la eliminatoria y el Mundial de Cabo Verde. El cierre reúne las limitaciones, las conclusiones y el registro de campeones."
+      }
+    ]
+  },
+  {
+    "title": "Qué es Elo y qué representa",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Elo es un sistema de valoración de fuerza relativa, llamado así por Arpad Elo; no es una sigla. Asigna una puntuación a cada equipo. La diferencia entre dos valoraciones permite calcular el resultado esperado: un rival con más Elo representa, según el sistema, una mayor dificultad."
+      },
+      {
+        "type": "p",
+        "text": "En este trabajo, E representa P(victoria) + ½ P(empate), no la probabilidad de ganar. Los Elo observados son entradas fijas durante cada simulación. Aunque algunos proveedores los redondean a enteros, se tratan como una escala numérica de intervalo: importan las diferencias, no afirmar que un equipo sea el doble de fuerte por tener el doble de Elo."
+      },
+      {
+        "type": "p",
+        "text": "Referencia: ClubElo, explicación del sistema: https://clubelo.com/System. Arpad Elo, The Rating of Chessplayers, Past and Present (1978). Fundamentos de variables aleatorias: Goldsman y Goldsman, capítulos 4–6."
+      }
+    ]
+  },
+  {
+    "title": "Discreta, continua o categórica: por qué importa",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Una variable discreta toma valores aislados y contables, como 0, 1 o 2 goles. Una continua representa una magnitud que puede variar en un intervalo, como el instante de un gol. Equipo, rival y condición local o visitante son variables categóricas: sus etiquetas no son cantidades que debamos promediar."
+      },
+      {
+        "type": "p",
+        "text": "Para variables discretas calculamos probabilidades mediante sumas de masas, por ejemplo la probabilidad de cero derrotas. Para una variable realmente continua, la probabilidad de un valor puntual es cero bajo un modelo con densidad; se integran intervalos. Los tiempos aquí se registran con resolución finita y no se ajusta una densidad de tiempos."
+      },
+      {
+        "type": "p",
+        "text": "Referencia: ClubElo, explicación del sistema: https://clubelo.com/System. Arpad Elo, The Rating of Chessplayers, Past and Present (1978). Fundamentos de variables aleatorias: Goldsman y Goldsman, capítulos 4–6."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · lenguaje de probabilidad",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · partidos y fuerzas",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · marcadores y simulaciones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · precisión de la estimación",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · campeones históricos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Leverkusen · rescates tardíos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Leverkusen: variables discretas del análisis",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los goles a favor y en contra por partido son conteos enteros no negativos; se modelan con Poisson. Su diferencia es un entero, positivo, cero o negativo, y se modela con Skellam. El resultado es una categoría ordenada —derrota, empate o victoria— obtenida al comparar esos goles."
+      },
+      {
+        "type": "p",
+        "text": "Las derrotas de Leverkusen en 34 jornadas toman valores de 0 a 34. El indicador de invicto toma 0 o 1; el total de invictos entre N temporadas es un conteo de 0 a N. Para campeones históricos, las derrotas tienen un límite real dado por los partidos jugados; Poisson es una aproximación con soporte no acotado, no una identidad del torneo."
+      }
+    ]
+  },
+  {
+    "title": "Leverkusen: tiempos, parámetros y estimadores",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El instante del gol y el tiempo restante se miden en minutos y segundos: conceptualmente son magnitudes continuas, observadas sobre una rejilla temporal. El déficit de goles y el número de rescates son discretos. Equipo y temporada identifican observaciones; no suponemos que temporadas de distintas épocas tengan idénticas condiciones."
+      },
+      {
+        "type": "p",
+        "text": "Las tasas Poisson, la ventaja local, los Elo y las probabilidades p y q son parámetros o entradas numéricas fijadas en el cálculo; no reciben una distribución aleatoria propia. La proporción simulada K/N sí es un estimador discreto, con incrementos de 1/N. Que se escriba con decimales no la convierte en continua; por eso usamos un intervalo binomial exacto."
+      }
+    ]
+  },
+  {
+    "title": "Datos y fundamentos del modelo",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Fuente",
+          "Información utilizada",
+          "Corte del análisis"
+        ],
+        "rows": [
+          [
+            "Curley, engsoccerdata [1]",
+            "Resultados de Bundesliga",
+            "1963/64–2023/24"
+          ],
+          [
+            "ClubElo vía archivo de Gábor [2]",
+            "Elo de los 18 clubes",
+            "15 de agosto de 2023"
+          ],
+          [
+            "StatsBomb Open Data [3]",
+            "Eventos de los 34 partidos",
+            "Bundesliga 2023/24"
+          ],
+          [
+            "World Football Elo Ratings [4]",
+            "Historial de selecciones",
+            "Antes de 15/11/2023 y 11/06/2026"
+          ],
+          [
+            "CAF y FIFA [5–7]",
+            "Grupos y formato competitivo",
+            "Eliminatoria y Mundial 2026"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La temporada 1991/92 aparece incompleta en la base de partidos: 340 de 380 encuentros. Se sustituyó su registro del campeón por el de Stuttgart, con 38 partidos y siete derrotas, verificado en DSFS y Sportschau [11]."
+      },
+      {
+        "type": "p",
+        "text": "El año de cada campeón es el de finalización de la temporada. Se usan dos puntos por victoria hasta 1994/95 y tres desde 1995/96. Las valoraciones permanecen fijas durante cada simulación. La copia histórica de ClubElo se utiliza porque el servicio original no permitió recuperar el corte solicitado. No se sustituye por el ranking actual."
+      },
+      {
+        "type": "p",
+        "text": "Elo expresa puntuación esperada, no directamente probabilidad de victoria. Por ello distinguimos victoria, empate y derrota mediante dos variables de goles Poisson independientes [8]."
+      },
+      {
+        "type": "equation",
+        "text": "E = 1 / (1 + 10^(−Δ/400)) = P(victoria) + ½ P(empate)"
+      },
+      {
+        "type": "equation",
+        "text": "G₁ ∼ Poisson(λ₁), G₂ ∼ Poisson(λ₂)"
+      },
+      {
+        "type": "equation",
+        "text": "λ₁ = (τ/2) exp(t), λ₂ = (τ/2) exp(−t)"
+      },
+      {
+        "type": "p",
+        "text": "El parámetro t se resuelve numéricamente para igualar la puntuación esperada Elo. τ representa los goles esperados cuando las fuerzas son iguales, no un total fijo para cualquier cruce. En Bundesliga τ=3.142, media de goles por partido de 2018/19–2022/23. Para selecciones se adopta τ=2.7 como supuesto. La localía suma 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana. El Mundial se modela en campo neutral."
+      }
+    ]
+  },
+  {
+    "title": "Eventos y cantidades que se estiman",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La pregunta de partidos se formaliza mediante el evento A: Leverkusen termina sus 34 jornadas sin derrotas. Los dos conteos de goles representan sus goles y los del rival en el partido j. La información inicial I₀ reúne la valoración de pretemporada, el calendario, la localía y los parámetros del modelo. El estimando P(A) es condicional a esa información; no es una frecuencia observada del torneo 2023/24."
+      },
+      {
+        "type": "p",
+        "text": "Para el análisis histórico, Yₛ indica si el campeón de la temporada s no fue Bayern. Su promedio describe la proporción de títulos de esa categoría en una ventana específica. Para el modelo de derrotas, Dₛ corresponde exclusivamente al campeón de cada temporada. Por ello P(Dₛ=0 | campeón) y P(A | I₀) no son el mismo estimando."
+      },
+      {
+        "type": "p",
+        "text": "Esta distinción determina qué se calcula y evita una multiplicación injustificada: la frecuencia de campeones distintos de Bayern no puede combinarse directamente con P(A) para producir la probabilidad de que Leverkusen sea campeón invicto. Haría falta modelar conjuntamente la tabla completa de la liga."
+      }
+    ]
+  },
+  {
+    "title": "Supuestos del modelo de partidos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La independencia dentro de cada partido permite obtener su distribución conjunta multiplicando las probabilidades marginales de goles. La independencia entre encuentros, condicionada a las fuerzas fijas, permite multiplicar las probabilidades de no perder. Son supuestos distintos y ambos son necesarios para la construcción elegida."
+      },
+      {
+        "type": "p",
+        "text": "Los goles Poisson tienen media igual a varianza. No se incorporan efectos de marcador, expulsiones, lesiones, alineaciones ni correlaciones de forma. La independencia y la estabilidad de fuerzas simplifican una temporada real, donde esos factores pueden generar dependencia y cambiar la probabilidad del invicto."
+      },
+      {
+        "type": "p",
+        "text": "El parámetro τ es 3.14248 para Bundesliga, estimado con goles de 2018/19–2022/23, y 2.7 para selecciones, adoptado como supuesto. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ representa el total esperado a igualdad de fuerzas, no un total constante para todos los enfrentamientos."
+      },
+      {
+        "type": "p",
+        "text": "Los datos del resultado que se pretende explicar se excluyen del corte inicial de Elo. En cambio, el análisis de rescates sí es retrospectivo y utiliza estados y duración observados. Sus probabilidades deben interpretarse con ese condicionamiento adicional."
+      }
+    ]
+  },
+  {
+    "title": "De Elo a las tasas de goles",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Primero se calcula Δ y se transforma mediante E=1/(1+10 elevado a −Δ/400). Este valor corresponde a P(victoria)+½P(empate). Una única ecuación no identifica tres probabilidades de resultados, por lo que es necesario introducir un modelo adicional para los goles."
+      },
+      {
+        "type": "p",
+        "text": "La parametrización exponencial mantiene ambas tasas positivas y cumple λ₁λ₂=(τ/2)². Se define una función residual: la probabilidad Poisson de victoria más la mitad de la de empate, menos E. Se resuelve su raíz con el método de Brent. Las tasas resultantes generan probabilidades que suman uno y reproducen la expectativa Elo dentro de la tolerancia numérica."
+      },
+      {
+        "type": "p",
+        "text": "El uso de dos Poisson es una decisión de modelación: no se atribuye al sistema Elo una fórmula directa para la probabilidad de empate. Para calcular las probabilidades del signo de G₁−G₂ se emplea la distribución de Skellam, equivalente a sumar la distribución conjunta de los dos conteos."
+      }
+    ]
+  },
+  {
+    "title": "Distribución de marcadores y ejemplo",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La expresión conjunta se deriva al multiplicar las funciones de masa de dos variables Poisson independientes. La suma sobre x>y da la probabilidad de victoria; la suma sobre x=y, la de empate; y la suma sobre x<y, la de derrota. Estas regiones son disjuntas y cubren todos los marcadores posibles."
+      },
+      {
+        "type": "p",
+        "text": "Como ejemplo reproducible, ante Leipzig como local, Δ=1748.23−1825.38+60=−17.15. El enlace numérico produce λ₁=1.514991 y λ₂=1.629582. Las probabilidades resultantes son 0.3572455, 0.2361874 y 0.4065671. Su suma es uno; no perder tiene probabilidad 0.5934329."
+      },
+      {
+        "type": "p",
+        "text": "Los puntos esperados en ese partido serían 3P(victoria)+P(empate)=1.307924. No se utilizan esos puntos esperados como resultado de un partido: las simulaciones muestrean un resultado aleatorio para conservar su variabilidad."
+      }
+    ]
+  },
+  {
+    "title": "Producto de probabilidades y simulación",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para generar el resultado de un partido se toma un uniforme U entre cero y uno. Si U<P(victoria), se registra victoria; si queda entre P(victoria) y P(victoria)+P(empate), se registra empate; en el resto, derrota. Repetirlo para los 34 partidos genera una temporada. Las repeticiones usan números pseudoaleatorios con semilla 14643."
+      },
+      {
+        "type": "p",
+        "text": "Bajo independencia condicional, P(A)=∏pⱼ. Agrupar los dos términos contra Bayern y los otros 32 no introduce un nuevo supuesto: solo reorganiza el producto. Se obtiene 0.11738495 × 7.891912 × 10⁻⁶ = 9.263917 × 10⁻⁷."
+      },
+      {
+        "type": "p",
+        "text": "Las N temporadas simuladas producen indicadores Bernoulli independientes con parámetro P(A). En consecuencia, el total de invictos K tiene distribución binomial, esperanza NP(A) y varianza NP(A)(1−P(A)). La estimación Monte Carlo es K/N. El producto analítico es más informativo para eventos tan raros, pues 10 000 repeticiones tienen resolución empírica de 0.0001."
+      },
+      {
+        "type": "p",
+        "text": "Para tener al menos 95 % de probabilidad de observar un invicto con este P(A) se necesitarían aproximadamente 3.23 millones de temporadas: N≥log(0.05)/log(1−P(A)). Esta cantidad describe la resolución necesaria y no supone que se hayan ejecutado esas repeticiones."
+      }
+    ]
+  },
+  {
+    "title": "Incertidumbre de Monte Carlo",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para 0<K<N, el límite inferior es el cuantil 0.025 de Beta(K,N−K+1), y el superior el cuantil 0.975 de Beta(K+1,N−K). En K=0 se fija el límite inferior en cero; en K=N, el superior en uno. Estos son intervalos binomiales exactos bilaterales del 95 %, con cobertura al menos nominal y posible conservadurismo."
+      },
+      {
+        "type": "p",
+        "text": "Cuando K=0, resolver P(K=0 | p=U)=0.025 da U=1−0.025 elevado a 1/N. Con 10 000 repeticiones, U=0.0003688199. El valor analítico 0.0000009264 está dentro del intervalo. No es adecuado usar el intervalo normal con el error estándar calculado en p̂=0 porque degeneraría artificialmente."
+      },
+      {
+        "type": "p",
+        "text": "La cobertura del 95 % se refiere a repeticiones del procedimiento bajo un parámetro fijo. No significa que el parámetro tenga una probabilidad posterior de 95 % de estar dentro de este intervalo. Tampoco convierte la simulación en evidencia empírica independiente de los supuestos usados para producirla."
+      },
+      {
+        "type": "p",
+        "text": "Las frecuencias de campeones de las ventanas históricas describen todas las temporadas seleccionadas, no una muestra aleatoria de una liga estacionaria. No se les atribuye automáticamente un intervalo binomial ni se contrasta la diferencia entre ventanas como si fueran dos muestras independientes: la ventana reciente está contenida en la larga."
+      }
+    ]
+  },
+  {
+    "title": "Estimación Poisson y diagnóstico",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para D₁,…,Dₙ independientes y Poisson con una media común λ, la verosimilitud es el producto de sus funciones de masa. Al tomar logaritmos se obtiene la expresión de log-verosimilitud. Su derivada es ∑Dₛ/λ−n; igualarla a cero produce λ̂=∑Dₛ/n. La segunda derivada es negativa para ∑Dₛ>0, de modo que se trata de un máximo."
+      },
+      {
+        "type": "p",
+        "text": "La estimación por sustitución de P(D=0) es e elevado a −λ̂. Para todos los campeones se obtiene 1.05672 %; para Bayern, 1.61635 %; y para otros campeones, 0.65016 %. Son probabilidades ajustadas condicionadas a la categoría del campeón. El cociente entre las dos últimas es aproximadamente 2.49 y no es una prueba de significación estadística."
+      },
+      {
+        "type": "p",
+        "text": "Poisson supone igualdad entre media y varianza, mientras que el cociente observado s²/media es 0.6364 en la muestra global. Se informa como diagnóstico descriptivo, sin asignar un valor p no calculado. La binomial negativa estándar tiene varianza λ+λ²/r, superior a la media: su uso no solucionaría este patrón de subdispersión."
+      },
+      {
+        "type": "p",
+        "text": "Para considerar temporadas de distinta duración se modela Dₛ como Poisson(ρ mₛ), donde mₛ son los partidos. La estimación de la tasa es ρ̂=∑Dₛ/∑mₛ y la probabilidad para una temporada de 34 partidos es exp(−34ρ̂). La base incluye 30, 34 y 38 jornadas, por lo que esta comprobación de exposición es pertinente."
+      }
+    ]
+  },
+  {
+    "title": "Modelo condicional de los rescates",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se reconstruye el marcador por orden temporal. Un partido es rescatado si existe una desventaja después del minuto 85 y el marcador final deja a Leverkusen sin derrota. Si ya pierde al minuto 85, se inicia allí; si empieza a perder más tarde, se usa ese primer estado desfavorable. El déficit dᵢ es positivo."
+      },
+      {
+        "type": "p",
+        "text": "Las tasas rₐ y rᵣ son goles por 90 minutos para la condición local o visitante, estimadas con partidos históricos de liga. Escalarlas por Tᵢ/90 supone intensidad constante. La diferencia entre los futuros goles de ambos equipos sigue una Skellam; su cola desde dᵢ calcula la probabilidad de alcanzar al menos un empate final, permitiendo también nuevos goles del adversario."
+      },
+      {
+        "type": "p",
+        "text": "El tiempo Tᵢ incluye el añadido efectivamente observado. Por tanto, qᵢ es un diagnóstico retrospectivo condicionado a esa duración, no un pronóstico realizado en el minuto 85 sin conocer el final. Las sensibilidades con añadido fijo muestran cómo cambia el cálculo si se modifica esa información."
+      },
+      {
+        "type": "p",
+        "text": "El producto Q=0.0006781737 y su inverso 1474.55 resumen la rareza conjunta de esos estados bajo independencia. Multiplicar P(A) por Q produce el índice solicitado 6.282545 × 10⁻¹⁰, pero puede volver a ponderar dificultades ya incluidas en los partidos. No es una probabilidad causal identificada del invicto sin suerte, ni permite concluir que sin goles tardíos todos los encuentros habrían terminado necesariamente en derrota."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Historia: sustituir los conteos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se cuentan temporadas cuyo campeón no fue Bayern. La diferencia es 21.0526 − 46.6667 = −25.6140 puntos porcentuales. Describe las ventanas históricas; no es la probabilidad de invicto de Leverkusen."
+      }
+    ]
+  },
+  {
+    "title": "Ejemplo: Leverkusen recibe a Leipzig",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se usan las valoraciones del 15 de agosto de 2023 y 60 puntos Elo de localía. E es el resultado esperado —victoria más medio empate—, por lo que todavía falta convertirlo en probabilidades de marcador."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Leipzig: tasas y probabilidad de no perder",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Las tasas se obtienen resolviendo numéricamente la ecuación Elo–Poisson. Al sumar victoria y empate se obtiene la probabilidad de superar este partido sin derrota. Los cálculos internos conservan la precisión completa; las cifras mostradas se redondean."
+      }
+    ]
+  },
+  {
+    "title": "Temporada completa: producto con datos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El primer factor corresponde a los dos partidos contra Bayern; el segundo, al producto de los otros 32. El inverso equivale aproximadamente a una temporada invicta por 1.08 millones de temporadas bajo este modelo, sin implicar un tiempo real de espera histórico."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Monte Carlo: cero éxitos e incertidumbre",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para el intervalo binomial exacto bilateral del 95 %, el límite inferior es cero y el superior equivale a 0.036882 %. La probabilidad de observar cero invictos es (1 − P(A)) elevado a 10 000, aproximadamente 99.08 %. Por eso la simulación es compatible con el producto analítico."
+      }
+    ]
+  },
+  {
+    "title": "Poisson: medias históricas sustituidas",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los 60 campeones suman 273 derrotas: Bayern aporta 132 en 32 títulos y los demás 141 en 28. Los resultados equivalen a 1.05672 %, 1.61635 % y 0.65016 %. Son probabilidades ajustadas para campeones históricos, no para un club cualquiera antes de comenzar la liga."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Rescate ante Bayern: tiempo y tasas",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Leverkusen pasa a perder en el minuto 85.35; el final observado fue 98.40. Se escalan las medias históricas de goles visitantes y locales a los 13.05 minutos restantes. La cola Skellam permite goles de ambos equipos y mide la probabilidad de compensar el déficit de uno."
+      }
+    ]
+  },
+  {
+    "title": "Cuatro rescates: producto y ajuste",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El orden es Bayern, Hoffenheim, Dortmund y Stuttgart. El inverso de Q es aproximadamente 1474.55. El último producto es el índice heurístico pedido en el ejercicio; no debe interpretarse como una probabilidad causal del invicto sin suerte."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Despeje de Elo: de E a la diferencia",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se parte de la ecuación logística, se invierte E y se resta uno. Después se aplica logaritmo base diez y se multiplica por −400. Este despeje recupera la diferencia de fuerza, incluida la localía; no convierte E en probabilidad de victoria."
+      }
+    ]
+  },
+  {
+    "title": "Tasas Poisson: solución numérica del enlace",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para cada valor de t se evalúan las probabilidades Skellam con tasas (τ/2)exp(t) y (τ/2)exp(−t). Brent busca una raíz en el intervalo [−8, 8]. La solución iguala el resultado esperado del marcador con el Elo; se comprueba el residuo en lugar de presentar un supuesto despeje algebraico."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Leverkusen",
+    "blocks": []
+  },
+  {
+    "title": "Derivación del estimador Poisson",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se multiplica la masa Poisson de las derrotas de cada campeón y se toma logaritmo. Al derivar e igualar a cero se obtiene la media. La segunda derivada es −273/λ², negativa para λ positivo, por lo que el punto es un máximo. Sustituir cero derrotas en la masa da exp(−4.55)."
+      }
+    ]
+  },
+  {
+    "title": "Despeje del límite con cero éxitos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para el intervalo exacto bilateral del 95 % se asigna 0.025 a esta cola. Se toma la raíz de orden 10 000 y se despeja U. El límite inferior es cero; multiplicar U por cien lo expresa como 0.036882 %. El valor 0.025 corresponde a un intervalo bilateral, no al límite unilateral del 95 %."
+      }
+    ]
+  },
+  {
+    "title": "Parte I La Bundesliga antes de Leverkusen",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La Bundesliga comenzó en 1963/64. El análisis termina en 2022/23 para excluir el resultado que queremos explicar. Bayern ganó 32 de esos 60 títulos. Los otros 28 se distribuyen entre once clubes. La racha de once campeonatos consecutivos del Bayern abarca 2012/13–2022/23 [1, 9]."
+      },
+      {
+        "type": "equation",
+        "text": "P̂(otro campeón | 1964–2023) = 28/60 = 46.67 %"
+      },
+      {
+        "type": "equation",
+        "text": "P̂(otro campeón | 2005–2023) = 4/19 = 21.05 %"
+      },
+      {
+        "type": "p",
+        "text": "La diferencia es de 25.61 puntos porcentuales. En el período reciente, los cuatro títulos restantes corresponden a Stuttgart en 2007, Wolfsburg en 2009 y Dortmund en 2011 y 2012. Reducir la ventana cambia la referencia histórica y muestra un dominio más marcado del Bayern."
+      },
+      {
+        "type": "figure",
+        "name": "champions",
+        "caption": "Figura 1. Campeonatos obtenidos. Elaboración propia con los resultados de Curley [1] y la corrección de 1991/92 [11]."
+      },
+      {
+        "type": "p",
+        "text": "La frecuencia de otros campeones no equivale a la probabilidad de que un club específico sea campeón, ni a la de ganar invicto. Tampoco se interpreta como una proporción estable en el tiempo."
+      }
+    ]
+  },
+  {
+    "title": "El punto de partida de los clubes",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El 15 de agosto de 2023, Leverkusen tenía 1748.23 puntos Elo, por debajo del Bayern, Dortmund y Leipzig. Se utiliza este corte previo al primer partido del 18 de agosto para formular una estimación ex ante [2]."
+      },
+      {
+        "type": "figure",
+        "name": "elo",
+        "caption": "Figura 2. Ranking de los participantes de la Bundesliga 2023/24. ClubElo mediante archivo histórico [2]."
+      },
+      {
+        "type": "p",
+        "text": "El modelo mantiene constantes esas diferencias durante la campaña. Por tanto, no incorpora el crecimiento posterior de Leverkusen ni aprende de sus victorias. Esta elección evita usar el resultado final como información predictiva, pero puede subestimar a un equipo que mejora rápidamente."
+      }
+    ]
+  },
+  {
+    "title": "Probabilidad de completar los 34 partidos invicto",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Leverkusen juega dos veces contra cada uno de sus 17 rivales. Para cada encuentro calculamos pⱼ = P(victoria) + P(empate). La probabilidad de no perder toda la temporada se obtiene multiplicando los 34 valores bajo independencia condicional a las fuerzas y la localía."
+      },
+      {
+        "type": "equation",
+        "text": "P(invicto) = ∏ⱼ pⱼ = P(no perder ante Bayern dos veces) × ∏otros pⱼ"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Componente",
+          "Probabilidad"
+        ],
+        "rows": [
+          [
+            "Dos encuentros contra Bayern",
+            "11.74 %"
+          ],
+          [
+            "Otros 32 encuentros",
+            "7.892 × 10⁻⁶"
+          ],
+          [
+            "Temporada completa",
+            "9.264 × 10⁻⁷"
+          ],
+          [
+            "Equivalencia aproximada",
+            "1 en 1,079,457 temporadas"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No se emplea una única probabilidad promedio elevada a 34. El calendario distingue adversarios y sede, aunque congela las fuerzas. La dificultad acumulada de los otros 32 partidos también es considerable: evitar una derrota durante una temporada exige repetir muchos resultados favorables."
+      }
+    ]
+  },
+  {
+    "title": "Sensibilidad a la fuerza de Leverkusen",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Cambio de Elo de Leverkusen",
+          "Localía",
+          "P de invicto"
+        ],
+        "rows": [
+          [
+            "+0",
+            "60",
+            "9.264 × 10⁻⁷"
+          ],
+          [
+            "+100",
+            "60",
+            "2.150 × 10⁻⁴"
+          ],
+          [
+            "+200",
+            "60",
+            "7.495 × 10⁻³"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Los aumentos de 100 y 200 puntos son escenarios de sensibilidad, no estimaciones observadas de talento. Una diferencia grande entre esos escenarios advierte que la cifra central depende fuertemente del punto de partida."
+      }
+    ]
+  },
+  {
+    "title": "Simulación de 10 000 temporadas",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cada repetición produce 34 resultados independientes con las probabilidades de victoria, empate y derrota del calendario. La semilla 14643 fija una secuencia reproducible. Los puntos se asignan como 3 por victoria y 1 por empate."
+      },
+      {
+        "type": "figure",
+        "name": "montecarlo",
+        "caption": "Figura 3. Distribución simulada de derrotas de Leverkusen con Elo de pretemporada."
+      },
+      {
+        "type": "p",
+        "text": "Se observaron 0 temporadas invictas de 10 000, con 10.72 derrotas promedio. La cantidad esperada de invictos era apenas 0.0093. No observar el evento es lo esperable: la probabilidad de cero invictos es (1−p)^10000 = 99.08 %."
+      },
+      {
+        "type": "p",
+        "text": "El intervalo binomial exacto bilateral del 95 % para la frecuencia simulada es [0, 0.04 %]. Por eso, cero simulaciones exitosas no demuestra que el invicto sea imposible. El producto analítico ofrece mayor resolución para un suceso tan raro. El intervalo solo mide error Monte Carlo, no incertidumbre sobre Elo ni sobre el modelo."
+      }
+    ]
+  },
+  {
+    "title": "Derrotas históricas de los campeones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Ahora la unidad de análisis es la temporada de un equipo que ya sabemos que fue campeón. Ajustamos D ∼ Poisson(λ), con λ igual a la media histórica de derrotas. La probabilidad buscada es P(D=0)=exp(−λ) [8]."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Campeones",
+          "n",
+          "Media D",
+          "Varianza D",
+          "P de 0 derrotas"
+        ],
+        "rows": [
+          [
+            "Todos",
+            60,
+            "4.550",
+            "2.896",
+            "1.06 %"
+          ],
+          [
+            "Bayern",
+            32,
+            "4.125",
+            "3.016",
+            "1.62 %"
+          ],
+          [
+            "Otros",
+            28,
+            "5.036",
+            "2.406",
+            "0.65 %"
+          ]
+        ]
+      },
+      {
+        "type": "figure",
+        "name": "poisson",
+        "caption": "Figura 4. Distribuciones ajustadas a las derrotas de los campeones de 1964–2023."
+      },
+      {
+        "type": "p",
+        "text": "Las tres varianzas son menores que sus medias. Una binomial negativa estándar, cuya varianza supera la media, no corrige esta subdispersión. Poisson se conserva como aproximación sencilla solicitada, no como un ajuste perfecto. Ningún campeón de la muestra tuvo cero derrotas."
+      },
+      {
+        "type": "p",
+        "text": "Las primeras dos campañas tuvieron 30 jornadas y 1991/92 tuvo 38. Normalizando la tasa de derrotas a 34 partidos, el resultado para todos los campeones es 1.05 %. La corrección de exposición cambia poco la conclusión."
+      }
+    ]
+  },
+  {
+    "title": "Comparación entre Bayern y los demás campeones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Condicionado a que el campeón sea Bayern, el modelo asigna 1.62 % a una campaña invicta. Si el campeón pertenece al conjunto de otros clubes, estima 0.65 %. La relación es 2.49 a favor de Bayern. Se comparan dos categorías de campeones, no Bayern contra un rival individual elegido de antemano."
+      },
+      {
+        "type": "equation",
+        "text": "P(Bayern campeón e invicto) ≈ (32/60) exp(−4.125)"
+      },
+      {
+        "type": "equation",
+        "text": "P(otro campeón e invicto) ≈ (28/60) exp(−5.0357)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Evento conjunto histórico",
+          "Estimación"
+        ],
+        "rows": [
+          [
+            "Bayern campeón e invicto",
+            "0.86 %"
+          ],
+          [
+            "Otro campeón e invicto",
+            "0.30 %"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Esta combinación usa frecuencias históricas como pesos y modelos de derrotas condicionados al campeón. No permite identificar la probabilidad de que Leverkusen, concretamente, gane invicto. El modelo de partidos sí parte de un equipo concreto y de sus 34 rivales."
+      },
+      {
+        "type": "p",
+        "text": "El valor Poisson resulta mucho mayor que el producto de partidos. La selección de campeones excluye de antemano las campañas mediocres. Además, mezcla épocas, entrenadores y estados de forma. En cambio, el modelo Elo de pretemporada conserva una valoración de Leverkusen anterior a su mejora. No hay razón para que ambas probabilidades coincidan."
+      },
+      {
+        "type": "p",
+        "text": "Por último, el evento «invicto» no exige ser campeón: un equipo podría empatar sus 34 partidos y no ganar la liga. Esta distinción impide multiplicar sin más la frecuencia de campeones ajenos al Bayern por la probabilidad de invicto de Leverkusen."
+      }
+    ]
+  },
+  {
+    "title": "Extra Los cuatro partidos rescatados",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se reconstruyó el marcador ordenando los goles de los 34 encuentros de Bundesliga, incluidos los autogoles. Se considera rescate un gol desde el minuto 85 que convierte una desventaja en empate o ventaja y evita la derrota final. La auditoría excluye las competiciones de copa y los goles que solamente convierten un empate en victoria [3]."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Fecha",
+          "Rival",
+          "Gol de empate",
+          "Resultado"
+        ],
+        "rows": [
+          [
+            "2023-09-15",
+            "Bayern Munich",
+            "93:46",
+            "2-2"
+          ],
+          [
+            "2024-03-30",
+            "Hoffenheim",
+            "87:24",
+            "2-1"
+          ],
+          [
+            "2024-04-21",
+            "Borussia Dortmund",
+            "96:52",
+            "1-1"
+          ],
+          [
+            "2024-04-27",
+            "VfB Stuttgart",
+            "95:59",
+            "2-2"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Los anotadores fueron Exequiel Palacios ante Bayern, Robert Andrich ante Hoffenheim, Josip Stanišić ante Dortmund y Andrich ante Stuttgart. Los tiempos anteriores son el reloj de eventos de StatsBomb. Por ejemplo, 93:46 se anuncia habitualmente como minuto 90+4. No deben confundirse segundos transcurridos con la etiqueta redondeada del minuto."
+      },
+      {
+        "type": "p",
+        "text": "Ante Bayern el marcador era 1–1 al minuto 85. El 2–1 del rival llegó a 85:21. Ese partido sí cumple «iba perdiendo después del minuto 85», aunque no «perdía exactamente al 85». La definición literal produce k=4. Una definición estricta del estado exactamente al minuto 85 dejaría k=3."
+      },
+      {
+        "type": "p",
+        "text": "Para estimar cada rescate usamos el estado al 85 o, si la desventaja comienza después, el primer estado desfavorable posterior. Se usan tasas históricas de goles por localía de toda la liga en 2018/19–2022/23 y la duración restante hasta el cierre observado del partido. Esto condiciona retrospectivamente por duración y supone una tasa uniforme de gol."
+      },
+      {
+        "type": "equation",
+        "text": "qᵢ = P(Xᵢ − Yᵢ ≥ déficitᵢ), Xᵢ ∼ Pois(rₐ Tᵢ/90), Yᵢ ∼ Pois(rᵣ Tᵢ/90)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Rival",
+          "Estado inicial",
+          "Minutos restantes",
+          "qᵢ"
+        ],
+        "rows": [
+          [
+            "Bayern Munich",
+            "1-2",
+            "13.05",
+            "14.55 %"
+          ],
+          [
+            "Hoffenheim",
+            "0-1",
+            "11.18",
+            "16.73 %"
+          ],
+          [
+            "Borussia Dortmund",
+            "0-1",
+            "13.80",
+            "15.12 %"
+          ],
+          [
+            "VfB Stuttgart",
+            "1-2",
+            "12.73",
+            "18.42 %"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Extra Fragilidad y discusión de la suerte",
+    "blocks": [
+      {
+        "type": "equation",
+        "text": "Q = q₁ × q₂ × q₃ × q₄ = 6.782 × 10⁻⁴"
+      },
+      {
+        "type": "equation",
+        "text": "1/Q = 1,474.5"
+      },
+      {
+        "type": "equation",
+        "text": "Índice ajustado solicitado = P(invicto) × Q = 6.283 × 10⁻¹⁰"
+      },
+      {
+        "type": "p",
+        "text": "Q resume la probabilidad conjunta de rescatar los cuatro estados desfavorables bajo independencia. El producto P(invicto)×Q se reporta como el índice heurístico solicitado por el ejercicio. No constituye una nueva probabilidad predictiva calibrada: el modelo inicial ya admite resultados salvados por goles tardíos, por lo que multiplicar puede contabilizar dos veces parte de la dificultad."
+      },
+      {
+        "type": "p",
+        "text": "El recíproco 1/Q expresa rareza conjunta dentro del modelo. No identifica cuántas veces tuvo «más suerte» el equipo en sentido causal. Para medir ese efecto sería necesario un contrafactual que sustituyera las probabilidades de los partidos rescatados sin duplicar su contribución."
+      }
+    ]
+  },
+  {
+    "title": "Sensibilidad al tiempo añadido",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Añadido supuesto",
+          "Q",
+          "Índice P × Q"
+        ],
+        "rows": [
+          [
+            0,
+            "3.196 × 10⁻⁵",
+            "2.961 × 10⁻¹¹"
+          ],
+          [
+            3,
+            "1.612 × 10⁻⁴",
+            "1.493 × 10⁻¹⁰"
+          ],
+          [
+            5,
+            "3.293 × 10⁻⁴",
+            "3.051 × 10⁻¹⁰"
+          ],
+          [
+            8,
+            "7.227 × 10⁻⁴",
+            "6.695 × 10⁻¹⁰"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La tabla fija horizontes comunes, mientras que el valor central usa el cierre observado de cada partido. Los horizontes cortos describen escenarios alternativos y pueden terminar antes de alguno de los goles reales. No son reconstrucciones exactas de esos encuentros."
+      },
+      {
+        "type": "p",
+        "text": "Nuestra postura es que llamar suerte a todos los rescates simplifica demasiado el fenómeno. La presión sostenida, la profundidad del plantel, las sustituciones y la capacidad de generar ocasiones pueden aumentar la probabilidad de un gol tardío. También existe variabilidad impredecible en cada remate y rebote. Cuatro casos no bastan para separar ambas explicaciones. El análisis cuantifica dependencia de rescates, sin probar que se deban exclusivamente al azar."
+      }
+    ]
+  },
+  {
+    "title": "Conclusión estadística: Leverkusen",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se concluye que el invicto de Leverkusen fue un evento extremadamente poco probable bajo el modelo de Elo de pretemporada, goles Poisson e independencia entre partidos: su probabilidad estimada es 9.264 × 10⁻⁷. Los cero invictos observados en 10 000 simulaciones son compatibles con esa estimación y no demuestran imposibilidad. El 1.06 % obtenido con Poisson histórico responde a otra pregunta, porque considera equipos que ya fueron campeones; por ello no contradice el cálculo inicial. Los cuatro rescates identificados muestran que el logro dependió de goles tardíos decisivos, pero el índice Q no permite atribuir causalmente ese resultado a la suerte. Estadísticamente, la evidencia permite calificar el invicto como excepcional dentro de los modelos utilizados, sin identificar su probabilidad verdadera ni demostrar que las valoraciones iniciales reflejaran toda la capacidad del equipo durante la temporada."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Cabo Verde · equipos, goles y puntos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Cabo Verde · eventos del grupo mundialista",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Cabo Verde · empates y condicionamiento",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Notación: Cabo Verde · rondas y probabilidad del título",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los símbolos se interpretan dentro de este caso. Cuando una letra cambia de significado entre secciones, se indica expresamente para evitar confundir eventos, parámetros y resultados."
+      }
+    ]
+  },
+  {
+    "title": "Cabo Verde: goles, puntos y posiciones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los goles de cada selección son conteos discretos Poisson. Victoria, empate y derrota son categorías ordenadas; los puntos por partido pertenecen al conjunto {0, 1, 3}. Los puntos acumulados, goles a favor y diferencia de goles son variables discretas que determinan la tabla, junto con las reglas de desempate."
+      },
+      {
+        "type": "p",
+        "text": "La posición final es ordinal: toma valores de 1 a 6 en la eliminatoria y de 1 a 4 en el grupo mundialista. La distancia entre posiciones no mide una diferencia constante de rendimiento. País, grupo y rival son categorías nominales; la localía es una categoría que incorporamos mediante una ventaja numérica Elo."
+      }
+    ]
+  },
+  {
+    "title": "Cabo Verde: eventos y condicionamiento",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Ganar el grupo, avanzar, obtener tres empates y ganar el título se representan con indicadores binarios. El número de clasificaciones entre N simulaciones es discreto. La condición de tres empates impone igualdad de goles en cada partido: tiene probabilidad positiva porque los marcadores son discretos."
+      },
+      {
+        "type": "p",
+        "text": "Las probabilidades y tasas de gol son parámetros reales, no resultados continuos simulados. En escenarios condicionados, el estimador divide los éxitos dentro de la condición entre las simulaciones que la cumplen. Ese denominador puede ser aleatorio. El intervalo binomial se calcula con el número efectivamente retenido y mide únicamente precisión Monte Carlo."
+      }
+    ]
+  },
+  {
+    "title": "Parte II La clasificación de Cabo Verde",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La eliminatoria africana ubica a Cabo Verde en el grupo D con Camerún, Angola, Libia, Esuatini y Mauricio [5]. Simulamos el grupo completo a ida y vuelta: 30 partidos, 10 por selección. La clasificación directa corresponde exclusivamente al primer puesto, sin repechaje, como establece el ejercicio."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Selección",
+          "Elo anterior al inicio"
+        ],
+        "rows": [
+          [
+            "Cabo Verde",
+            1474
+          ],
+          [
+            "Camerún",
+            1625
+          ],
+          [
+            "Angola",
+            1388
+          ],
+          [
+            "Libia",
+            1331
+          ],
+          [
+            "Esuatini",
+            1286
+          ],
+          [
+            "Mauricio",
+            1031
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Las fuerzas proceden del último partido anterior al 15 de noviembre de 2023 en World Football Elo Ratings [4]. Se congelan antes de la eliminatoria. No se emplean ratings posteriores a la clasificación. Se aplica la misma conversión Elo–Poisson y una ventaja local de 100 puntos."
+      },
+      {
+        "type": "p",
+        "text": "Cabo Verde terminó primero en 1288 de 10 000 simulaciones: 12.88 %. El intervalo Monte Carlo del 95 % es [12.23 %, 13.55 %]. Bajo estos supuestos, la clasificación ocurre aproximadamente una vez cada 7.8 eliminatorias simuladas."
+      },
+      {
+        "type": "p",
+        "text": "Camerún parte con mayor Elo, pero el formato de diez partidos permite que empates y derrotas del favorito abran una oportunidad. El resultado mide la dificultad antes de empezar. No condiciona el cálculo a los resultados reales conocidos de la eliminatoria."
+      },
+      {
+        "type": "p",
+        "text": "El desempate simulado usa puntos, diferencia de goles y goles anotados, seguido por el desempeño entre empatados. La igualdad residual se resuelve al azar. La simulación no incorpora tarjetas ni decisiones disciplinarias, por lo que los desempates finales son una aproximación explícita."
+      }
+    ]
+  },
+  {
+    "title": "El grupo H y los mejores terceros",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El grupo H reúne a España, Cabo Verde, Arabia Saudita y Uruguay. Se simulan también los otros once grupos. Avanzan los dos primeros de cada grupo y los ocho mejores terceros, para formar los dieciseisavos [6, 7]. Tener tres puntos no garantiza el pase: también importan la diferencia de goles y los goles anotados."
+      },
+      {
+        "type": "p",
+        "text": "Se usa el último Elo de cada selección anterior al 11 de junio de 2026. Dentro del grupo se prioriza la minitabla de enfrentamientos directos entre equipos igualados a puntos, seguida de diferencia de goles y goles totales. Entre terceros se comparan puntos, diferencia de goles y goles anotados. La igualdad restante se sortea porque no se modela conducta deportiva ni ranking FIFA residual. Los porcentajes son aproximaciones del formato bajo esa simplificación."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Selección",
+          "Elo previo al Mundial"
+        ],
+        "rows": [
+          [
+            "España",
+            2157
+          ],
+          [
+            "Cabo Verde",
+            1578
+          ],
+          [
+            "Arabia Saudita",
+            1576
+          ],
+          [
+            "Uruguay",
+            1892
+          ]
+        ]
+      },
+      {
+        "type": "figure",
+        "name": "cape_scenarios",
+        "caption": "Figura 5. Probabilidades con denominadores distintos. Los escenarios con empates están condicionados a ellos."
+      },
+      {
+        "type": "p",
+        "text": "Sin imponer sus resultados, Cabo Verde avanza en 23.36 % de las simulaciones. La probabilidad analítica de empatar sus tres partidos es 0.15 %. Este evento es poco frecuente, pero, una vez que ocurre, ofrece una posición relativamente favorable frente a otros terceros."
+      }
+    ]
+  },
+  {
+    "title": "Tres empates y los escenarios condicionados",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Para imponer tres empates no se fijan artificialmente tres marcadores 0–0. En cada duelo se muestrea k–k según la distribución de goles condicionada a la igualdad. Esto conserva la incertidumbre en goles anotados, relevante para los desempates."
+      },
+      {
+        "type": "equation",
+        "text": "P(k–k | empate) ∝ P(G₁=k) P(G₂=k)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Escenario",
+          "Casos",
+          "P de avanzar",
+          "IC 95 %"
+        ],
+        "rows": [
+          [
+            "Sin imponer resultados",
+            10000,
+            "23.36 %",
+            "22.5–24.2 %"
+          ],
+          [
+            "Con tres empates",
+            10000,
+            "95.31 %",
+            "94.9–95.7 %"
+          ],
+          [
+            "Tres empates y Uruguay no pierde ante España",
+            2576,
+            "93.71 %",
+            "92.7–94.6 %"
+          ],
+          [
+            "Tres empates y tercer lugar",
+            8679,
+            "96.23 %",
+            "95.8–96.6 %"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El tercer escenario considera que Uruguay gana o empata contra España y que Cabo Verde empata sus tres encuentros. Su denominador incluye únicamente las simulaciones que cumplen ambas condiciones. El cuarto responde directamente a la posibilidad de avanzar como mejor tercero con tres puntos obtenidos por tres empates."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Posición de Cabo Verde con tres empates",
+          "Frecuencia"
+        ],
+        "rows": [
+          [
+            "1",
+            "0.02 %"
+          ],
+          [
+            "2",
+            "11.77 %"
+          ],
+          [
+            "3",
+            "86.79 %"
+          ],
+          [
+            "4",
+            "1.42 %"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No debe confundirse la probabilidad de obtener tres empates con la probabilidad de avanzar después de conseguirlos. Tampoco debe generalizarse el resultado a cualquier tercer lugar con tres puntos: una victoria y dos derrotas pueden dejar una diferencia de goles negativa, mientras que tres empates dejan diferencia cero."
+      },
+      {
+        "type": "p",
+        "text": "Si la condición «Uruguay no pierde ante España» se interpreta sin imponer empates de Cabo Verde, el pase estimado es 23.75 %. Se presenta por separado para evitar mezclar las dos interpretaciones."
+      }
+    ]
+  },
+  {
+    "title": "La ruta eliminatoria propuesta",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El relato del ejercicio se trata como un contrafactual deportivo. Las afirmaciones sobre decisiones arbitrales no se adoptan como hechos ni se incluyen como variables del modelo. La ruta principal comienza después de superar a Argentina y exige no perder en 90 minutos ante Egipto, Suiza, Inglaterra y España. En todos los empates se supone que Cabo Verde avanza por penales, como pide el enunciado."
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Rival",
+          "P victoria",
+          "P empate",
+          "P avance"
+        ],
+        "rows": [
+          [
+            "Argentina",
+            "1.75 %",
+            "5.19 %",
+            "6.94 %"
+          ],
+          [
+            "Egipto",
+            "21.95 %",
+            "23.39 %",
+            "45.34 %"
+          ],
+          [
+            "Suiza",
+            "7.32 %",
+            "13.68 %",
+            "21.00 %"
+          ],
+          [
+            "Inglaterra",
+            "3.16 %",
+            "7.93 %",
+            "11.09 %"
+          ],
+          [
+            "España",
+            "1.33 %",
+            "4.23 %",
+            "5.56 %"
+          ]
+        ]
+      },
+      {
+        "type": "equation",
+        "text": "P(título | supera Argentina y ruta fija) = ∏ᵢ₌₁⁴ [P(Gᵢ) + P(Eᵢ)]"
+      },
+      {
+        "type": "p",
+        "text": "El producto da 0.06 %: aproximadamente una posibilidad en 1,703. La simulación independiente produjo 3 éxitos de 10 000. Su intervalo binomial es amplio y contiene el producto analítico. Se prioriza este último para describir un evento poco frecuente."
+      },
+      {
+        "type": "figure",
+        "name": "route",
+        "caption": "Figura 6. Probabilidad acumulada de superar la ruta desde Egipto. Escala logarítmica."
+      }
+    ]
+  },
+  {
+    "title": "Alcance de la probabilidad de ganar el Mundial",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Punto de partida con ruta fija",
+          "Probabilidad"
+        ],
+        "rows": [
+          [
+            "Después de superar Argentina",
+            "0.06 %"
+          ],
+          [
+            "Antes de jugar contra Argentina",
+            "0.00408 %"
+          ],
+          [
+            "Desde el grupo H",
+            "0.000953 %"
+          ],
+          [
+            "Desde la eliminatoria africana",
+            "0.000123 %"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La primera fila responde a los cuatro rivales expresamente solicitados. La segunda añade el partido contra Argentina con la misma regla favorable de avanzar en cualquier empate. Las últimas dos combinan etapas bajo independencia y mantienen la ruta de rivales fijada por el ejercicio. No representan una simulación completa de todos los cruces posibles del Mundial."
+      },
+      {
+        "type": "p",
+        "text": "Garantizar la victoria en penales favorece mucho a Cabo Verde. Si cada empate se resolviera con una moneda equilibrada y se ignorara la prórroga, cada factor sería P(victoria)+0.5 P(empate). El supuesto del ejercicio, por tanto, constituye una condición optimista, no una estimación empírica de su capacidad de ejecutar penales."
+      }
+    ]
+  },
+  {
+    "title": "Limitaciones comunes",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Elo resume resultados pasados y no describe lesiones, alineaciones ni evolución táctica. Congelar fuerzas descarta cambios durante torneos largos. Los modelos Poisson independientes simplifican la dependencia entre ambos marcadores, y la tasa base de 2.7 para selecciones es una elección de modelación. La localía del Mundial se considera neutral para todos, incluso para anfitriones."
+      },
+      {
+        "type": "p",
+        "text": "Los intervalos presentados describen únicamente la variación Monte Carlo. No cubren incertidumbre en parámetros, en desempates residuales ni en las fuentes. El escenario de mejores terceros depende de la composición completa de los grupos. Las probabilidades calculadas no se interpretan como certezas ni como evidencia de irregularidades deportivas."
+      }
+    ]
+  },
+  {
+    "title": "Simulación de clasificación y posiciones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La clasificación directa no se modela como ganar individualmente los diez partidos. Se generan los marcadores de los 30 encuentros entre las seis selecciones, se acumulan puntos y se ordena la tabla. Cabo Verde clasifica cuando ocupa la primera posición, aunque haya empatado o perdido algunos encuentros."
+      },
+      {
+        "type": "p",
+        "text": "El simulador prioriza puntos, diferencia de goles y goles a favor en la eliminatoria; después usa una minitabla entre empatados y un sorteo residual. El ordenamiento del Mundial prioriza la minitabla entre equipos igualados a puntos, después diferencia de goles y goles generales, con sorteo residual. No reproduce disciplina ni todas las posibles reaplicaciones de criterios: es una aproximación explícita del reglamento."
+      },
+      {
+        "type": "p",
+        "text": "El cálculo produce 1288 clasificaciones directas en 10 000 repeticiones, p̂=0.1288. Su error estándar Monte Carlo aproximado es 0.003350, equivalente a 0.335 puntos porcentuales. El intervalo binomial exacto del 95 % es [0.122293,0.135524]. La estimación describe una posibilidad minoritaria bajo el modelo, no una imposibilidad ni una prueba de que el resultado real fuera anómalo."
+      }
+    ]
+  },
+  {
+    "title": "Condicionar los empates correctamente",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La igualdad de goles es un evento al que se condiciona la distribución conjunta. La probabilidad de cada empate k–k se normaliza dividiendo por la probabilidad total de empate. El código evalúa los valores k=0,…,24, cuyo peso omitido es despreciable para las tasas utilizadas; esto es una aproximación numérica de la suma infinita."
+      },
+      {
+        "type": "p",
+        "text": "Para el Mundial se generan doce grupos de cuatro equipos, seis partidos por grupo. Avanzan los dos primeros de cada grupo y ocho terceros ordenados por puntos, diferencia de goles y goles a favor, con sorteo residual. Simular únicamente el grupo H no permite identificar la probabilidad de ser uno de los ocho mejores terceros."
+      },
+      {
+        "type": "p",
+        "text": "Sea D el evento de tres empates y U el evento de que Uruguay no pierda ante España. La estimación de P(A | D,U) es el número de simulaciones con avance, D y U dividido por el número con D y U. Las simulaciones condicionadas a D ya fijan ese evento mediante muestreo directo, por lo que conservan muchas más repeticiones útiles que filtrar un evento raro en una corrida no condicionada."
+      },
+      {
+        "type": "p",
+        "text": "Las tres condiciones no son intercambiables: P(D), P(A | D) y P(A | D, tercer puesto) tienen denominadores distintos. Tampoco se interpreta la diferencia entre P(A | D) y P(A) como efecto causal de una intervención que obligue a empatar."
+      }
+    ]
+  },
+  {
+    "title": "Resultados condicionados y su precisión",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El intervalo exacto del escenario no condicionado es [22.5336 %,24.2020 %]; para tres empates, [94.8772 %,95.7161 %]. En los escenarios filtrados se recalcula el intervalo con su tamaño efectivo, no se conserva artificialmente un denominador de 10 000."
+      },
+      {
+        "type": "p",
+        "text": "La probabilidad analítica de tres empates es 0.00148934. Condicionado a ellos, la clasificación es alta bajo esta simulación, en parte porque la diferencia de goles es cero. Esto no equivale a afirmar que cualquier tercero con tres puntos tenga la misma probabilidad: tres puntos obtenidos mediante una victoria y dos derrotas pueden implicar una diferencia negativa."
+      },
+      {
+        "type": "p",
+        "text": "La combinación de la probabilidad analítica de D con la frecuencia condicional de A permite aproximar P(A∩D)=P(D)P(A | D)≈0.0014195, es decir, 0.14195 %. Esta identidad contrasta la baja frecuencia del camino concreto de tres empates con su elevada probabilidad de avance una vez observado ese camino."
+      },
+      {
+        "type": "p",
+        "text": "Las barras son estimaciones condicionales, no observaciones de miles de Mundiales reales. Su precisión Monte Carlo no valida las valoraciones Elo, la tasa base de goles ni la aproximación de los desempates."
+      }
+    ]
+  },
+  {
+    "title": "Derivación de la ruta al título",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Sean wᵢ y dᵢ las probabilidades de victoria y empate en 90 minutos frente al rival i. La regla del ejercicio garantiza avanzar por penales en cada empate, por lo que el factor por ronda es wᵢ+dᵢ. Bajo fuerzas constantes e independencia condicional, multiplicar los cuatro factores obtiene la probabilidad de superar consecutivamente Egipto, Suiza, Inglaterra y España."
+      },
+      {
+        "type": "p",
+        "text": "La simulación de 10 000 rutas produjo tres títulos. Se obtiene p̂=0.0003, diferente del producto analítico por variación Monte Carlo; no se deben exigir cifras idénticas. El intervalo exacto de esa frecuencia incluye el producto. Para este evento raro, el resultado analítico 0.000587369 es el estimador principal del modelo especificado."
+      },
+      {
+        "type": "p",
+        "text": "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos añade su probabilidad de avance; partir de la eliminatoria africana añade además su probabilidad de clasificación. Estas combinaciones conservan la ruta fija del ejercicio y requieren los supuestos de enlace entre etapas."
+      },
+      {
+        "type": "p",
+        "text": "Como contraste de la regla de penales, se puede reemplazar cada factor por wᵢ+0.5dᵢ, ignorando prórroga. Esta alternativa identifica el efecto del supuesto dentro del modelo, no estima la habilidad real de Cabo Verde para ejecutar penales."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Cabo Verde",
+    "blocks": []
+  },
+  {
+    "title": "Eliminatoria: estimación con sus repeticiones",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cabo Verde terminó primero en 1288 de los 10 000 grupos simulados. Se usaron Elo 1474 para Cabo Verde y 1625 para Camerún; al recibirlo, la diferencia es 1474 − 1625 + 100 = −51. El intervalo exacto se calcula con 1288 éxitos y 10 000 ensayos, no con el número de partidos."
+      }
+    ]
+  },
+  {
+    "title": "Grupo mundialista: dos denominadores",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "A significa avanzar y T obtener tres empates. La primera fracción usa grupos sin imponer esos empates; la segunda, 10 000 repeticiones generadas bajo esa condición. No son 9531 clasificaciones dentro de los 2336 éxitos de la primera simulación."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Cabo Verde",
+    "blocks": []
+  },
+  {
+    "title": "Obtener los tres empates: producto real",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Las probabilidades individuales corresponden a España, Uruguay y Arabia Saudita, con Elo de Cabo Verde igual a 1578 y localía neutral. El segundo cálculo combina la probabilidad de obtener los empates con la estimación condicional de avanzar después de ellos."
+      }
+    ]
+  },
+  {
+    "title": "Escenarios condicionados: conteos retenidos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "U significa que Uruguay no pierde ante España. De las repeticiones con tres empates, 2576 cumplen U; 2414 de ellas clasifican. En el segundo escenario se retienen los 8679 terceros y 8352 avanzan. Los denominadores expresan qué condición se está evaluando."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Cabo Verde",
+    "blocks": []
+  },
+  {
+    "title": "Ruta al título: cada rival aporta un factor",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Los factores corresponden a Egipto, Suiza, Inglaterra y España: victoria más empate, porque el ejercicio garantiza avanzar por penales. El producto equivale a 0.0587369 %, condicionado a haber superado a Argentina. Los valores internos no se redondean antes de multiplicar."
+      }
+    ]
+  },
+  {
+    "title": "Cambiar el punto de partida: productos",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Incluir Argentina agrega la probabilidad de victoria o empate contra esa selección. Empezar desde el grupo agrega el 23.36 % de avance estimado; empezar desde la eliminatoria agrega además 0.1288 y da aproximadamente 1.227123 × 10⁻⁶. Todos mantienen la ruta fija y los supuestos de independencia entre etapas."
+      }
+    ]
+  },
+  {
+    "title": "Cálculos con datos: Cabo Verde",
+    "blocks": []
+  },
+  {
+    "title": "Derivación: condicionar un marcador a empate",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La definición de probabilidad condicional divide la probabilidad conjunta por la del evento condicionante. La independencia de goles permite factorizar el numerador. El denominador suma todos los empates posibles: 0–0, 1–1 y los demás; por eso forzar tres empates no equivale a fijarlos todos en cero."
+      }
+    ]
+  },
+  {
+    "title": "Conclusión estadística: Cabo Verde",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Se concluye que Cabo Verde tenía una posibilidad minoritaria, pero apreciable, de clasificación directa bajo el modelo: 12.88 %, con un intervalo Monte Carlo del 95 % de 12.23 % a 13.55 %. En el grupo mundialista, la estimación de avance es 23.36 % y aumenta a 95.31 % al condicionar los tres empates; esto describe situaciones distintas y no implica que conseguir esos empates sea fácil. La probabilidad de superar la ruta desde Egipto hasta España es aproximadamente 0.05874 %, incluso garantizando el avance en los empates, por lo que el título resulta muy poco probable en ese escenario. Estadísticamente, estas cifras cuantifican la dificultad de las etapas bajo fuerzas Elo, tasas de goles y rivales fijados; no constituyen una probabilidad general de ganar el Mundial. Los intervalos miden únicamente error de simulación y no incorporan incertidumbre de parámetros ni posibles errores del modelo."
+      }
+    ]
+  },
+  {
+    "title": "Referencias",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "[1] Curley, J. P. (2016, datos actualizados en 2026). engsoccerdata. Resultados de ligas europeas. https://github.com/jalapic/engsoccerdata"
+      },
+      {
+        "type": "p",
+        "text": "[2] ClubElo. Football Club Elo Ratings. https://clubelo.com/ . Archivo histórico de valoraciones publicado por Ádám Gábor en Club Football Match Data. Corte utilizado: 15/08/2023. https://github.com/xgabora/Club-Football-Match-Data/blob/main/data/EloRatings.csv"
+      },
+      {
+        "type": "p",
+        "text": "[3] Hudl StatsBomb. Open Data. Competición 9, temporada 281. Partidos y eventos de Bayer Leverkusen en Bundesliga 2023/24. https://github.com/statsbomb/open-data"
+      },
+      {
+        "type": "p",
+        "text": "[4] World Football Elo Ratings. Historiales de selecciones y datos TSV. https://www.eloratings.net/ . Ejemplo: https://www.eloratings.net/Cape_Verde.tsv"
+      },
+      {
+        "type": "p",
+        "text": "[5] Confederation of African Football. Everything you need to know about 2026 World Cup qualifying for Africa. https://www.cafonline.com/news/everything-you-need-to-know-about-2026-world-cup-qualifying-for-africa/"
+      },
+      {
+        "type": "p",
+        "text": "[6] FIFA. FIFA World Cup 2026 match schedule, fixtures and stadiums. https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+      },
+      {
+        "type": "p",
+        "text": "[7] FIFA. Grupos de la Copa Mundial 2026 y criterios de desempate. https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/articles/grupos-como-funcionan-clasificacion-criterios-desempate"
+      },
+      {
+        "type": "p",
+        "text": "[8] Goldsman, D., y Goldsman, P. (2024). A First Course in Probability and Statistics. Versión 201127.241225. Capítulos 1 (independencia y probabilidad condicional), 4 (distribuciones), 5 (estimación) y 6 (intervalos). Texto proporcionado para el curso."
+      },
+      {
+        "type": "p",
+        "text": "[9] Bundesliga (2024). Xabi Alonso’s Bayer Leverkusen become first Bundesliga team to go unbeaten throughout a season. https://www.bundesliga.com/en/bundesliga/news/bayer-leverkusen-record-unbeaten-run-xabi-alonso-26289"
+      },
+      {
+        "type": "p",
+        "text": "[10] NumPy, pandas, SciPy y Matplotlib. Documentación de las bibliotecas utilizadas: https://numpy.org/doc/ ; https://pandas.pydata.org/docs/ ; https://docs.scipy.org/doc/scipy/ ; https://matplotlib.org/stable/ . Las versiones exactas se conservan en uv.lock."
+      },
+      {
+        "type": "p",
+        "text": "[11] Deutscher Sportclub für Fußball-Statistiken. Die Bundesliga seit 1963. https://www.dsfs.de/wp-content/uploads/2024/01/Bundesliga_Geschichte_Tabellen.pdf . Contraste: Sportschau, tabla final 1991/92. https://www.sportschau.de/live-und-ergebnisse/fussball/deutschland-bundesliga/se2613/1991-1992/tabelle"
+      },
+      {
+        "type": "p",
+        "text": "Fecha de consulta de fuentes en línea: 14 de septiembre de 2026. Las tablas y gráficas presentan cálculos propios a partir de las fuentes indicadas. Las fórmulas de conversión Elo–Poisson y los supuestos de simulación corresponden al modelo de este estudio."
+      }
+    ]
+  },
+  {
+    "title": "Anexo Campeones de 1964 a 1983",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Año",
+          "Campeón",
+          "PJ",
+          "G",
+          "E",
+          "D"
+        ],
+        "rows": [
+          [
+            "1964",
+            "FC Koln",
+            "30",
+            "17",
+            "11",
+            "2"
+          ],
+          [
+            "1965",
+            "Werder Bremen",
+            "30",
+            "15",
+            "11",
+            "4"
+          ],
+          [
+            "1966",
+            "TSV 1860 Munchen",
+            "34",
+            "20",
+            "10",
+            "4"
+          ],
+          [
+            "1967",
+            "Eintracht Braunschweig",
+            "34",
+            "17",
+            "9",
+            "8"
+          ],
+          [
+            "1968",
+            "1. FC Nurnberg",
+            "34",
+            "19",
+            "9",
+            "6"
+          ],
+          [
+            "1969",
+            "Bayern Munich",
+            "34",
+            "18",
+            "10",
+            "6"
+          ],
+          [
+            "1970",
+            "MGladbach",
+            "34",
+            "23",
+            "5",
+            "6"
+          ],
+          [
+            "1971",
+            "MGladbach",
+            "34",
+            "20",
+            "10",
+            "4"
+          ],
+          [
+            "1972",
+            "Bayern Munich",
+            "34",
+            "24",
+            "7",
+            "3"
+          ],
+          [
+            "1973",
+            "Bayern Munich",
+            "34",
+            "25",
+            "4",
+            "5"
+          ],
+          [
+            "1974",
+            "Bayern Munich",
+            "34",
+            "20",
+            "9",
+            "5"
+          ],
+          [
+            "1975",
+            "MGladbach",
+            "34",
+            "21",
+            "8",
+            "5"
+          ],
+          [
+            "1976",
+            "MGladbach",
+            "34",
+            "16",
+            "13",
+            "5"
+          ],
+          [
+            "1977",
+            "MGladbach",
+            "34",
+            "17",
+            "10",
+            "7"
+          ],
+          [
+            "1978",
+            "FC Koln",
+            "34",
+            "22",
+            "4",
+            "8"
+          ],
+          [
+            "1979",
+            "Hamburger SV",
+            "34",
+            "21",
+            "7",
+            "6"
+          ],
+          [
+            "1980",
+            "Bayern Munich",
+            "34",
+            "22",
+            "6",
+            "6"
+          ],
+          [
+            "1981",
+            "Bayern Munich",
+            "34",
+            "22",
+            "9",
+            "3"
+          ],
+          [
+            "1982",
+            "Hamburger SV",
+            "34",
+            "18",
+            "12",
+            "4"
+          ],
+          [
+            "1983",
+            "Hamburger SV",
+            "34",
+            "20",
+            "12",
+            "2"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Fuente: reconstrucción de clasificaciones con los resultados de Curley [1] y la corrección de 1991/92 [11]. PJ: partidos jugados. G: victorias. E: empates. D: derrotas. Los nombres conservan la normalización utilizada para enlazar las bases de datos."
+      }
+    ]
+  },
+  {
+    "title": "Anexo Campeones de 1984 a 2003",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Año",
+          "Campeón",
+          "PJ",
+          "G",
+          "E",
+          "D"
+        ],
+        "rows": [
+          [
+            "1984",
+            "Stuttgart",
+            "34",
+            "19",
+            "10",
+            "5"
+          ],
+          [
+            "1985",
+            "Bayern Munich",
+            "34",
+            "21",
+            "8",
+            "5"
+          ],
+          [
+            "1986",
+            "Bayern Munich",
+            "34",
+            "21",
+            "7",
+            "6"
+          ],
+          [
+            "1987",
+            "Bayern Munich",
+            "34",
+            "20",
+            "13",
+            "1"
+          ],
+          [
+            "1988",
+            "Werder Bremen",
+            "34",
+            "22",
+            "8",
+            "4"
+          ],
+          [
+            "1989",
+            "Bayern Munich",
+            "34",
+            "19",
+            "12",
+            "3"
+          ],
+          [
+            "1990",
+            "Bayern Munich",
+            "34",
+            "19",
+            "11",
+            "4"
+          ],
+          [
+            "1991",
+            "1. FC Kaiserslautern",
+            "34",
+            "19",
+            "10",
+            "5"
+          ],
+          [
+            "1992",
+            "Stuttgart",
+            "38",
+            "21",
+            "10",
+            "7"
+          ],
+          [
+            "1993",
+            "Werder Bremen",
+            "34",
+            "19",
+            "10",
+            "5"
+          ],
+          [
+            "1994",
+            "Bayern Munich",
+            "34",
+            "17",
+            "10",
+            "7"
+          ],
+          [
+            "1995",
+            "Dortmund",
+            "34",
+            "20",
+            "9",
+            "5"
+          ],
+          [
+            "1996",
+            "Dortmund",
+            "34",
+            "19",
+            "11",
+            "4"
+          ],
+          [
+            "1997",
+            "Bayern Munich",
+            "34",
+            "20",
+            "11",
+            "3"
+          ],
+          [
+            "1998",
+            "1. FC Kaiserslautern",
+            "34",
+            "19",
+            "11",
+            "4"
+          ],
+          [
+            "1999",
+            "Bayern Munich",
+            "34",
+            "24",
+            "6",
+            "4"
+          ],
+          [
+            "2000",
+            "Bayern Munich",
+            "34",
+            "22",
+            "7",
+            "5"
+          ],
+          [
+            "2001",
+            "Bayern Munich",
+            "34",
+            "19",
+            "6",
+            "9"
+          ],
+          [
+            "2002",
+            "Dortmund",
+            "34",
+            "21",
+            "7",
+            "6"
+          ],
+          [
+            "2003",
+            "Bayern Munich",
+            "34",
+            "23",
+            "6",
+            "5"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Fuente: reconstrucción de clasificaciones con los resultados de Curley [1] y la corrección de 1991/92 [11]. PJ: partidos jugados. G: victorias. E: empates. D: derrotas. Los nombres conservan la normalización utilizada para enlazar las bases de datos."
+      }
+    ]
+  },
+  {
+    "title": "Anexo Campeones de 2004 a 2023",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Año",
+          "Campeón",
+          "PJ",
+          "G",
+          "E",
+          "D"
+        ],
+        "rows": [
+          [
+            "2004",
+            "Werder Bremen",
+            "34",
+            "22",
+            "8",
+            "4"
+          ],
+          [
+            "2005",
+            "Bayern Munich",
+            "34",
+            "24",
+            "5",
+            "5"
+          ],
+          [
+            "2006",
+            "Bayern Munich",
+            "34",
+            "22",
+            "9",
+            "3"
+          ],
+          [
+            "2007",
+            "Stuttgart",
+            "34",
+            "21",
+            "7",
+            "6"
+          ],
+          [
+            "2008",
+            "Bayern Munich",
+            "34",
+            "22",
+            "10",
+            "2"
+          ],
+          [
+            "2009",
+            "Wolfsburg",
+            "34",
+            "21",
+            "6",
+            "7"
+          ],
+          [
+            "2010",
+            "Bayern Munich",
+            "34",
+            "20",
+            "10",
+            "4"
+          ],
+          [
+            "2011",
+            "Dortmund",
+            "34",
+            "23",
+            "6",
+            "5"
+          ],
+          [
+            "2012",
+            "Dortmund",
+            "34",
+            "25",
+            "6",
+            "3"
+          ],
+          [
+            "2013",
+            "Bayern Munich",
+            "34",
+            "29",
+            "4",
+            "1"
+          ],
+          [
+            "2014",
+            "Bayern Munich",
+            "34",
+            "29",
+            "3",
+            "2"
+          ],
+          [
+            "2015",
+            "Bayern Munich",
+            "34",
+            "25",
+            "4",
+            "5"
+          ],
+          [
+            "2016",
+            "Bayern Munich",
+            "34",
+            "28",
+            "4",
+            "2"
+          ],
+          [
+            "2017",
+            "Bayern Munich",
+            "34",
+            "25",
+            "7",
+            "2"
+          ],
+          [
+            "2018",
+            "Bayern Munich",
+            "34",
+            "27",
+            "3",
+            "4"
+          ],
+          [
+            "2019",
+            "Bayern Munich",
+            "34",
+            "24",
+            "6",
+            "4"
+          ],
+          [
+            "2020",
+            "Bayern Munich",
+            "34",
+            "26",
+            "4",
+            "4"
+          ],
+          [
+            "2021",
+            "Bayern Munich",
+            "34",
+            "24",
+            "6",
+            "4"
+          ],
+          [
+            "2022",
+            "Bayern Munich",
+            "34",
+            "24",
+            "5",
+            "5"
+          ],
+          [
+            "2023",
+            "Bayern Munich",
+            "34",
+            "21",
+            "8",
+            "5"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Fuente: reconstrucción de clasificaciones con los resultados de Curley [1] y la corrección de 1991/92 [11]. PJ: partidos jugados. G: victorias. E: empates. D: derrotas. Los nombres conservan la normalización utilizada para enlazar las bases de datos."
+      }
+    ]
+  },
+  {
+    "title": "Anexo Grupos mundialistas y reproducibilidad",
+    "blocks": [
+      {
+        "type": "table",
+        "headers": [
+          "Grupo",
+          "Selecciones"
+        ],
+        "rows": [
+          [
+            "A",
+            "Mexico, South Africa, South Korea, Czechia"
+          ],
+          [
+            "B",
+            "Canada, Switzerland, Qatar, Bosnia and Herzegovina"
+          ],
+          [
+            "C",
+            "Brazil, Morocco, Haiti, Scotland"
+          ],
+          [
+            "D",
+            "United States, Paraguay, Australia, Turkey"
+          ],
+          [
+            "E",
+            "Germany, Curaçao, Ivory Coast, Ecuador"
+          ],
+          [
+            "F",
+            "Netherlands, Japan, Sweden, Tunisia"
+          ],
+          [
+            "G",
+            "Belgium, Egypt, Iran, New Zealand"
+          ],
+          [
+            "H",
+            "Spain, Cape Verde, Saudi Arabia, Uruguay"
+          ],
+          [
+            "I",
+            "France, Senegal, Iraq, Norway"
+          ],
+          [
+            "J",
+            "Argentina, Algeria, Austria, Jordan"
+          ],
+          [
+            "K",
+            "Portugal, DR Congo, Uzbekistan, Colombia"
+          ],
+          [
+            "L",
+            "England, Croatia, Ghana, Panama"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El análisis utiliza Python y un entorno virtual administrado con uv. Para repetirlo con los datos conservados se ejecuta uv sync --frozen y después uv run python src/analyze.py. Las simulaciones producen tablas completas por repetición. Los archivos de datos incluyen fecha de corte y fuente, y la descarga original se registra con una huella SHA-256."
+      },
+      {
+        "type": "p",
+        "text": "La reproducción no requiere volver a consultar ratings actuales. Se conservaron las instantáneas utilizadas, evitando que una actualización posterior altere la interpretación temporal. La reconstrucción de eventos verificó los marcadores finales de los 34 encuentros y la tabla histórica verificó 60 campeones, incluidos 32 del Bayern."
+      }
+    ]
+  }
+]

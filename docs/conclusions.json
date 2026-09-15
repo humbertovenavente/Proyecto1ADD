@@ -1,0 +1,16 @@
+[
+  {
+    "part": 1,
+    "title": "Conclusión estadística: Leverkusen",
+    "paragraphs": [
+      "Se concluye que el invicto de Leverkusen fue un evento extremadamente poco probable bajo el modelo de Elo de pretemporada, goles Poisson e independencia entre partidos: su probabilidad estimada es 9.264 × 10⁻⁷. Los cero invictos observados en 10 000 simulaciones son compatibles con esa estimación y no demuestran imposibilidad. El 1.06 % obtenido con Poisson histórico responde a otra pregunta, porque considera equipos que ya fueron campeones; por ello no contradice el cálculo inicial. Los cuatro rescates identificados muestran que el logro dependió de goles tardíos decisivos, pero el índice Q no permite atribuir causalmente ese resultado a la suerte. Estadísticamente, la evidencia permite calificar el invicto como excepcional dentro de los modelos utilizados, sin identificar su probabilidad verdadera ni demostrar que las valoraciones iniciales reflejaran toda la capacidad del equipo durante la temporada."
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Conclusión estadística: Cabo Verde",
+    "paragraphs": [
+      "Se concluye que Cabo Verde tenía una posibilidad minoritaria, pero apreciable, de clasificación directa bajo el modelo: 12.88 %, con un intervalo Monte Carlo del 95 % de 12.23 % a 13.55 %. En el grupo mundialista, la estimación de avance es 23.36 % y aumenta a 95.31 % al condicionar los tres empates; esto describe situaciones distintas y no implica que conseguir esos empates sea fácil. La probabilidad de superar la ruta desde Egipto hasta España es aproximadamente 0.05874 %, incluso garantizando el avance en los empates, por lo que el título resulta muy poco probable en ese escenario. Estadísticamente, estas cifras cuantifican la dificultad de las etapas bajo fuerzas Elo, tasas de goles y rivales fijados; no constituyen una probabilidad general de ganar el Mundial. Los intervalos miden únicamente error de simulación y no incorporan incertidumbre de parámetros ni posibles errores del modelo."
+    ]
+  }
+]
