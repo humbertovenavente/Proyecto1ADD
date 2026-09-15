@@ -1,0 +1,202 @@
+[
+  {
+    "part": 1,
+    "title": "Eventos y cantidades que se estiman",
+    "formula": "$A=\\bigcap_{j=1}^{34}\\{G_{Lj}\\geq G_{Rj}\\},\\qquad p_A=P(A\\mid\\mathcal I_0)$",
+    "bullets": [
+      "La unidad es una temporada de Leverkusen con 34 partidos.",
+      "El invicto A exige no perder; ser campeón es un evento diferente.",
+      "La información inicial contiene Elo, rivales y localías.",
+      "El modelo histórico condiciona a ser campeón: cambia la población."
+    ],
+    "paragraphs": [
+      "La pregunta de partidos se formaliza mediante el evento A: Leverkusen termina sus 34 jornadas sin derrotas. Los dos conteos de goles representan sus goles y los del rival en el partido j. La información inicial I₀ reúne la valoración de pretemporada, el calendario, la localía y los parámetros del modelo. El estimando P(A) es condicional a esa información; no es una frecuencia observada del torneo 2023/24.",
+      "Para el análisis histórico, Yₛ indica si el campeón de la temporada s no fue Bayern. Su promedio describe la proporción de títulos de esa categoría en una ventana específica. Para el modelo de derrotas, Dₛ corresponde exclusivamente al campeón de cada temporada. Por ello P(Dₛ=0 | campeón) y P(A | I₀) no son el mismo estimando.",
+      "Esta distinción determina qué se calcula y evita una multiplicación injustificada: la frecuencia de campeones distintos de Bayern no puede combinarse directamente con P(A) para producir la probabilidad de que Leverkusen sea campeón invicto. Haría falta modelar conjuntamente la tabla completa de la liga."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Supuestos del modelo de partidos",
+    "formula": "$G_{1j}\\perp G_{2j}\\mid(\\lambda_{1j},\\lambda_{2j}),\\qquad (G_{1j},G_{2j})\\perp(G_{1k},G_{2k})\\mid\\mathcal I_0,\\quad j\\ne k$",
+    "bullets": [
+      "Elo fijo: no se actualiza con los resultados simulados.",
+      "Goles Poisson independientes dentro de cada encuentro.",
+      "Partidos independientes dadas las fuerzas y el calendario.",
+      "Localía y tasas base se fijan antes de simular."
+    ],
+    "paragraphs": [
+      "La independencia dentro de cada partido permite obtener su distribución conjunta multiplicando las probabilidades marginales de goles. La independencia entre encuentros, condicionada a las fuerzas fijas, permite multiplicar las probabilidades de no perder. Son supuestos distintos y ambos son necesarios para la construcción elegida.",
+      "Los goles Poisson tienen media igual a varianza. No se incorporan efectos de marcador, expulsiones, lesiones, alineaciones ni correlaciones de forma. La independencia y la estabilidad de fuerzas simplifican una temporada real, donde esos factores pueden generar dependencia y cambiar la probabilidad del invicto.",
+      "El parámetro τ es 3.14248 para Bundesliga, estimado con goles de 2018/19–2022/23, y 2.7 para selecciones, adoptado como supuesto. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ representa el total esperado a igualdad de fuerzas, no un total constante para todos los enfrentamientos.",
+      "Los datos del resultado que se pretende explicar se excluyen del corte inicial de Elo. En cambio, el análisis de rescates sí es retrospectivo y utiliza estados y duración observados. Sus probabilidades deben interpretarse con ese condicionamiento adicional."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "De Elo a las tasas de goles",
+    "formula": "$\\lambda_1=\\frac{\\tau}{2}e^t,\\quad\\lambda_2=\\frac{\\tau}{2}e^{-t},\\quad P(G_1>G_2)+\\frac12P(G_1=G_2)=E$",
+    "bullets": [
+      "Diferencia de fuerzas: Δ = Elo₁ − Elo₂ + ventaja local.",
+      "Elo determina puntuación esperada, no la tasa de empate.",
+      "Se busca t que iguala la expectativa Elo y la expectativa Poisson.",
+      "Con t = 0 ambos equipos tienen tasa τ/2; se conserva la simetría."
+    ],
+    "paragraphs": [
+      "Primero se calcula Δ y se transforma mediante E=1/(1+10 elevado a −Δ/400). Este valor corresponde a P(victoria)+½P(empate). Una única ecuación no identifica tres probabilidades de resultados, por lo que es necesario introducir un modelo adicional para los goles.",
+      "La parametrización exponencial mantiene ambas tasas positivas y cumple λ₁λ₂=(τ/2)². Se define una función residual: la probabilidad Poisson de victoria más la mitad de la de empate, menos E. Se resuelve su raíz con el método de Brent. Las tasas resultantes generan probabilidades que suman uno y reproducen la expectativa Elo dentro de la tolerancia numérica.",
+      "El uso de dos Poisson es una decisión de modelación: no se atribuye al sistema Elo una fórmula directa para la probabilidad de empate. Para calcular las probabilidades del signo de G₁−G₂ se emplea la distribución de Skellam, equivalente a sumar la distribución conjunta de los dos conteos."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Distribución de marcadores y ejemplo",
+    "formula": "$P(G_1=x,G_2=y)=e^{-(\\lambda_1+\\lambda_2)}\\frac{\\lambda_1^x\\lambda_2^y}{x!y!},\\quad x,y=0,1,\\ldots$",
+    "bullets": [
+      "Leverkusen–Leipzig: Δ = −17.15; λ₁ = 1.5150, λ₂ = 1.6296.",
+      "P(victoria) = 0.357246; P(empate) = 0.236187.",
+      "P(derrota) = 0.406567; P(no perder) = 0.593433.",
+      "La misma operación se repite para los 34 cruces y sus sedes."
+    ],
+    "paragraphs": [
+      "La expresión conjunta se deriva al multiplicar las funciones de masa de dos variables Poisson independientes. La suma sobre x>y da la probabilidad de victoria; la suma sobre x=y, la de empate; y la suma sobre x<y, la de derrota. Estas regiones son disjuntas y cubren todos los marcadores posibles.",
+      "Como ejemplo reproducible, ante Leipzig como local, Δ=1748.23−1825.38+60=−17.15. El enlace numérico produce λ₁=1.514991 y λ₂=1.629582. Las probabilidades resultantes son 0.3572455, 0.2361874 y 0.4065671. Su suma es uno; no perder tiene probabilidad 0.5934329.",
+      "Los puntos esperados en ese partido serían 3P(victoria)+P(empate)=1.307924. No se utilizan esos puntos esperados como resultado de un partido: las simulaciones muestrean un resultado aleatorio para conservar su variabilidad."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Producto de probabilidades y simulación",
+    "formula": "$I_b=\\prod_{j=1}^{34}1\\{\\mathrm{no\\ pierde}_{bj}\\},\\quad K=\\sum_{b=1}^{N}I_b,\\quad K\\sim\\mathrm{Bin}(N,p_A)$",
+    "bullets": [
+      "Cada temporada produce un indicador I: invicta o no invicta.",
+      "P(A) es el producto de las 34 probabilidades de no perder.",
+      "Con N = 10 000, E[K] = 0.009264 y P(K = 0) = 99.08 %.",
+      "Observar K = 0 concuerda con el modelo; no demuestra p = 0."
+    ],
+    "paragraphs": [
+      "Para generar el resultado de un partido se toma un uniforme U entre cero y uno. Si U<P(victoria), se registra victoria; si queda entre P(victoria) y P(victoria)+P(empate), se registra empate; en el resto, derrota. Repetirlo para los 34 partidos genera una temporada. Las repeticiones usan números pseudoaleatorios con semilla 14643.",
+      "Bajo independencia condicional, P(A)=∏pⱼ. Agrupar los dos términos contra Bayern y los otros 32 no introduce un nuevo supuesto: solo reorganiza el producto. Se obtiene 0.11738495 × 7.891912 × 10⁻⁶ = 9.263917 × 10⁻⁷.",
+      "Las N temporadas simuladas producen indicadores Bernoulli independientes con parámetro P(A). En consecuencia, el total de invictos K tiene distribución binomial, esperanza NP(A) y varianza NP(A)(1−P(A)). La estimación Monte Carlo es K/N. El producto analítico es más informativo para eventos tan raros, pues 10 000 repeticiones tienen resolución empírica de 0.0001.",
+      "Para tener al menos 95 % de probabilidad de observar un invicto con este P(A) se necesitarían aproximadamente 3.23 millones de temporadas: N≥log(0.05)/log(1−P(A)). Esta cantidad describe la resolución necesaria y no supone que se hayan ejecutado esas repeticiones."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Incertidumbre de Monte Carlo",
+    "formula": "$\\widehat p=K/N,\\qquad \\mathrm{SE}(\\widehat p)=\\sqrt{p(1-p)/N},\\qquad U_{K=0}=1-(0.025)^{1/N}$",
+    "bullets": [
+      "El intervalo bilateral exacto usa cuantiles beta (Clopper–Pearson).",
+      "Para K = 0 y N = 10 000: IC 95 % = [0, 0.036882 %].",
+      "La aproximación normal falla en el borde: produciría amplitud cero.",
+      "El intervalo cubre error de simulación, no incertidumbre del modelo."
+    ],
+    "paragraphs": [
+      "Para 0<K<N, el límite inferior es el cuantil 0.025 de Beta(K,N−K+1), y el superior el cuantil 0.975 de Beta(K+1,N−K). En K=0 se fija el límite inferior en cero; en K=N, el superior en uno. Estos son intervalos binomiales exactos bilaterales del 95 %, con cobertura al menos nominal y posible conservadurismo.",
+      "Cuando K=0, resolver P(K=0 | p=U)=0.025 da U=1−0.025 elevado a 1/N. Con 10 000 repeticiones, U=0.0003688199. El valor analítico 0.0000009264 está dentro del intervalo. No es adecuado usar el intervalo normal con el error estándar calculado en p̂=0 porque degeneraría artificialmente.",
+      "La cobertura del 95 % se refiere a repeticiones del procedimiento bajo un parámetro fijo. No significa que el parámetro tenga una probabilidad posterior de 95 % de estar dentro de este intervalo. Tampoco convierte la simulación en evidencia empírica independiente de los supuestos usados para producirla.",
+      "Las frecuencias de campeones de las ventanas históricas describen todas las temporadas seleccionadas, no una muestra aleatoria de una liga estacionaria. No se les atribuye automáticamente un intervalo binomial ni se contrasta la diferencia entre ventanas como si fueran dos muestras independientes: la ventana reciente está contenida en la larga."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Estimación Poisson y diagnóstico",
+    "formula": "$\\ell(\\lambda)=\\sum_sD_s\\log\\lambda-n\\lambda-\\sum_s\\log(D_s!),\\quad\\widehat\\lambda=\\overline D,\\quad\\widehat P(D=0)=e^{-\\overline D}$",
+    "bullets": [
+      "La derivada de la log-verosimilitud da λ̂ = suma de derrotas / n.",
+      "La media global 4.55 produce P(D = 0) = 1.05672 %.",
+      "Varianza 2.89576 < media 4.55: hay subdispersión descriptiva.",
+      "El ajuste es aproximado; no se declara validado por sus resultados."
+    ],
+    "paragraphs": [
+      "Para D₁,…,Dₙ independientes y Poisson con una media común λ, la verosimilitud es el producto de sus funciones de masa. Al tomar logaritmos se obtiene la expresión de log-verosimilitud. Su derivada es ∑Dₛ/λ−n; igualarla a cero produce λ̂=∑Dₛ/n. La segunda derivada es negativa para ∑Dₛ>0, de modo que se trata de un máximo.",
+      "La estimación por sustitución de P(D=0) es e elevado a −λ̂. Para todos los campeones se obtiene 1.05672 %; para Bayern, 1.61635 %; y para otros campeones, 0.65016 %. Son probabilidades ajustadas condicionadas a la categoría del campeón. El cociente entre las dos últimas es aproximadamente 2.49 y no es una prueba de significación estadística.",
+      "Poisson supone igualdad entre media y varianza, mientras que el cociente observado s²/media es 0.6364 en la muestra global. Se informa como diagnóstico descriptivo, sin asignar un valor p no calculado. La binomial negativa estándar tiene varianza λ+λ²/r, superior a la media: su uso no solucionaría este patrón de subdispersión.",
+      "Para considerar temporadas de distinta duración se modela Dₛ como Poisson(ρ mₛ), donde mₛ son los partidos. La estimación de la tasa es ρ̂=∑Dₛ/∑mₛ y la probabilidad para una temporada de 34 partidos es exp(−34ρ̂). La base incluye 30, 34 y 38 jornadas, por lo que esta comprobación de exposición es pertinente."
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Modelo condicional de los rescates",
+    "formula": "$q_i=P(X_i-Y_i\\geq d_i),\\quad X_i\\sim\\mathrm{Pois}(r_aT_i/90),\\quad Y_i\\sim\\mathrm{Pois}(r_rT_i/90)$",
+    "bullets": [
+      "d es la desventaja cuando comienza el estado crítico.",
+      "T es el tiempo restante hasta el final observado del partido.",
+      "El rescate exige compensar la desventaja y los goles del rival.",
+      "Q = producto de qᵢ supone independencia entre los cuatro rescates."
+    ],
+    "paragraphs": [
+      "Se reconstruye el marcador por orden temporal. Un partido es rescatado si existe una desventaja después del minuto 85 y el marcador final deja a Leverkusen sin derrota. Si ya pierde al minuto 85, se inicia allí; si empieza a perder más tarde, se usa ese primer estado desfavorable. El déficit dᵢ es positivo.",
+      "Las tasas rₐ y rᵣ son goles por 90 minutos para la condición local o visitante, estimadas con partidos históricos de liga. Escalarlas por Tᵢ/90 supone intensidad constante. La diferencia entre los futuros goles de ambos equipos sigue una Skellam; su cola desde dᵢ calcula la probabilidad de alcanzar al menos un empate final, permitiendo también nuevos goles del adversario.",
+      "El tiempo Tᵢ incluye el añadido efectivamente observado. Por tanto, qᵢ es un diagnóstico retrospectivo condicionado a esa duración, no un pronóstico realizado en el minuto 85 sin conocer el final. Las sensibilidades con añadido fijo muestran cómo cambia el cálculo si se modifica esa información.",
+      "El producto Q=0.0006781737 y su inverso 1474.55 resumen la rareza conjunta de esos estados bajo independencia. Multiplicar P(A) por Q produce el índice solicitado 6.282545 × 10⁻¹⁰, pero puede volver a ponderar dificultades ya incluidas en los partidos. No es una probabilidad causal identificada del invicto sin suerte, ni permite concluir que sin goles tardíos todos los encuentros habrían terminado necesariamente en derrota."
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Simulación de clasificación y posiciones",
+    "formula": "$S_i=\\sum_j\\left(3\\,1\\{G_{ij}>G_{ji}\\}+1\\{G_{ij}=G_{ji}\\}\\right),\\qquad\\widehat p_F=\\frac{1288}{10000}=0.1288$",
+    "bullets": [
+      "Se simulan 30 partidos de ida y vuelta en el grupo africano.",
+      "Goles → puntos → desempates → posición de Cabo Verde.",
+      "El indicador de clasificación vale uno solo cuando queda primero.",
+      "IC exacto 95 %: 12.2293 % a 13.5524 %."
+    ],
+    "paragraphs": [
+      "La clasificación directa no se modela como ganar individualmente los diez partidos. Se generan los marcadores de los 30 encuentros entre las seis selecciones, se acumulan puntos y se ordena la tabla. Cabo Verde clasifica cuando ocupa la primera posición, aunque haya empatado o perdido algunos encuentros.",
+      "El simulador prioriza puntos, diferencia de goles y goles a favor en la eliminatoria; después usa una minitabla entre empatados y un sorteo residual. El ordenamiento del Mundial prioriza la minitabla entre equipos igualados a puntos, después diferencia de goles y goles generales, con sorteo residual. No reproduce disciplina ni todas las posibles reaplicaciones de criterios: es una aproximación explícita del reglamento.",
+      "El cálculo produce 1288 clasificaciones directas en 10 000 repeticiones, p̂=0.1288. Su error estándar Monte Carlo aproximado es 0.003350, equivalente a 0.335 puntos porcentuales. El intervalo binomial exacto del 95 % es [0.122293,0.135524]. La estimación describe una posibilidad minoritaria bajo el modelo, no una imposibilidad ni una prueba de que el resultado real fuera anómalo."
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Condicionar los empates correctamente",
+    "formula": "$P(G_1=k,G_2=k\\mid G_1=G_2)=\\frac{P(G_1=k)P(G_2=k)}{\\sum_{r=0}^{\\infty}P(G_1=r)P(G_2=r)}$",
+    "bullets": [
+      "Se muestrea k–k con su distribución condicionada; no solo 0–0.",
+      "D: tres empates; A: avanzar; U: Uruguay no pierde ante España.",
+      "P(A | D,U) usa como denominador únicamente los casos D y U.",
+      "Los otros once grupos se simulan para comparar mejores terceros."
+    ],
+    "paragraphs": [
+      "La igualdad de goles es un evento al que se condiciona la distribución conjunta. La probabilidad de cada empate k–k se normaliza dividiendo por la probabilidad total de empate. El código evalúa los valores k=0,…,24, cuyo peso omitido es despreciable para las tasas utilizadas; esto es una aproximación numérica de la suma infinita.",
+      "Para el Mundial se generan doce grupos de cuatro equipos, seis partidos por grupo. Avanzan los dos primeros de cada grupo y ocho terceros ordenados por puntos, diferencia de goles y goles a favor, con sorteo residual. Simular únicamente el grupo H no permite identificar la probabilidad de ser uno de los ocho mejores terceros.",
+      "Sea D el evento de tres empates y U el evento de que Uruguay no pierda ante España. La estimación de P(A | D,U) es el número de simulaciones con avance, D y U dividido por el número con D y U. Las simulaciones condicionadas a D ya fijan ese evento mediante muestreo directo, por lo que conservan muchas más repeticiones útiles que filtrar un evento raro en una corrida no condicionada.",
+      "Las tres condiciones no son intercambiables: P(D), P(A | D) y P(A | D, tercer puesto) tienen denominadores distintos. Tampoco se interpreta la diferencia entre P(A | D) y P(A) como efecto causal de una intervención que obligue a empatar."
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Resultados condicionados y su precisión",
+    "formula": "$\\widehat P(A\\mid B)=\\frac{\\#(A\\cap B)}{\\#B},\\qquad \\mathrm{SE}\\approx\\sqrt{\\widehat p(1-\\widehat p)/\\#B}$",
+    "bullets": [
+      "Grupo sin condiciones: 2336 / 10 000 = 23.36 %.",
+      "Tres empates: 9531 / 10 000 = 95.31 %.",
+      "Tres empates y Uruguay no pierde: 2414 / 2576 = 93.7112 %.",
+      "Tres empates y tercer lugar: 8352 / 8679 = 96.2323 %."
+    ],
+    "paragraphs": [
+      "El intervalo exacto del escenario no condicionado es [22.5336 %,24.2020 %]; para tres empates, [94.8772 %,95.7161 %]. En los escenarios filtrados se recalcula el intervalo con su tamaño efectivo, no se conserva artificialmente un denominador de 10 000.",
+      "La probabilidad analítica de tres empates es 0.00148934. Condicionado a ellos, la clasificación es alta bajo esta simulación, en parte porque la diferencia de goles es cero. Esto no equivale a afirmar que cualquier tercero con tres puntos tenga la misma probabilidad: tres puntos obtenidos mediante una victoria y dos derrotas pueden implicar una diferencia negativa.",
+      "La combinación de la probabilidad analítica de D con la frecuencia condicional de A permite aproximar P(A∩D)=P(D)P(A | D)≈0.0014195, es decir, 0.14195 %. Esta identidad contrasta la baja frecuencia del camino concreto de tres empates con su elevada probabilidad de avance una vez observado ese camino.",
+      "Las barras son estimaciones condicionales, no observaciones de miles de Mundiales reales. Su precisión Monte Carlo no valida las valoraciones Elo, la tasa base de goles ni la aproximación de los desempates."
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Derivación de la ruta al título",
+    "formula": "$p_T=\\prod_{i=1}^{4}(w_i+d_i),\\qquad p_{T,\\,\\mathrm{penales}\\,50\\%}=\\prod_{i=1}^{4}(w_i+0.5d_i)$",
+    "bullets": [
+      "Cada ronda se supera ganando o empatando, según el ejercicio.",
+      "Producto: 0.453366 × 0.210038 × 0.110905 × 0.055618.",
+      "Resultado desde Egipto: 0.000587369 = 0.0587369 %.",
+      "La ruta es fija; no se promedian llaves alternativas del Mundial."
+    ],
+    "paragraphs": [
+      "Sean wᵢ y dᵢ las probabilidades de victoria y empate en 90 minutos frente al rival i. La regla del ejercicio garantiza avanzar por penales en cada empate, por lo que el factor por ronda es wᵢ+dᵢ. Bajo fuerzas constantes e independencia condicional, multiplicar los cuatro factores obtiene la probabilidad de superar consecutivamente Egipto, Suiza, Inglaterra y España.",
+      "La simulación de 10 000 rutas produjo tres títulos. Se obtiene p̂=0.0003, diferente del producto analítico por variación Monte Carlo; no se deben exigir cifras idénticas. El intervalo exacto de esa frecuencia incluye el producto. Para este evento raro, el resultado analítico 0.000587369 es el estimador principal del modelo especificado.",
+      "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos añade su probabilidad de avance; partir de la eliminatoria africana añade además su probabilidad de clasificación. Estas combinaciones conservan la ruta fija del ejercicio y requieren los supuestos de enlace entre etapas.",
+      "Como contraste de la regla de penales, se puede reemplazar cada factor por wᵢ+0.5dᵢ, ignorando prórroga. Esta alternativa identifica el efecto del supuesto dentro del modelo, no estima la habilidad real de Cabo Verde para ejecutar penales."
+    ]
+  }
+]

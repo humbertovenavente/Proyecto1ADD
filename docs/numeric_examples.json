@@ -1,0 +1,192 @@
+[
+  {
+    "part": 1,
+    "title": "Historia: sustituir los conteos",
+    "formulas": [
+      "$\\widehat p_{1964:2023}=\\frac{28}{60}=0.466667=46.6667\\%$",
+      "$\\widehat p_{2005:2023}=\\frac{4}{19}=0.210526=21.0526\\%$"
+    ],
+    "explanation": "Se cuentan temporadas cuyo campeón no fue Bayern. La diferencia es 21.0526 − 46.6667 = −25.6140 puntos porcentuales. Describe las ventanas históricas; no es la probabilidad de invicto de Leverkusen.",
+    "code": "print(\"Historia:\",28/60,4/19,\"diferencia pp:\",100*(4/19-28/60))"
+  },
+  {
+    "part": 1,
+    "title": "Ejemplo: Leverkusen recibe a Leipzig",
+    "formulas": [
+      "$\\Delta=1748.23-1825.38+60=-17.15$",
+      "$E=\\frac{1}{1+10^{17.15/400}}=0.475339$"
+    ],
+    "explanation": "Se usan las valoraciones del 15 de agosto de 2023 y 60 puntos Elo de localía. E es el resultado esperado —victoria más medio empate—, por lo que todavía falta convertirlo en probabilidades de marcador.",
+    "code": "delta=1748.23-1825.38+60\nprint(\"Delta y expectativa:\",delta,1/(1+10**(-delta/400)))"
+  },
+  {
+    "part": 1,
+    "title": "Leipzig: tasas y probabilidad de no perder",
+    "formulas": [
+      "$\\tau=3.142484,\\quad\\lambda_L=1.514991,\\quad\\lambda_R=1.629582$",
+      "$p_1=P(G_L\\geq G_R)=0.357246+0.236187=0.593433$"
+    ],
+    "explanation": "Las tasas se obtienen resolviendo numéricamente la ecuación Elo–Poisson. Al sumar victoria y empate se obtiene la probabilidad de superar este partido sin derrota. Los cálculos internos conservan la precisión completa; las cifras mostradas se redondean.",
+    "code": "a,b=goal_rates(-17.15,r[\"leverkusen\"][\"total_goals\"])\nv,d,lost=probabilities(-17.15,r[\"leverkusen\"][\"total_goals\"])\nprint(\"Tasas:\",a,b,\"victoria, empate, derrota:\",v,d,lost,\"no perder:\",v+d)"
+  },
+  {
+    "part": 1,
+    "title": "Temporada completa: producto con datos",
+    "formulas": [
+      "$P(A)=(0.117384947)(7.891912\\times10^{-6})$",
+      "$P(A)=9.263917\\times10^{-7}\\quad\\Rightarrow\\quad1/P(A)=1079457$"
+    ],
+    "explanation": "El primer factor corresponde a los dos partidos contra Bayern; el segundo, al producto de los otros 32. El inverso equivale aproximadamente a una temporada invicta por 1.08 millones de temporadas bajo este modelo, sin implicar un tiempo real de espera histórico.",
+    "code": "p=r[\"leverkusen\"][\"p_bayern2\"]*r[\"leverkusen\"][\"p_other32\"]\nprint(\"Producto e inverso:\",p,1/p)"
+  },
+  {
+    "part": 1,
+    "title": "Monte Carlo: cero éxitos e incertidumbre",
+    "formulas": [
+      "$E[K]=10000(9.263917\\times10^{-7})=0.00926392$",
+      "$\\widehat p=\\frac{0}{10000}=0,\\quad U=1-(0.025)^{1/10000}=0.000368820$"
+    ],
+    "explanation": "Para el intervalo binomial exacto bilateral del 95 %, el límite inferior es cero y el superior equivale a 0.036882 %. La probabilidad de observar cero invictos es (1 − P(A)) elevado a 10 000, aproximadamente 99.08 %. Por eso la simulación es compatible con el producto analítico.",
+    "code": "p=r[\"leverkusen\"][\"p_unbeaten\"]\nprint(\"Esperados, P(cero), IC95:\",10000*p,(1-p)**10000,interval(0,10000))"
+  },
+  {
+    "part": 1,
+    "title": "Poisson: medias históricas sustituidas",
+    "formulas": [
+      "$\\widehat\\lambda=\\frac{273}{60}=4.55,\\quad P(D=0)=e^{-4.55}=0.0105672$",
+      "$e^{-132/32}=0.0161635,\\quad e^{-141/28}=0.00650155$"
+    ],
+    "explanation": "Los 60 campeones suman 273 derrotas: Bayern aporta 132 en 32 títulos y los demás 141 en 28. Los resultados equivalen a 1.05672 %, 1.61635 % y 0.65016 %. Son probabilidades ajustadas para campeones históricos, no para un club cualquiera antes de comenzar la liga.",
+    "code": "print(\"Poisson: todos, Bayern y otros:\",np.exp(-273/60),np.exp(-132/32),np.exp(-141/28))"
+  },
+  {
+    "part": 1,
+    "title": "Rescate ante Bayern: tiempo y tasas",
+    "formulas": [
+      "$T=98.40-85.35=13.05,\\quad\\mu_L=1.393464\\frac{13.05}{90}=0.202052$",
+      "$\\mu_B=1.749020\\frac{13.05}{90}=0.253608,\\quad q_1=P(X-Y\\geq1)=0.145511$"
+    ],
+    "explanation": "Leverkusen pasa a perder en el minuto 85.35; el final observado fue 98.40. Se escalan las medias históricas de goles visitantes y locales a los 13.05 minutos restantes. La cola Skellam permite goles de ambos equipos y mide la probabilidad de compensar el déficit de uno.",
+    "code": "from scipy.stats import skellam\nmu_l=np.float64(1.3934640522875816)*13.05/90\nmu_b=np.float64(1.7490196078431373)*13.05/90\nprint(\"Tasas restantes y rescate:\",mu_l,mu_b,skellam.sf(0,mu_l,mu_b))"
+  },
+  {
+    "part": 1,
+    "title": "Cuatro rescates: producto y ajuste",
+    "formulas": [
+      "$Q=0.145511\\times0.167278\\times0.151230\\times0.184233=6.781737\\times10^{-4}$",
+      "$P(A)Q=(9.263917\\times10^{-7} )(6.781737\\times10^{-4} )=6.282545\\times10^{-10}$"
+    ],
+    "explanation": "El orden es Bayern, Hoffenheim, Dortmund y Stuttgart. El inverso de Q es aproximadamente 1474.55. El último producto es el índice heurístico pedido en el ejercicio; no debe interpretarse como una probabilidad causal del invicto sin suerte.",
+    "code": "q=np.array([x[\"q\"] for x in r[\"leverkusen\"][\"rescues\"]])\nprint(\"q, Q, inverso y ajuste:\",q,np.prod(q),1/np.prod(q),r[\"leverkusen\"][\"p_unbeaten\"]*np.prod(q))"
+  },
+  {
+    "part": 2,
+    "title": "Eliminatoria: estimación con sus repeticiones",
+    "formulas": [
+      "$\\widehat p_F=\\frac{1288}{10000}=0.1288=12.88\\%$",
+      "$IC_{95\\%}=[0.1222933,\\ 0.1355237]$"
+    ],
+    "explanation": "Cabo Verde terminó primero en 1288 de los 10 000 grupos simulados. Se usaron Elo 1474 para Cabo Verde y 1625 para Camerún; al recibirlo, la diferencia es 1474 − 1625 + 100 = −51. El intervalo exacto se calcula con 1288 éxitos y 10 000 ensayos, no con el número de partidos.",
+    "code": "print(\"Estimación, IC y delta local ante Camerún:\",1288/10000,interval(1288,10000),1474-1625+100)"
+  },
+  {
+    "part": 2,
+    "title": "Grupo mundialista: dos denominadores",
+    "formulas": [
+      "$\\widehat P(A)=\\frac{2336}{10000}=0.2336=23.36\\%$",
+      "$\\widehat P(A\\mid T)=\\frac{9531}{10000}=0.9531=95.31\\%$"
+    ],
+    "explanation": "A significa avanzar y T obtener tres empates. La primera fracción usa grupos sin imponer esos empates; la segunda, 10 000 repeticiones generadas bajo esa condición. No son 9531 clasificaciones dentro de los 2336 éxitos de la primera simulación.",
+    "code": "print(\"Avance sin condición y con tres empates:\",2336/10000,9531/10000)"
+  },
+  {
+    "part": 2,
+    "title": "Obtener los tres empates: producto real",
+    "formulas": [
+      "$P(T)=0.04232272\\times0.13630413\\times0.25817267=1.489337\\times10^{-3}$",
+      "$\\widehat P(A\\cap T)=(1.489337\\times10^{-3})(0.9531)=1.419487\\times10^{-3}$"
+    ],
+    "explanation": "Las probabilidades individuales corresponden a España, Uruguay y Arabia Saudita, con Elo de Cabo Verde igual a 1578 y localía neutral. El segundo cálculo combina la probabilidad de obtener los empates con la estimación condicional de avanzar después de ellos.",
+    "code": "ds=[probabilities(1578-r[\"cape_verde\"][\"world_elo\"][code],2.7)[1] for code in [\"ES\",\"UY\",\"SA\"]]\nprint(\"Empates individuales, producto y avance conjunto:\",ds,np.prod(ds),np.prod(ds)*.9531)"
+  },
+  {
+    "part": 2,
+    "title": "Escenarios condicionados: conteos retenidos",
+    "formulas": [
+      "$\\widehat P(A\\mid T,U)=\\frac{2414}{2576}=0.937112$",
+      "$\\widehat P(A\\mid T,\\mathrm{tercero})=\\frac{8352}{8679}=0.962323$"
+    ],
+    "explanation": "U significa que Uruguay no pierde ante España. De las repeticiones con tres empates, 2576 cumplen U; 2414 de ellas clasifican. En el segundo escenario se retienen los 8679 terceros y 8352 avanzan. Los denominadores expresan qué condición se está evaluando.",
+    "code": "print(\"Tres empates y Uruguay no pierde:\",2414/2576,interval(2414,2576))\nprint(\"Tres empates y tercer puesto:\",8352/8679,interval(8352,8679))\nprint(\"Uruguay no pierde sin forzar empates:\",619/2606)"
+  },
+  {
+    "part": 2,
+    "title": "Ruta al título: cada rival aporta un factor",
+    "formulas": [
+      "$p_{EG}=0.219486+0.233880=0.453366$",
+      "$p_T=0.453366\\times0.210038\\times0.110905\\times0.055618\\approx0.000587369$"
+    ],
+    "explanation": "Los factores corresponden a Egipto, Suiza, Inglaterra y España: victoria más empate, porque el ejercicio garantiza avanzar por penales. El producto equivale a 0.0587369 %, condicionado a haber superado a Argentina. Los valores internos no se redondean antes de multiplicar.",
+    "code": "factors=np.array([x[\"p_win\"]+x[\"p_draw\"] for x in r[\"cape_verde\"][\"knockouts\"][1:]])\nprint(\"Factores, producto y porcentaje:\",factors,np.prod(factors),100*np.prod(factors))"
+  },
+  {
+    "part": 2,
+    "title": "Cambiar el punto de partida: productos",
+    "formulas": [
+      "$p_{AR+}=0.0694365413(0.000587369465)=4.078490\\times10^{-5}$",
+      "$p_{grupo}=0.2336\\,p_{AR+}=9.527354\\times10^{-6}$"
+    ],
+    "explanation": "Incluir Argentina agrega la probabilidad de victoria o empate contra esa selección. Empezar desde el grupo agrega el 23.36 % de avance estimado; empezar desde la eliminatoria agrega además 0.1288 y da aproximadamente 1.227123 × 10⁻⁶. Todos mantienen la ruta fija y los supuestos de independencia entre etapas.",
+    "code": "cv=r[\"cape_verde\"]\np=cv[\"knockouts\"][0][\"p_advance\"]*cv[\"title_given_pass_argentina\"]\nprint(\"Desde Argentina, grupo y eliminatoria:\",p,.2336*p,.1288*.2336*p)"
+  },
+  {
+    "part": 1,
+    "title": "Despeje de Elo: de E a la diferencia",
+    "formulas": [
+      "$E^{-1}-1=10^{-\\Delta/400}\\ \\Rightarrow\\ \\Delta=400\\log_{10}\\!\\left(\\frac{E}{1-E}\\right)$",
+      "$\\Delta=400\\log_{10}\\!\\left(\\frac{0.475339192}{1-0.475339192}\\right)\\approx-17.15$"
+    ],
+    "explanation": "Se parte de la ecuación logística, se invierte E y se resta uno. Después se aplica logaritmo base diez y se multiplica por −400. Este despeje recupera la diferencia de fuerza, incluida la localía; no convierte E en probabilidad de victoria.",
+    "code": "E=1/(1+10**(17.15/400))\nprint(\"Delta recuperada:\",400*np.log10(E/(1-E)))"
+  },
+  {
+    "part": 1,
+    "title": "Tasas Poisson: solución numérica del enlace",
+    "formulas": [
+      "$f(t)=P(X>Y)+\\frac12P(X=Y)-E=0$",
+      "$t=-0.036456989,\\quad\\lambda_L=\\frac{3.142484}{2}e^t=1.514991,\\quad\\lambda_R=\\frac{3.142484}{2}e^{-t}=1.629582$"
+    ],
+    "explanation": "Para cada valor de t se evalúan las probabilidades Skellam con tasas (τ/2)exp(t) y (τ/2)exp(−t). Brent busca una raíz en el intervalo [−8, 8]. La solución iguala el resultado esperado del marcador con el Elo; se comprueba el residuo en lugar de presentar un supuesto despeje algebraico.",
+    "code": "from scipy.stats import skellam\na,b=goal_rates(-17.15,r[\"leverkusen\"][\"total_goals\"])\nE=1/(1+10**(17.15/400))\nprint(\"t y residuo:\",np.log(a/(r[\"leverkusen\"][\"total_goals\"]/2)),skellam.sf(0,a,b)+.5*skellam.pmf(0,a,b)-E)"
+  },
+  {
+    "part": 1,
+    "title": "Derivación del estimador Poisson",
+    "formulas": [
+      "$\\ell(\\lambda)=-n\\lambda+\\left(\\sum_s D_s\\right)\\log\\lambda-\\sum_s\\log(D_s!)$",
+      "$\\ell^{\\prime}(\\lambda)=-n+\\frac{\\sum_sD_s}{\\lambda}=0\\ \\Rightarrow\\ \\widehat\\lambda=\\frac{273}{60}=4.55$"
+    ],
+    "explanation": "Se multiplica la masa Poisson de las derrotas de cada campeón y se toma logaritmo. Al derivar e igualar a cero se obtiene la media. La segunda derivada es −273/λ², negativa para λ positivo, por lo que el punto es un máximo. Sustituir cero derrotas en la masa da exp(−4.55).",
+    "code": "lam=273/60\nprint(\"Media, segunda derivada y P(cero):\",lam,-273/lam**2,np.exp(-lam))"
+  },
+  {
+    "part": 1,
+    "title": "Despeje del límite con cero éxitos",
+    "formulas": [
+      "$P(K=0\\mid p=U)=(1-U)^{10000}=0.025$",
+      "$1-U=(0.025)^{1/10000}\\ \\Rightarrow\\ U=1-(0.025)^{1/10000}=0.000368820$"
+    ],
+    "explanation": "Para el intervalo exacto bilateral del 95 % se asigna 0.025 a esta cola. Se toma la raíz de orden 10 000 y se despeja U. El límite inferior es cero; multiplicar U por cien lo expresa como 0.036882 %. El valor 0.025 corresponde a un intervalo bilateral, no al límite unilateral del 95 %.",
+    "code": "U=1-.025**(1/10000)\nprint(\"U, porcentaje y cola recuperada:\",U,100*U,(1-U)**10000)"
+  },
+  {
+    "part": 2,
+    "title": "Derivación: condicionar un marcador a empate",
+    "formulas": [
+      "$P(G_1=k,G_2=k\\mid G_1=G_2)=\\frac{P(G_1=k)P(G_2=k)}{\\sum_{r=0}^{\\infty}P(G_1=r)P(G_2=r)}$",
+      "$P(A\\cap T)=P(A\\mid T)P(T)\\approx0.9531(0.001489337)=0.001419487$"
+    ],
+    "explanation": "La definición de probabilidad condicional divide la probabilidad conjunta por la del evento condicionante. La independencia de goles permite factorizar el numerador. El denominador suma todos los empates posibles: 0–0, 1–1 y los demás; por eso forzar tres empates no equivale a fijarlos todos en cero.",
+    "code": "print(\"Probabilidad conjunta de tres empates y avance:\",r[\"cape_verde\"][\"p_three_draws\"]*r[\"cape_verde\"][\"scenarios\"][\"tres_empates\"][\"p\"])"
+  }
+]

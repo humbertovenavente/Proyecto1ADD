@@ -1,0 +1,262 @@
+[
+  {
+    "part": 1,
+    "title": "Leverkusen · lenguaje de probabilidad",
+    "rows": [
+      [
+        "P(B),\\ P(B\\mid C)",
+        "Probabilidad de B; probabilidad de B condicionada a que ocurre C."
+      ],
+      [
+        "\\cap,\\ \\bigcap,\\ \\prod,\\ \\sum",
+        "Intersección de eventos, intersección múltiple, producto y suma."
+      ],
+      [
+        "\\perp,\\ \\sim,\\ \\mathrm{iid}",
+        "Independencia; distribución de una variable; independientes e idénticamente distribuidas."
+      ],
+      [
+        "1\\{B\\},\\ E[X],\\ \\mathrm{Var}(X)",
+        "Indicador: vale 1 si ocurre B y 0 si no; esperanza y varianza de X."
+      ],
+      [
+        "\\widehat\\theta,\\ \\approx,\\ \\propto",
+        "Estimación de θ; igualdad aproximada; proporcionalidad. El sombrero distingue estimador y parámetro."
+      ]
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Leverkusen · partidos y fuerzas",
+    "rows": [
+      [
+        "j,k;\\ G_{Lj},G_{Rj}",
+        "j y k identifican partidos distintos. Los dos conteos son los goles de Leverkusen y su rival en j."
+      ],
+      [
+        "A,\\ \\mathcal{I}_0,\\ p_A",
+        "A: invicto en 34 partidos. I₀: información inicial. probabilidad del invicto = P(A | I₀)."
+      ],
+      [
+        "p_j,\\ G_{1j},G_{2j}",
+        "pⱼ: probabilidad de no perder el partido j. 1 y 2 identifican los dos equipos de un encuentro."
+      ],
+      [
+        "\\Delta,\\ E,\\ h",
+        "Δ: diferencia Elo más localía h, en puntos Elo. E sin corchetes: puntuación esperada Elo."
+      ],
+      [
+        "\\lambda_{1j},\\lambda_{2j},\\tau,t",
+        "Tasas de goles por encuentro; τ: goles a igualdad de fuerzas; t: parámetro ajustado numéricamente."
+      ]
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Leverkusen · marcadores y simulaciones",
+    "rows": [
+      [
+        "x,y;\\ x!,\\ e,\\ \\exp(t)",
+        "x,y: posibles goles enteros. Factorial; número e; función exponencial."
+      ],
+      [
+        "\\mathrm{Pois}(\\lambda),\\ \\mathrm{Skellam}",
+        "Poisson modela conteos de goles; Skellam, la diferencia entre dos conteos Poisson independientes."
+      ],
+      [
+        "b,\\ N,\\ I_b,\\ K",
+        "b: repetición; N = 10 000 temporadas; indicador de la repetición b: indicador de invicto; K: total de invictos simulados."
+      ],
+      [
+        "\\mathrm{Bern}(p),\\ \\mathrm{Bin}(N,p)",
+        "Bernoulli: un indicador de éxito; binomial: número de éxitos en N repeticiones independientes."
+      ],
+      [
+        "U\\sim\\mathrm{Unif}(0,1),\\ \\widehat p=K/N",
+        "U uniforme determina el resultado simulado; p̂ es la proporción de temporadas exitosas."
+      ]
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Leverkusen · precisión de la estimación",
+    "rows": [
+      [
+        "\\mathrm{SE}(\\widehat p),\\ \\mathrm{IC}_{95\\%}",
+        "Error estándar de la proporción e intervalo de confianza del 95 %, solo para variación Monte Carlo."
+      ],
+      [
+        "\\alpha,\\ \\mathrm{Beta}(a,b)",
+        "α = 0.05: nivel de error del intervalo. Beta: distribución cuyos cuantiles dan los límites exactos."
+      ],
+      [
+        "U_{K=0}",
+        "Límite superior del intervalo si no hubo éxitos. Es distinto del uniforme U usado al simular."
+      ],
+      [
+        "q_{0.025},\\ q_{0.975}",
+        "Cuantiles que dejan 2.5 % y 97.5 % de probabilidad acumulada, respectivamente."
+      ],
+      [
+        "\\log(\\cdot),\\ 10^{-7}",
+        "Logaritmo natural en las derivaciones; 10 elevado a −7 equivale a 0.0000001."
+      ]
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Leverkusen · campeones históricos",
+    "rows": [
+      [
+        "s,n;\\ Y_s,D_s",
+        "s: temporada histórica; n: número de campeones. Yₛ indica campeón no Bayern; Dₛ cuenta sus derrotas."
+      ],
+      [
+        "\\overline D,\\ s_D^2,\\ \\widehat\\lambda",
+        "Media y varianza muestral de derrotas; estimación de la media Poisson, igual a la media observada."
+      ],
+      [
+        "\\ell(\\lambda),\\ D_s!",
+        "Log-verosimilitud como función de λ; factorial del número de derrotas."
+      ],
+      [
+        "m_s,\\rho,\\widehat\\rho",
+        "mₛ: partidos en temporada s; ρ: derrotas esperadas por partido; ρ̂: tasa estimada."
+      ],
+      [
+        "r_{\\mathrm{NB}}",
+        "Parámetro de dispersión r de la binomial negativa: varianza λ + λ²/r. No es una tasa de goles."
+      ]
+    ]
+  },
+  {
+    "part": 1,
+    "title": "Leverkusen · rescates tardíos",
+    "rows": [
+      [
+        "i,k;\\ d_i,T_i",
+        "i: partido rescatado; k = 4 rescates; dᵢ: déficit inicial; Tᵢ: minutos restantes observados."
+      ],
+      [
+        "r_a,r_r;\\ X_i,Y_i",
+        "Tasas de goles a favor y en contra por 90 minutos; futuros goles propios y rivales en el tiempo restante."
+      ],
+      [
+        "q_i=P(X_i-Y_i\\geq d_i)",
+        "Probabilidad condicional de compensar el déficit y terminar sin derrota en el rescate i."
+      ],
+      [
+        "Q=\\prod_{i=1}^{k}q_i,\\quad 1/Q",
+        "Probabilidad conjunta bajo independencia e inverso de esa probabilidad."
+      ],
+      [
+        "P(A)Q",
+        "Índice heurístico solicitado. No identifica por sí mismo una probabilidad causal del invicto sin suerte."
+      ]
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Cabo Verde · equipos, goles y puntos",
+    "rows": [
+      [
+        "i,j;\\ G_{ij},G_{ji}",
+        "i y j: selecciones enfrentadas. Gᵢⱼ: goles de i contra j en un partido; Gⱼᵢ: goles del rival."
+      ],
+      [
+        "S_i,\\ \\mathrm{DG}_i,\\ \\mathrm{GF}_i",
+        "Puntos de la selección i, diferencia de goles y goles a favor; se usan al ordenar las tablas."
+      ],
+      [
+        "F,\\ \\widehat p_F",
+        "F: clasificación directa ganando el grupo africano; probabilidad estimada de F: proporción simulada de clasificaciones."
+      ],
+      [
+        "\\Delta,\\ E,\\ \\lambda_1,\\lambda_2,\\tau,t",
+        "Mismo enlace Elo–Poisson del primer caso. Aquí τ = 2.7; localía de 100 Elo en eliminatoria y 0 en Mundial."
+      ],
+      [
+        "N,\\ K,\\ \\widehat p,\\ \\mathrm{IC}_{95\\%}",
+        "Número de repeticiones, éxitos, proporción e intervalo exacto; mantienen el significado estadístico anterior."
+      ]
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Cabo Verde · eventos del grupo mundialista",
+    "rows": [
+      [
+        "A",
+        "En esta parte A significa avanzar desde el grupo H. No significa el invicto de Leverkusen."
+      ],
+      [
+        "D",
+        "Evento de empatar los tres partidos de Cabo Verde. No es el conteo histórico de derrotas Dₛ."
+      ],
+      [
+        "U",
+        "Evento de que Uruguay empate o gane contra España. No es el uniforme usado en el simulador."
+      ],
+      [
+        "B,\\ n_B,\\ n_{A\\cap B}",
+        "B: condición analizada; n de B: simulaciones que la cumplen; n de A∩B: las que además avanzan."
+      ],
+      [
+        "P(A\\mid D,U),\\ P(A\\mid D,\\mathrm{tercero})",
+        "Pase dado tres empates y Uruguay sin derrota; pase dado tres empates y tercer puesto del grupo."
+      ]
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Cabo Verde · empates y condicionamiento",
+    "rows": [
+      [
+        "k,\\ r;\\ G_1,G_2",
+        "k: goles de cada equipo en un empate k–k. r recorre los empates de la suma; no es la tasa de gol del extra."
+      ],
+      [
+        "P(G_1=k,G_2=k\\mid G_1=G_2)",
+        "Distribución del marcador condicionada al empate; determina cuántos goles tuvo el empate simulado."
+      ],
+      [
+        "\\sum_{r=0}^{\\infty},\\quad k=0,\\ldots,24",
+        "La fórmula suma todos los empates posibles; el cálculo usa 0 a 24, con resto despreciable para estas tasas."
+      ],
+      [
+        "P(A\\cap D)=P(D)P(A\\mid D)",
+        "Probabilidad de avanzar y obtener tres empates: frecuencia del camino completo, no solo del pase condicionado."
+      ],
+      [
+        "\\widehat P(A\\mid B)=n_{A\\cap B}/n_B",
+        "Estimación condicionada: su denominador es n de B, que puede ser menor que 10 000."
+      ]
+    ]
+  },
+  {
+    "part": 2,
+    "title": "Cabo Verde · rondas y probabilidad del título",
+    "rows": [
+      [
+        "i=1,\\ldots,4;\\ w_i,d_i",
+        "i: ronda frente a Egipto, Suiza, Inglaterra y España; wᵢ: victoria; dᵢ: empate en 90 minutos."
+      ],
+      [
+        "w_i+d_i",
+        "Probabilidad de avanzar cuando el empate garantiza ganar en penales, como supone el ejercicio."
+      ],
+      [
+        "p_T=\\prod_{i=1}^{4}(w_i+d_i)",
+        "Probabilidad del título después de superar Argentina, con ruta fija e independencia condicional."
+      ],
+      [
+        "\\prod_{i=1}^{4}(w_i+0.5d_i)",
+        "Escenario alternativo con 50 % de éxito en penales y sin prórroga."
+      ],
+      [
+        "G,E\\ \\mathrm{en}\\ P(G)+P(E)",
+        "En la notación abreviada de la ruta, G = ganar y E = empatar; aquí E no es la expectativa Elo."
+      ]
+    ]
+  }
+]
