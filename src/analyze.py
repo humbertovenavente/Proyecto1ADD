@@ -132,6 +132,7 @@ def historical():
         {"non_bayern_all": 28 / 60, "non_bayern_recent": 4 / 19, "fits": fits},
     )
 
+
 def leverkusen(df, ch):
     # Filtra por bloques: no conserva todo el archivo Elo en memoria.
     elo = pd.concat(
@@ -362,6 +363,7 @@ def leverkusen(df, ch):
         "elo_sensitivity": elo_sens,
     }
 
+
 def national_ratings(codes, cut):
     rows = []
     for code in codes:
@@ -384,6 +386,7 @@ def national_ratings(codes, cut):
     frame = pd.DataFrame(rows)
     frame.to_csv(PROC / f"national_elo_{cut}.csv", index=False)
     return frame.set_index("code").elo.to_dict()
+
 
 def qualify_world(groups, ratings, n, rng, forced=False, total=2.7):
     # Mantiene solo los terceros y el grupo H, sin acumular doce torneos completos.
@@ -418,6 +421,7 @@ def qualify_world(groups, ratings, n, rng, forced=False, total=2.7):
         "uruguay_not_lose": uruguay,
         "p_three_draws": h["p_three_draws"],
     }
+
 
 def cape_verde():
     groups = json.loads((ROOT / "data/groups_2026.json").read_text())
@@ -487,3 +491,139 @@ def cape_verde():
         "total_goals_assumption": 2.7,
         "n": N,
     }
+
+
+def charts(df, ch, r):
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    plt.rcParams.update(
+        {
+            "font.family": "DejaVu Sans",
+            "font.size": 11,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.dpi": 150,
+            "savefig.bbox": "tight",
+        }
+    )
+    red = "#B62835"
+    blue = "#176B9A"
+    gray = "#7B858D"
+
+    def save(name):
+        plt.tight_layout()
+        plt.savefig(OUT / f"figures/{name}.png", dpi=200)
+        plt.savefig(OUT / f"figures/{name}.svg")
+        plt.close()
+
+    h = ch[ch.end_year <= 2023]
+    counts = h.team.value_counts()
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.barh(
+        counts.index[::-1],
+        counts.values[::-1],
+        color=[red if x == "Bayern Munich" else gray for x in counts.index[::-1]],
+    )
+    ax.set_xlabel("Títulos entre 1964 y 2023")
+    save("champions")
+    fig, ax = plt.subplots(figsize=(9, 3))
+    ax.scatter(
+        h.end_year,
+        np.zeros(len(h)),
+        c=[red if x == "Bayern Munich" else blue for x in h.team],
+        s=80,
+    )
+    ax.set_yticks([])
+    ax.set_xlabel("Año de finalización de temporada")
+    ax.set_title("Rojo: Bayern Múnich    Azul: otros campeones")
+    save("timeline")
+    f = pd.read_csv(PROC / "bundesliga_elo_2023_08_15.csv")
+    fig, ax = plt.subplots(figsize=(9, 6))
+    ax.barh(
+        f.club[::-1],
+        f.elo[::-1],
+        color=[red if x == "Leverkusen" else gray for x in f.club[::-1]],
+    )
+    ax.set_xlim(1400, 2000)
+    ax.set_xlabel("Elo al 15 de agosto de 2023")
+    save("elo")
+    sim = pd.read_csv(OUT / "leverkusen_10000.csv")
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+    ax.hist(
+        sim.losses,
+        bins=np.arange(-0.5, sim.losses.max() + 1.5),
+        color=red,
+        edgecolor="white",
+    )
+    ax.set_xlabel("Derrotas en 34 partidos")
+    ax.set_ylabel("Temporadas simuladas")
+    ax.set_title(f"10 000 temporadas · {int((sim.losses == 0).sum())} invictas")
+    save("montecarlo")
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+    x = np.arange(14)
+    for fit, c in zip(r["history"]["fits"], [gray, red, blue]):
+        ax.plot(x, poisson.pmf(x, fit["mean"]), marker="o", label=fit["group"], color=c)
+    ax.set_xlabel("Derrotas del campeón")
+    ax.set_ylabel("Probabilidad Poisson")
+    ax.legend()
+    save("poisson")
+    fig, ax = plt.subplots(figsize=(9, 4))
+    rr = r["leverkusen"]["rescues"]
+    ax.barh([x["opponent"] for x in rr], [100 * x["q"] for x in rr], color=red)
+    ax.set_xlabel("Probabilidad de rescate desde el minuto 85 (%)")
+    save("rescues")
+    cv = r["cape_verde"]
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+    labels = [
+        "Clasificación\ndirecta",
+        "Avanzar\ndel grupo",
+        "Avanzar con\ntres empates",
+        "Avanzar siendo\ntercero y 3 empates",
+    ]
+    vals = [
+        cv["qualifying"]["p"],
+        cv["scenarios"]["grupo_sin_condicionar"]["p"],
+        cv["scenarios"]["tres_empates"]["p"],
+        cv["scenarios"]["tres_empates_y_tercero"]["p"],
+    ]
+    ax.bar(labels, np.array(vals) * 100, color=blue)
+    ax.set_ylabel("Probabilidad (%)")
+    ax.set_ylim(0, 100)
+    save("cape_scenarios")
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+    ko = cv["knockouts"]
+    ax.bar([x["opponent"] for x in ko], [100 * x["p_advance"] for x in ko], color=blue)
+    ax.set_ylabel("Victoria o empate en 90 minutos (%)")
+    ax.set_ylim(0, 100)
+    save("knockouts")
+    fig, ax = plt.subplots(figsize=(9, 4))
+    ax.plot(
+        ["Egipto", "Suiza", "Inglaterra", "España"],
+        100 * np.cumprod([x["p_advance"] for x in ko[1:]]),
+        marker="o",
+        color=blue,
+    )
+    ax.set_yscale("log")
+    ax.set_ylabel("Probabilidad acumulada (%) · escala log")
+    save("route")
+
+
+def main():
+    df, ch, h = historical()
+    r = {
+        "seed": SEED,
+        "n": N,
+        "history": h,
+        "leverkusen": leverkusen(df, ch),
+        "cape_verde": cape_verde(),
+    }
+    (OUT / "results.json").write_text(json.dumps(r, indent=2, ensure_ascii=False))
+    charts(df, ch, r)
+    print(json.dumps(r, indent=2, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

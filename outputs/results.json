@@ -1,0 +1,365 @@
+{
+  "seed": 14643,
+  "n": 10000,
+  "history": {
+    "non_bayern_all": 0.4666666666666667,
+    "non_bayern_recent": 0.21052631578947367,
+    "fits": [
+      {
+        "group": "Todos",
+        "n": 60,
+        "mean": 4.55,
+        "variance": 2.8957627118644065,
+        "p_zero": 0.010567204383852655,
+        "p_zero_34": 0.010473164070506559,
+        "empirical_zero": 0.0
+      },
+      {
+        "group": "Bayern",
+        "n": 32,
+        "mean": 4.125,
+        "variance": 3.0161290322580645,
+        "p_zero": 0.016163494588165874,
+        "p_zero_34": 0.016163494588165874,
+        "empirical_zero": 0.0
+      },
+      {
+        "group": "Otros",
+        "n": 28,
+        "mean": 5.035714285714286,
+        "variance": 2.406084656084656,
+        "p_zero": 0.006501552491753531,
+        "p_zero_34": 0.006364866474243006,
+        "empirical_zero": 0.0
+      }
+    ]
+  },
+  "leverkusen": {
+    "elo_date": "2023-08-15",
+    "total_goals": 3.142483660130719,
+    "hfa": 60.0,
+    "p_bayern2": 0.11738494655663884,
+    "p_other32": 7.89191227773592e-06,
+    "p_unbeaten": 9.263917009517128e-07,
+    "simulation": {
+      "successes": 0,
+      "n": 10000,
+      "p": 0.0,
+      "ci95": [
+        0.0,
+        0.0003688199146187622
+      ]
+    },
+    "expected_unbeaten_10000": 0.009263917009517128,
+    "mean_losses": 10.7175,
+    "rescues": [
+      {
+        "date": "2023-09-15",
+        "opponent": "Bayern Munich",
+        "at85": "1-1",
+        "minute": "93:46",
+        "player": "Exequiel Alejandro Palacios",
+        "final": "2-2",
+        "q": 0.14551132695960833,
+        "home": false,
+        "deficit": 1,
+        "state_minute": 85.35,
+        "state_score": "1-2",
+        "remaining": 13.050000000000011,
+        "final_whistle": 98.4
+      },
+      {
+        "date": "2024-03-30",
+        "opponent": "Hoffenheim",
+        "at85": "0-1",
+        "minute": "87:24",
+        "player": "Robert Andrich",
+        "final": "2-1",
+        "q": 0.16727818921568072,
+        "home": true,
+        "deficit": 1,
+        "state_minute": 85.0,
+        "state_score": "0-1",
+        "remaining": 11.183333333333337,
+        "final_whistle": 96.18333333333334
+      },
+      {
+        "date": "2024-04-21",
+        "opponent": "Borussia Dortmund",
+        "at85": "0-1",
+        "minute": "96:52",
+        "player": "Josip Stanišić",
+        "final": "1-1",
+        "q": 0.15123013489280768,
+        "home": false,
+        "deficit": 1,
+        "state_minute": 85.0,
+        "state_score": "0-1",
+        "remaining": 13.799999999999997,
+        "final_whistle": 98.8
+      },
+      {
+        "date": "2024-04-27",
+        "opponent": "VfB Stuttgart",
+        "at85": "1-2",
+        "minute": "95:59",
+        "player": "Robert Andrich",
+        "final": "2-2",
+        "q": 0.18423259682607374,
+        "home": true,
+        "deficit": 1,
+        "state_minute": 85.0,
+        "state_score": "1-2",
+        "remaining": 12.733333333333334,
+        "final_whistle": 97.73333333333333
+      }
+    ],
+    "Q": 0.0006781736835333622,
+    "inverse_Q": 1474.548517998938,
+    "adjusted": 6.2825447222916e-10,
+    "late_sensitivity": [
+      {
+        "added_minutes": 0,
+        "Q": 3.1959966103303785e-05,
+        "adjusted": 2.960744736079868e-11
+      },
+      {
+        "added_minutes": 3,
+        "Q": 0.00016117889679081066,
+        "adjusted": 1.4931479235555966e-10
+      },
+      {
+        "added_minutes": 5,
+        "Q": 0.000329333964477986,
+        "adjusted": 3.050922515339324e-10
+      },
+      {
+        "added_minutes": 8,
+        "Q": 0.000722736961359359,
+        "adjusted": 6.695375229743689e-10
+      }
+    ],
+    "elo_sensitivity": [
+      {
+        "hfa": 0,
+        "leverkusen_elo_boost": 0,
+        "p": 1.4212311156965513e-06
+      },
+      {
+        "hfa": 0,
+        "leverkusen_elo_boost": 100,
+        "p": 0.0003033769451685277
+      },
+      {
+        "hfa": 0,
+        "leverkusen_elo_boost": 200,
+        "p": 0.009589799965793228
+      },
+      {
+        "hfa": 60,
+        "leverkusen_elo_boost": 0,
+        "p": 9.263917009517128e-07
+      },
+      {
+        "hfa": 60,
+        "leverkusen_elo_boost": 100,
+        "p": 0.0002149547331302565
+      },
+      {
+        "hfa": 60,
+        "leverkusen_elo_boost": 200,
+        "p": 0.007494974585882285
+      },
+      {
+        "hfa": 100,
+        "leverkusen_elo_boost": 0,
+        "p": 4.359069972573508e-07
+      },
+      {
+        "hfa": 100,
+        "leverkusen_elo_boost": 100,
+        "p": 0.00011674468769366359
+      },
+      {
+        "hfa": 100,
+        "leverkusen_elo_boost": 200,
+        "p": 0.004827130057376752
+      }
+    ]
+  },
+  "cape_verde": {
+    "qualifying": {
+      "successes": 1288,
+      "n": 10000,
+      "p": 0.1288,
+      "ci95": [
+        0.12229333142499799,
+        0.1355236733358582
+      ]
+    },
+    "qualifying_elo": {
+      "CV": 1474,
+      "CM": 1625,
+      "AO": 1388,
+      "LY": 1331,
+      "SZ": 1286,
+      "MU": 1031
+    },
+    "world_elo": {
+      "AR": 2115,
+      "AT": 1830,
+      "AU": 1777,
+      "BA": 1594,
+      "BE": 1893,
+      "BR": 1991,
+      "CA": 1788,
+      "CD": 1652,
+      "CH": 1891,
+      "CI": 1696,
+      "CO": 1982,
+      "CV": 1578,
+      "CW": 1434,
+      "CZ": 1740,
+      "DE": 1932,
+      "DZ": 1772,
+      "EC": 1938,
+      "EG": 1696,
+      "EN": 2024,
+      "ES": 2157,
+      "FR": 2064,
+      "GH": 1511,
+      "HR": 1911,
+      "HT": 1548,
+      "IQ": 1607,
+      "IR": 1772,
+      "JO": 1680,
+      "JP": 1906,
+      "KR": 1758,
+      "MA": 1827,
+      "MX": 1875,
+      "NL": 1947,
+      "NO": 1914,
+      "NZ": 1562,
+      "PA": 1730,
+      "PT": 1989,
+      "PY": 1833,
+      "QA": 1421,
+      "SA": 1576,
+      "SE": 1712,
+      "SN": 1860,
+      "SQ": 1782,
+      "TN": 1628,
+      "TR": 1910,
+      "US": 1726,
+      "UY": 1892,
+      "UZ": 1714,
+      "ZA": 1518
+    },
+    "scenarios": {
+      "grupo_sin_condicionar": {
+        "successes": 2336,
+        "n": 10000,
+        "p": 0.2336,
+        "ci95": [
+          0.22533550162339555,
+          0.24201991459218494
+        ]
+      },
+      "tres_empates": {
+        "successes": 9531,
+        "n": 10000,
+        "p": 0.9531,
+        "ci95": [
+          0.9487722265009725,
+          0.9571613584926532
+        ]
+      },
+      "uruguay_no_pierde_sin_condicionar_empates": {
+        "successes": 619,
+        "n": 2606,
+        "p": 0.2375287797390637,
+        "ci95": [
+          0.22129982865995163,
+          0.2543494479856197
+        ]
+      },
+      "tres_empates_y_uruguay_no_pierde": {
+        "successes": 2414,
+        "n": 2576,
+        "p": 0.937111801242236,
+        "ci95": [
+          0.9270358477158427,
+          0.9461794111632077
+        ]
+      },
+      "tres_empates_y_tercero": {
+        "successes": 8352,
+        "n": 8679,
+        "p": 0.9623228482544072,
+        "ci95": [
+          0.9581009654247273,
+          0.9662305922494389
+        ]
+      }
+    },
+    "p_three_draws": 0.0014893366159703285,
+    "positions_three_draws": [
+      0.0002,
+      0.1177,
+      0.8679,
+      0.0142
+    ],
+    "knockouts": [
+      {
+        "opponent": "AR",
+        "elo": 2115,
+        "p_win": 0.01750517348558367,
+        "p_draw": 0.05193136785161987,
+        "p_advance": 0.06943654133720353
+      },
+      {
+        "opponent": "EG",
+        "elo": 1696,
+        "p_win": 0.21948608163269434,
+        "p_draw": 0.23387964065184141,
+        "p_advance": 0.45336572228453575
+      },
+      {
+        "opponent": "CH",
+        "elo": 1891,
+        "p_win": 0.07323235933164607,
+        "p_draw": 0.13680607298891234,
+        "p_advance": 0.2100384323205584
+      },
+      {
+        "opponent": "EN",
+        "elo": 2024,
+        "p_win": 0.03163021743873573,
+        "p_draw": 0.07927429661082744,
+        "p_advance": 0.11090451404956317
+      },
+      {
+        "opponent": "ES",
+        "elo": 2157,
+        "p_win": 0.013295191161627695,
+        "p_draw": 0.04232272242262377,
+        "p_advance": 0.055617913584251465
+      }
+    ],
+    "title_given_pass_argentina": 0.00058736946507725,
+    "title_from_argentina": 4.0784904142047595e-05,
+    "title_from_group_fixed_route": 9.527353607582318e-06,
+    "title_from_qualifiers_fixed_route": 1.2271231446566025e-06,
+    "knockout_mc": {
+      "successes": 3,
+      "n": 10000,
+      "p": 0.0003,
+      "ci95": [
+        6.187148574838712e-05,
+        0.0008764745225140007
+      ]
+    },
+    "total_goals_assumption": 2.7,
+    "n": 10000
+  }
+}

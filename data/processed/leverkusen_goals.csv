@@ -1,0 +1,114 @@
+match_id,date,opponent,period,minute,second,leverkusen_goal,player,score_lev,score_opp
+3895052,2023-08-19,RB Leipzig,1,23,4,True,Jeremie Frimpong,1,0
+3895052,2023-08-19,RB Leipzig,1,34,3,True,Jonathan Tah,2,0
+3895052,2023-08-19,RB Leipzig,1,38,55,False,Daniel Olmo Carvajal,2,1
+3895052,2023-08-19,RB Leipzig,2,63,20,True,Florian Wirtz,3,1
+3895052,2023-08-19,RB Leipzig,2,70,20,False,Ikoma Loïs Openda,3,2
+3895060,2023-08-26,Borussia Mönchengladbach,1,17,57,True,Victor Okoh Boniface,1,0
+3895060,2023-08-26,Borussia Mönchengladbach,1,50,21,True,Jonathan Tah,2,0
+3895060,2023-08-26,Borussia Mönchengladbach,2,52,34,True,Victor Okoh Boniface,3,0
+3895067,2023-09-02,Darmstadt 98,1,20,18,True,Victor Okoh Boniface,1,0
+3895067,2023-09-02,Darmstadt 98,1,23,57,False,Oscar Vilhelmsson,1,1
+3895067,2023-09-02,Darmstadt 98,2,48,8,True,Exequiel Alejandro Palacios,2,1
+3895067,2023-09-02,Darmstadt 98,2,60,21,True,Victor Okoh Boniface,3,1
+3895067,2023-09-02,Darmstadt 98,2,66,59,True,Jonas Hofmann,4,1
+3895067,2023-09-02,Darmstadt 98,2,82,10,True,Adam Hložek,5,1
+3895074,2023-09-15,Bayern Munich,1,6,34,False,Harry Kane,0,1
+3895074,2023-09-15,Bayern Munich,1,23,54,True,Alejandro Grimaldo García,1,1
+3895074,2023-09-15,Bayern Munich,2,85,21,False,Leon Goretzka,1,2
+3895074,2023-09-15,Bayern Munich,2,93,46,True,Exequiel Alejandro Palacios,2,2
+3895086,2023-09-24,FC Heidenheim,1,8,32,True,Victor Okoh Boniface,1,0
+3895086,2023-09-24,FC Heidenheim,2,57,34,False,Eren Sami Dinkçi,1,1
+3895086,2023-09-24,FC Heidenheim,2,62,9,True,Jonas Hofmann,2,1
+3895086,2023-09-24,FC Heidenheim,2,73,58,True,Victor Okoh Boniface,3,1
+3895086,2023-09-24,FC Heidenheim,2,81,58,True,Amine Adli,4,1
+3895095,2023-09-30,FSV Mainz 05,1,17,34,True,Sepp van den Berg,1,0
+3895095,2023-09-30,FSV Mainz 05,2,58,44,True,Alejandro Grimaldo García,2,0
+3895095,2023-09-30,FSV Mainz 05,2,64,21,True,Jonas Hofmann,3,0
+3895107,2023-10-08,FC Köln,1,21,2,True,Jonas Hofmann,1,0
+3895107,2023-10-08,FC Köln,1,31,23,True,Jeremie Frimpong,2,0
+3895107,2023-10-08,FC Köln,2,66,31,True,Victor Okoh Boniface,3,0
+3895113,2023-10-21,Wolfsburg,1,12,5,True,Jeremie Frimpong,1,0
+3895113,2023-10-21,Wolfsburg,1,40,22,False,Maxence Lacroix,1,1
+3895113,2023-10-21,Wolfsburg,2,61,35,True,Alejandro Grimaldo García,2,1
+3895121,2023-10-29,Freiburg,1,35,57,True,Florian Wirtz,1,0
+3895121,2023-10-29,Freiburg,2,59,53,True,Noah Atubolu,2,0
+3895121,2023-10-29,Freiburg,2,69,39,False,Manuel Gulde,2,1
+3895134,2023-11-04,Hoffenheim,1,8,14,True,Florian Wirtz,1,0
+3895134,2023-11-04,Hoffenheim,1,45,34,True,Alejandro Grimaldo García,2,0
+3895134,2023-11-04,Hoffenheim,2,55,11,False,Anton Stach,2,1
+3895134,2023-11-04,Hoffenheim,2,57,44,False,Wout Weghorst,2,2
+3895134,2023-11-04,Hoffenheim,2,69,18,True,Alejandro Grimaldo García,3,2
+3895139,2023-11-12,Union Berlin,1,22,24,True,Alejandro Grimaldo García,1,0
+3895139,2023-11-12,Union Berlin,2,56,20,True,Odilon Kossonou,2,0
+3895139,2023-11-12,Union Berlin,2,72,41,True,Jonathan Tah,3,0
+3895139,2023-11-12,Union Berlin,2,82,34,True,Nathan Tella,4,0
+3895153,2023-11-25,Werder Bremen,1,8,42,True,Olivier Deman,1,0
+3895153,2023-11-25,Werder Bremen,1,42,0,True,Jeremie Frimpong,2,0
+3895153,2023-11-25,Werder Bremen,2,75,3,True,Alejandro Grimaldo García,3,0
+3895158,2023-12-03,Borussia Dortmund,1,4,7,False,Julian Ryerson,0,1
+3895158,2023-12-03,Borussia Dortmund,2,78,45,True,Victor Okoh Boniface,1,1
+3895167,2023-12-10,VfB Stuttgart,1,39,10,False,Chris Führich,0,1
+3895167,2023-12-10,VfB Stuttgart,2,46,36,True,Florian Wirtz,1,1
+3895180,2023-12-17,Eintracht Frankfurt,1,13,46,True,Victor Okoh Boniface,1,0
+3895180,2023-12-17,Eintracht Frankfurt,2,50,50,True,Jeremie Frimpong,2,0
+3895180,2023-12-17,Eintracht Frankfurt,2,56,35,True,Florian Wirtz,3,0
+3895182,2023-12-20,Bochum,1,29,33,True,Patrik Schick,1,0
+3895182,2023-12-20,Bochum,1,31,16,True,Patrik Schick,2,0
+3895182,2023-12-20,Bochum,1,45,54,True,Patrik Schick,3,0
+3895182,2023-12-20,Bochum,2,68,12,True,Victor Okoh Boniface,4,0
+3895194,2024-01-13,Augsburg,2,93,49,True,Exequiel Alejandro Palacios,1,0
+3895202,2024-01-20,RB Leipzig,1,6,58,False,Xavi Simons,0,1
+3895202,2024-01-20,RB Leipzig,2,46,16,True,Nathan Tella,1,1
+3895202,2024-01-20,RB Leipzig,2,55,8,False,Ikoma Loïs Openda,1,2
+3895202,2024-01-20,RB Leipzig,2,62,52,True,Jonathan Tah,2,2
+3895202,2024-01-20,RB Leipzig,2,90,40,True,Piero Martín Hincapié Reyna,3,2
+3895220,2024-02-03,Darmstadt 98,1,32,6,True,Nathan Tella,1,0
+3895220,2024-02-03,Darmstadt 98,2,51,44,True,Nathan Tella,2,0
+3895232,2024-02-10,Bayern Munich,1,17,35,True,Josip Stanišić,1,0
+3895232,2024-02-10,Bayern Munich,2,49,3,True,Alejandro Grimaldo García,2,0
+3895232,2024-02-10,Bayern Munich,2,94,38,True,Jeremie Frimpong,3,0
+3895244,2024-02-17,FC Heidenheim,1,46,53,True,Jeremie Frimpong,1,0
+3895244,2024-02-17,FC Heidenheim,2,80,46,True,Amine Adli,2,0
+3895244,2024-02-17,FC Heidenheim,2,85,59,False,Tim Kleindienst,2,1
+3895250,2024-02-23,FSV Mainz 05,1,2,39,True,Granit Xhaka,1,0
+3895250,2024-02-23,FSV Mainz 05,1,6,58,False,Dominik Kohr,1,1
+3895250,2024-02-23,FSV Mainz 05,2,67,3,True,Robert Andrich,2,1
+3895258,2024-03-03,FC Köln,1,36,53,True,Jeremie Frimpong,1,0
+3895258,2024-03-03,FC Köln,2,72,8,True,Alejandro Grimaldo García,2,0
+3895266,2024-03-10,Wolfsburg,1,36,34,True,Nathan Tella,1,0
+3895266,2024-03-10,Wolfsburg,2,85,45,True,Florian Wirtz,2,0
+3895275,2024-03-17,Freiburg,1,1,25,True,Florian Wirtz,1,0
+3895275,2024-03-17,Freiburg,1,9,43,False,Ritsu Doan,1,1
+3895275,2024-03-17,Freiburg,1,39,53,True,Adam Hložek,2,1
+3895275,2024-03-17,Freiburg,2,52,34,True,Patrik Schick,3,1
+3895275,2024-03-17,Freiburg,2,78,40,False,Yannik Keitel,3,2
+3895286,2024-03-30,Hoffenheim,1,32,38,False,Maximilian Beier,0,1
+3895286,2024-03-30,Hoffenheim,2,87,24,True,Robert Andrich,1,1
+3895286,2024-03-30,Hoffenheim,2,90,12,True,Patrik Schick,2,1
+3895292,2024-04-06,Union Berlin,1,52,15,True,Florian Wirtz,1,0
+3895302,2024-04-14,Werder Bremen,1,24,27,True,Victor Okoh Boniface,1,0
+3895302,2024-04-14,Werder Bremen,2,59,18,True,Granit Xhaka,2,0
+3895302,2024-04-14,Werder Bremen,2,67,25,True,Florian Wirtz,3,0
+3895302,2024-04-14,Werder Bremen,2,82,29,True,Florian Wirtz,4,0
+3895302,2024-04-14,Werder Bremen,2,89,25,True,Florian Wirtz,5,0
+3895309,2024-04-21,Borussia Dortmund,2,80,25,False,Niclas Füllkrug,0,1
+3895309,2024-04-21,Borussia Dortmund,2,96,52,True,Josip Stanišić,1,1
+3895320,2024-04-27,VfB Stuttgart,2,46,7,False,Chris Führich,0,1
+3895320,2024-04-27,VfB Stuttgart,2,56,1,False,Deniz Undav,0,2
+3895320,2024-04-27,VfB Stuttgart,2,60,57,True,Amine Adli,1,2
+3895320,2024-04-27,VfB Stuttgart,2,95,59,True,Robert Andrich,2,2
+3895333,2024-05-05,Eintracht Frankfurt,1,11,39,True,Granit Xhaka,1,0
+3895333,2024-05-05,Eintracht Frankfurt,1,31,13,False,Hugo Ekitike,1,1
+3895333,2024-05-05,Eintracht Frankfurt,1,43,32,True,Patrik Schick,2,1
+3895333,2024-05-05,Eintracht Frankfurt,2,57,1,True,Exequiel Alejandro Palacios,3,1
+3895333,2024-05-05,Eintracht Frankfurt,2,76,32,True,Jeremie Frimpong,4,1
+3895333,2024-05-05,Eintracht Frankfurt,2,88,24,True,Victor Okoh Boniface,5,1
+3895340,2024-05-12,Bochum,1,40,47,True,Patrik Schick,1,0
+3895340,2024-05-12,Bochum,1,46,18,True,Victor Okoh Boniface,2,0
+3895340,2024-05-12,Bochum,2,75,38,True,Amine Adli,3,0
+3895340,2024-05-12,Bochum,2,85,50,True,Josip Stanišić,4,0
+3895340,2024-05-12,Bochum,2,92,7,True,Alejandro Grimaldo García,5,0
+3895348,2024-05-18,Augsburg,1,11,13,True,Victor Okoh Boniface,1,0
+3895348,2024-05-18,Augsburg,1,26,43,True,Robert Andrich,2,0
+3895348,2024-05-18,Augsburg,2,61,21,False,Mert Kömür,2,1
