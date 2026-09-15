@@ -1,0 +1,11 @@
+{
+  "peak_kernel_process_tree_rss_mib": 282.2,
+  "seconds": 20.0,
+  "code_cells": 47,
+  "errors": 0,
+  "figures": 9,
+  "installation": "Dependencias preinstaladas; celda pip sustituida por importaciones en la prueba local",
+  "environment": "Kernel Jupyter local nuevo; no Google Colab",
+  "regression_tests": "7 passed",
+  "results": "Ambas partes coinciden con los resultados de referencia"
+}
