@@ -12,6 +12,8 @@ r = json.loads((ROOT / "outputs/results.json").read_text())
 L = r["leverkusen"]
 C = r["cape_verde"]
 H = r["history"]
+REF = C["total_goals_reference"]
+mil = lambda n: f"{n:,}".replace(",", " ")
 P = lambda x: f"{100 * x:.2f} %"
 def small(x):
     mantissa, exponent = f"{x:.3e}".split("e")
@@ -244,6 +246,7 @@ doc.add_paragraph(
 doc.add_paragraph("Curso: Análisis de Datos")
 doc.add_paragraph("Catedrático: Juan Andrés García Porres")
 doc.add_paragraph("")
+doc.add_paragraph().add_run("Equipo 2").bold = True
 for name, code in [
     ("Didvin Nohel Estrada Pineda", "14092"),
     ("Jose Humberto Najar Venavente", "13661"),
@@ -309,7 +312,7 @@ eq("E = 1 / (1 + 10^(−Δ/400)) = P(victoria) + ½ P(empate)")
 eq("G₁ ∼ Poisson(λ₁), G₂ ∼ Poisson(λ₂)")
 eq("λ₁ = (τ/2) exp(t), λ₂ = (τ/2) exp(−t)")
 p(
-    f"El parámetro t se resuelve numéricamente para igualar la puntuación esperada Elo. τ representa los goles esperados cuando las fuerzas son iguales, no un total fijo para cualquier cruce. En Bundesliga τ={L['total_goals']:.3f}, media de goles por partido de 2018/19–2022/23. Para selecciones se adopta τ=2.7 como supuesto. La localía suma 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana. El Mundial se modela en campo neutral."
+    f"El parámetro t se resuelve numéricamente para igualar la puntuación esperada Elo. τ representa los goles esperados cuando las fuerzas son iguales, no un total fijo para cualquier cruce. En Bundesliga τ={L['total_goals']:.3f}, media de goles por partido de 2018/19–2022/23. Para selecciones se adopta τ=2.7, contrastado con los historiales de World Football Elo Ratings conservados en data/raw/national: los {mil(REF['mundialista_2010_2025']['n'])} partidos de eliminatoria y fase final mundialista de 2010 a 2025 promedian {REF['mundialista_2010_2025']['mean_total_goals']:.4f} goles por encuentro, y los {mil(REF['todos_2010_2025']['n'])} partidos internacionales del mismo periodo promedian {REF['todos_2010_2025']['mean_total_goals']:.4f}. Se toma el primer subconjunto porque es el contexto que simula la Parte II. La localía suma 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana. El Mundial se modela en campo neutral."
 )
 development(1)
 numerical_examples(1)
@@ -531,7 +534,7 @@ p(
     "Camerún parte con mayor Elo, pero el formato de diez partidos permite que empates y derrotas del favorito abran una oportunidad. El resultado mide la dificultad antes de empezar. No condiciona el cálculo a los resultados reales conocidos de la eliminatoria."
 )
 p(
-    "El desempate simulado usa puntos, diferencia de goles y goles anotados, seguido por el desempeño entre empatados. La igualdad residual se resuelve al azar. La simulación no incorpora tarjetas ni decisiones disciplinarias, por lo que los desempates finales son una aproximación explícita."
+    "El desempate simulado de la eliminatoria usa puntos, diferencia de goles global y goles anotados, seguido por el desempeño entre empatados. Ese es el orden del reglamento de la fase preliminar de la Copa Mundial 2026, aplicable a los grupos de CAF [5]. La igualdad residual se resuelve al azar. La simulación no incorpora tarjetas ni decisiones disciplinarias, por lo que los desempates finales son una aproximación explícita."
 )
 # 13
 new("El grupo H y los mejores terceros")
@@ -539,7 +542,7 @@ p(
     "El grupo H reúne a España, Cabo Verde, Arabia Saudita y Uruguay. Se simulan también los otros once grupos. Avanzan los dos primeros de cada grupo y los ocho mejores terceros, para formar los dieciseisavos [6, 7]. Tener tres puntos no garantiza el pase: también importan la diferencia de goles y los goles anotados."
 )
 p(
-    "Se usa el último Elo de cada selección anterior al 11 de junio de 2026. Dentro del grupo se prioriza la minitabla de enfrentamientos directos entre equipos igualados a puntos, seguida de diferencia de goles y goles totales. Entre terceros se comparan puntos, diferencia de goles y goles anotados. La igualdad restante se sortea porque no se modela conducta deportiva ni ranking FIFA residual. Los porcentajes son aproximaciones del formato bajo esa simplificación."
+    "Se usa el último Elo de cada selección anterior al 11 de junio de 2026. Dentro del grupo se prioriza la minitabla de enfrentamientos directos entre equipos igualados a puntos, seguida de diferencia de goles y goles totales. Este orden es el inverso del que se aplica en la eliminatoria africana, y la inversión es deliberada: para 2026 la FIFA colocó el enfrentamiento directo por delante de la diferencia de goles global en la fase final, por primera vez desde 1970, mientras que la fase preliminar conservó la diferencia de goles global como primer criterio [5][7]. Entre terceros se comparan puntos, diferencia de goles y goles anotados. La igualdad restante se sortea porque no se modela conducta deportiva ni ranking FIFA residual. Los porcentajes son aproximaciones del formato bajo esa simplificación."
 )
 table(
     ["Selección", "Elo previo al Mundial"],
@@ -637,7 +640,7 @@ fig(
 # 16
 new("Alcance de la probabilidad de ganar el Mundial")
 table(
-    ["Punto de partida con ruta fija", "Probabilidad"],
+    ["Punto de partida (aproximación de ruta fija)", "Probabilidad"],
     [
         ["Después de superar Argentina", P(C["title_given_pass_argentina"])],
         ["Antes de jugar contra Argentina", f"{100 * C['title_from_argentina']:.5f} %"],
@@ -649,14 +652,14 @@ table(
     ],
 )
 p(
-    "La primera fila responde a los cuatro rivales expresamente solicitados. La segunda añade el partido contra Argentina con la misma regla favorable de avanzar en cualquier empate. Las últimas dos combinan etapas bajo independencia y mantienen la ruta de rivales fijada por el ejercicio. No representan una simulación completa de todos los cruces posibles del Mundial."
+    "La primera fila responde a los cuatro rivales expresamente solicitados. La segunda añade el partido contra Argentina con la misma regla favorable de avanzar en cualquier empate. Las últimas dos son aproximaciones de ruta fija: multiplican una probabilidad de avance incondicional por la probabilidad de una llave concreta, cuando el cuadro eliminatorio real depende de si Cabo Verde termina primero, segundo o mejor tercero del grupo H. Se reportan con ese nombre, y no como la probabilidad de título del modelo, porque no representan una simulación completa de todos los cruces posibles del Mundial."
 )
 p(
     "Garantizar la victoria en penales favorece mucho a Cabo Verde. Si cada empate se resolviera con una moneda equilibrada y se ignorara la prórroga, cada factor sería P(victoria)+0.5 P(empate). El supuesto del ejercicio, por tanto, constituye una condición optimista, no una estimación empírica de su capacidad de ejecutar penales."
 )
 title("Limitaciones comunes")
 p(
-    "Elo resume resultados pasados y no describe lesiones, alineaciones ni evolución táctica. Congelar fuerzas descarta cambios durante torneos largos. Los modelos Poisson independientes simplifican la dependencia entre ambos marcadores, y la tasa base de 2.7 para selecciones es una elección de modelación. La localía del Mundial se considera neutral para todos, incluso para anfitriones."
+    "Elo resume resultados pasados y no describe lesiones, alineaciones ni evolución táctica. Congelar fuerzas descarta cambios durante torneos largos. Los modelos Poisson independientes simplifican la dependencia entre ambos marcadores. La tasa base de 2.7 para selecciones reproduce el promedio observado de 2010 a 2025 en partidos de eliminatoria y fase final mundialista, pero sigue siendo un único parámetro aplicado a todos los cruces. La localía del Mundial se considera neutral para todos, incluso para anfitriones."
 )
 p(
     "Los intervalos presentados describen únicamente la variación Monte Carlo. No cubren incertidumbre en parámetros, en desempates residuales ni en las fuentes. El escenario de mejores terceros depende de la composición completa de los grupos. Las probabilidades calculadas no se interpretan como certezas ni como evidencia de irregularidades deportivas."
@@ -681,6 +684,9 @@ refs = [
 ]
 refs.append(
     "[11] Deutscher Sportclub für Fußball-Statistiken. Die Bundesliga seit 1963. https://www.dsfs.de/wp-content/uploads/2024/01/Bundesliga_Geschichte_Tabellen.pdf . Contraste: Sportschau, tabla final 1991/92. https://www.sportschau.de/live-und-ergebnisse/fussball/deutschland-bundesliga/se2613/1991-1992/tabelle"
+)
+refs.append(
+    "[12] FIFA. Reglamento de la Copa Mundial de la FIFA 2026, artículo 13 (clasificación de los equipos en los grupos), y Reglamento de la fase preliminar. El primero ordena a los igualados a puntos por su enfrentamiento directo; el segundo mantiene la diferencia de goles global como primer criterio. https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026"
 )
 for x in refs:
     p(x)

@@ -28,7 +28,7 @@
     "paragraphs": [
       "La independencia dentro de cada partido permite obtener su distribución conjunta multiplicando las probabilidades marginales de goles. La independencia entre encuentros, condicionada a las fuerzas fijas, permite multiplicar las probabilidades de no perder. Son supuestos distintos y ambos son necesarios para la construcción elegida.",
       "Los goles Poisson tienen media igual a varianza. No se incorporan efectos de marcador, expulsiones, lesiones, alineaciones ni correlaciones de forma. La independencia y la estabilidad de fuerzas simplifican una temporada real, donde esos factores pueden generar dependencia y cambiar la probabilidad del invicto.",
-      "El parámetro τ es 3.14248 para Bundesliga, estimado con goles de 2018/19–2022/23, y 2.7 para selecciones, adoptado como supuesto. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ representa el total esperado a igualdad de fuerzas, no un total constante para todos los enfrentamientos.",
+      "El parámetro τ es 3.14248 para Bundesliga, estimado con los goles de 2018/19–2022/23, y 2.7 para selecciones. Ese 2.7 no es un supuesto libre: los 1 972 partidos de eliminatoria y fase final mundialista de 2010 a 2025 promedian 2.6998 goles por encuentro. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ es el total esperado a igualdad de fuerzas, no un total constante.",
       "Los datos del resultado que se pretende explicar se excluyen del corte inicial de Elo. En cambio, el análisis de rescates sí es retrospectivo y utiliza estados y duración observados. Sus probabilidades deben interpretarse con ese condicionamiento adicional."
     ]
   },
@@ -144,7 +144,7 @@
     ],
     "paragraphs": [
       "La clasificación directa no se modela como ganar individualmente los diez partidos. Se generan los marcadores de los 30 encuentros entre las seis selecciones, se acumulan puntos y se ordena la tabla. Cabo Verde clasifica cuando ocupa la primera posición, aunque haya empatado o perdido algunos encuentros.",
-      "El simulador prioriza puntos, diferencia de goles y goles a favor en la eliminatoria; después usa una minitabla entre empatados y un sorteo residual. El ordenamiento del Mundial prioriza la minitabla entre equipos igualados a puntos, después diferencia de goles y goles generales, con sorteo residual. No reproduce disciplina ni todas las posibles reaplicaciones de criterios: es una aproximación explícita del reglamento.",
+      "Los dos torneos usan órdenes de desempate distintos y el simulador los distingue. En la eliminatoria africana prioriza puntos, diferencia de goles global y goles a favor, y solo después la minitabla entre empatados: es el reglamento de la fase preliminar, que rige los grupos de CAF. El Mundial 2026 invierte los dos bloques, porque la FIFA puso el enfrentamiento directo primero por primera vez desde 1970. La igualdad restante se sortea.",
       "El cálculo produce 1288 clasificaciones directas en 10 000 repeticiones, p̂=0.1288. Su error estándar Monte Carlo aproximado es 0.003350, equivalente a 0.335 puntos porcentuales. El intervalo binomial exacto del 95 % es [0.122293,0.135524]. La estimación describe una posibilidad minoritaria bajo el modelo, no una imposibilidad ni una prueba de que el resultado real fuera anómalo."
     ]
   },
@@ -190,12 +190,12 @@
       "Cada ronda se supera ganando o empatando, según el ejercicio.",
       "Producto: 0.453366 × 0.210038 × 0.110905 × 0.055618.",
       "Resultado desde Egipto: 0.000587369 = 0.0587369 %.",
-      "La ruta es fija; no se promedian llaves alternativas del Mundial."
+      "Aproximación de ruta fija: no se promedian llaves alternativas."
     ],
     "paragraphs": [
       "Sean wᵢ y dᵢ las probabilidades de victoria y empate en 90 minutos frente al rival i. La regla del ejercicio garantiza avanzar por penales en cada empate, por lo que el factor por ronda es wᵢ+dᵢ. Bajo fuerzas constantes e independencia condicional, multiplicar los cuatro factores obtiene la probabilidad de superar consecutivamente Egipto, Suiza, Inglaterra y España.",
       "La simulación de 10 000 rutas produjo tres títulos. Se obtiene p̂=0.0003, diferente del producto analítico por variación Monte Carlo; no se deben exigir cifras idénticas. El intervalo exacto de esa frecuencia incluye el producto. Para este evento raro, el resultado analítico 0.000587369 es el estimador principal del modelo especificado.",
-      "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos añade su probabilidad de avance; partir de la eliminatoria africana añade además su probabilidad de clasificación. Estas combinaciones conservan la ruta fija del ejercicio y requieren los supuestos de enlace entre etapas.",
+      "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos o de la eliminatoria añade sus probabilidades de avance. Esos dos últimos valores son una aproximación de ruta fija: multiplican un avance incondicional por la probabilidad de una llave concreta, cuando el cuadro real depende de la posición final en el grupo H.",
       "Como contraste de la regla de penales, se puede reemplazar cada factor por wᵢ+0.5dᵢ, ignorando prórroga. Esta alternativa identifica el efecto del supuesto dentro del modelo, no estima la habilidad real de Cabo Verde para ejecutar penales."
     ]
   }

@@ -211,7 +211,7 @@
       },
       {
         "type": "p",
-        "text": "El parámetro t se resuelve numéricamente para igualar la puntuación esperada Elo. τ representa los goles esperados cuando las fuerzas son iguales, no un total fijo para cualquier cruce. En Bundesliga τ=3.142, media de goles por partido de 2018/19–2022/23. Para selecciones se adopta τ=2.7 como supuesto. La localía suma 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana. El Mundial se modela en campo neutral."
+        "text": "El parámetro t se resuelve numéricamente para igualar la puntuación esperada Elo. τ representa los goles esperados cuando las fuerzas son iguales, no un total fijo para cualquier cruce. En Bundesliga τ=3.142, media de goles por partido de 2018/19–2022/23. Para selecciones se adopta τ=2.7, contrastado con los historiales de World Football Elo Ratings conservados en data/raw/national: los 1 972 partidos de eliminatoria y fase final mundialista de 2010 a 2025 promedian 2.6998 goles por encuentro, y los 7 883 partidos internacionales del mismo periodo promedian 2.6405. Se toma el primer subconjunto porque es el contexto que simula la Parte II. La localía suma 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana. El Mundial se modela en campo neutral."
       }
     ]
   },
@@ -245,7 +245,7 @@
       },
       {
         "type": "p",
-        "text": "El parámetro τ es 3.14248 para Bundesliga, estimado con goles de 2018/19–2022/23, y 2.7 para selecciones, adoptado como supuesto. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ representa el total esperado a igualdad de fuerzas, no un total constante para todos los enfrentamientos."
+        "text": "El parámetro τ es 3.14248 para Bundesliga, estimado con los goles de 2018/19–2022/23, y 2.7 para selecciones. Ese 2.7 no es un supuesto libre: los 1 972 partidos de eliminatoria y fase final mundialista de 2010 a 2025 promedian 2.6998 goles por encuentro. La ventaja local es 60 puntos Elo en Bundesliga y 100 en la eliminatoria africana; en el Mundial es cero. τ es el total esperado a igualdad de fuerzas, no un total constante."
       },
       {
         "type": "p",
@@ -780,13 +780,13 @@
           ],
           [
             "2024-04-21",
-            "Borussia Dortmund",
+            "Dortmund",
             "96:52",
             "1-1"
           ],
           [
             "2024-04-27",
-            "VfB Stuttgart",
+            "Stuttgart",
             "95:59",
             "2-2"
           ]
@@ -830,13 +830,13 @@
             "16.73 %"
           ],
           [
-            "Borussia Dortmund",
+            "Dortmund",
             "0-1",
             "13.80",
             "15.12 %"
           ],
           [
-            "VfB Stuttgart",
+            "Stuttgart",
             "1-2",
             "12.73",
             "18.42 %"
@@ -1038,7 +1038,7 @@
       },
       {
         "type": "p",
-        "text": "El desempate simulado usa puntos, diferencia de goles y goles anotados, seguido por el desempeño entre empatados. La igualdad residual se resuelve al azar. La simulación no incorpora tarjetas ni decisiones disciplinarias, por lo que los desempates finales son una aproximación explícita."
+        "text": "El desempate simulado de la eliminatoria usa puntos, diferencia de goles global y goles anotados, seguido por el desempeño entre empatados. Ese es el orden del reglamento de la fase preliminar de la Copa Mundial 2026, aplicable a los grupos de CAF [5]. La igualdad residual se resuelve al azar. La simulación no incorpora tarjetas ni decisiones disciplinarias, por lo que los desempates finales son una aproximación explícita."
       }
     ]
   },
@@ -1051,7 +1051,7 @@
       },
       {
         "type": "p",
-        "text": "Se usa el último Elo de cada selección anterior al 11 de junio de 2026. Dentro del grupo se prioriza la minitabla de enfrentamientos directos entre equipos igualados a puntos, seguida de diferencia de goles y goles totales. Entre terceros se comparan puntos, diferencia de goles y goles anotados. La igualdad restante se sortea porque no se modela conducta deportiva ni ranking FIFA residual. Los porcentajes son aproximaciones del formato bajo esa simplificación."
+        "text": "Se usa el último Elo de cada selección anterior al 11 de junio de 2026. Dentro del grupo se prioriza la minitabla de enfrentamientos directos entre equipos igualados a puntos, seguida de diferencia de goles y goles totales. Este orden es el inverso del que se aplica en la eliminatoria africana, y la inversión es deliberada: para 2026 la FIFA colocó el enfrentamiento directo por delante de la diferencia de goles global en la fase final, por primera vez desde 1970, mientras que la fase preliminar conservó la diferencia de goles global como primer criterio [5][7]. Entre terceros se comparan puntos, diferencia de goles y goles anotados. La igualdad restante se sortea porque no se modela conducta deportiva ni ranking FIFA residual. Los porcentajes son aproximaciones del formato bajo esa simplificación."
       },
       {
         "type": "table",
@@ -1243,7 +1243,7 @@
       {
         "type": "table",
         "headers": [
-          "Punto de partida con ruta fija",
+          "Punto de partida (aproximación de ruta fija)",
           "Probabilidad"
         ],
         "rows": [
@@ -1267,7 +1267,7 @@
       },
       {
         "type": "p",
-        "text": "La primera fila responde a los cuatro rivales expresamente solicitados. La segunda añade el partido contra Argentina con la misma regla favorable de avanzar en cualquier empate. Las últimas dos combinan etapas bajo independencia y mantienen la ruta de rivales fijada por el ejercicio. No representan una simulación completa de todos los cruces posibles del Mundial."
+        "text": "La primera fila responde a los cuatro rivales expresamente solicitados. La segunda añade el partido contra Argentina con la misma regla favorable de avanzar en cualquier empate. Las últimas dos son aproximaciones de ruta fija: multiplican una probabilidad de avance incondicional por la probabilidad de una llave concreta, cuando el cuadro eliminatorio real depende de si Cabo Verde termina primero, segundo o mejor tercero del grupo H. Se reportan con ese nombre, y no como la probabilidad de título del modelo, porque no representan una simulación completa de todos los cruces posibles del Mundial."
       },
       {
         "type": "p",
@@ -1280,7 +1280,7 @@
     "blocks": [
       {
         "type": "p",
-        "text": "Elo resume resultados pasados y no describe lesiones, alineaciones ni evolución táctica. Congelar fuerzas descarta cambios durante torneos largos. Los modelos Poisson independientes simplifican la dependencia entre ambos marcadores, y la tasa base de 2.7 para selecciones es una elección de modelación. La localía del Mundial se considera neutral para todos, incluso para anfitriones."
+        "text": "Elo resume resultados pasados y no describe lesiones, alineaciones ni evolución táctica. Congelar fuerzas descarta cambios durante torneos largos. Los modelos Poisson independientes simplifican la dependencia entre ambos marcadores. La tasa base de 2.7 para selecciones reproduce el promedio observado de 2010 a 2025 en partidos de eliminatoria y fase final mundialista, pero sigue siendo un único parámetro aplicado a todos los cruces. La localía del Mundial se considera neutral para todos, incluso para anfitriones."
       },
       {
         "type": "p",
@@ -1297,7 +1297,7 @@
       },
       {
         "type": "p",
-        "text": "El simulador prioriza puntos, diferencia de goles y goles a favor en la eliminatoria; después usa una minitabla entre empatados y un sorteo residual. El ordenamiento del Mundial prioriza la minitabla entre equipos igualados a puntos, después diferencia de goles y goles generales, con sorteo residual. No reproduce disciplina ni todas las posibles reaplicaciones de criterios: es una aproximación explícita del reglamento."
+        "text": "Los dos torneos usan órdenes de desempate distintos y el simulador los distingue. En la eliminatoria africana prioriza puntos, diferencia de goles global y goles a favor, y solo después la minitabla entre empatados: es el reglamento de la fase preliminar, que rige los grupos de CAF. El Mundial 2026 invierte los dos bloques, porque la FIFA puso el enfrentamiento directo primero por primera vez desde 1970. La igualdad restante se sortea."
       },
       {
         "type": "p",
@@ -1360,7 +1360,7 @@
       },
       {
         "type": "p",
-        "text": "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos añade su probabilidad de avance; partir de la eliminatoria africana añade además su probabilidad de clasificación. Estas combinaciones conservan la ruta fija del ejercicio y requieren los supuestos de enlace entre etapas."
+        "text": "Incluir Argentina añade un factor 0.06943654 y produce 0.0000407849. Partir de la fase de grupos o de la eliminatoria añade sus probabilidades de avance. Esos dos últimos valores son una aproximación de ruta fija: multiplican un avance incondicional por la probabilidad de una llave concreta, cuando el cuadro real depende de la posición final en el grupo H."
       },
       {
         "type": "p",
@@ -1502,6 +1502,10 @@
       {
         "type": "p",
         "text": "[11] Deutscher Sportclub für Fußball-Statistiken. Die Bundesliga seit 1963. https://www.dsfs.de/wp-content/uploads/2024/01/Bundesliga_Geschichte_Tabellen.pdf . Contraste: Sportschau, tabla final 1991/92. https://www.sportschau.de/live-und-ergebnisse/fussball/deutschland-bundesliga/se2613/1991-1992/tabelle"
+      },
+      {
+        "type": "p",
+        "text": "[12] FIFA. Reglamento de la Copa Mundial de la FIFA 2026, artículo 13 (clasificación de los equipos en los grupos), y Reglamento de la fase preliminar. El primero ordena a los igualados a puntos por su enfrentamiento directo; el segundo mantiene la diferencia de goles global como primer criterio. https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026"
       },
       {
         "type": "p",

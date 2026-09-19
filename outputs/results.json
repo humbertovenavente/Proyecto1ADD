@@ -85,7 +85,7 @@
       },
       {
         "date": "2024-04-21",
-        "opponent": "Borussia Dortmund",
+        "opponent": "Dortmund",
         "at85": "0-1",
         "minute": "96:52",
         "player": "Josip Stanišić",
@@ -100,7 +100,7 @@
       },
       {
         "date": "2024-04-27",
-        "opponent": "VfB Stuttgart",
+        "opponent": "Stuttgart",
         "at85": "1-2",
         "minute": "95:59",
         "player": "Robert Andrich",
@@ -360,6 +360,16 @@
       ]
     },
     "total_goals_assumption": 2.7,
+    "total_goals_reference": {
+      "mundialista_2010_2025": {
+        "n": 1972,
+        "mean_total_goals": 2.6997971602434077
+      },
+      "todos_2010_2025": {
+        "n": 7883,
+        "mean_total_goals": 2.6404921984016236
+      }
+    },
     "n": 10000
   }
 }

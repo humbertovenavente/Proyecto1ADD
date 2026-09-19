@@ -4,6 +4,8 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .DS_Store
+# Los paquetes se distribuyen como release, no dentro del repositorio.
+# outputs/datos_colab.zip lo regenera docs/build_notebook.py.
 *.zip
 .env
 .env.*

@@ -128,7 +128,7 @@ $N$ es el número de simulaciones, $K$ el número de éxitos y $\hat p=K/N$. Los
  code((ROOT/'src/models.py').read_text())
  code(header)
  if iscv:
-  for name,desc in [('national_ratings','Selecciona el último Elo anterior al corte.'),('qualify_world','Simula todos los grupos y la clasificación de terceros; admite tres empates condicionados.'),('cape_verde','Ejecuta la eliminatoria sin repechaje, el grupo mundialista y la ruta fija del ejercicio.')]:
+  for name,desc in [('national_ratings','Selecciona el último Elo anterior al corte.'),('national_goal_reference','Respalda τ=2.7 con el promedio de goles observado en partidos de selecciones.'),('qualify_world','Simula todos los grupos y la clasificación de terceros; admite tres empates condicionados.'),('cape_verde','Ejecuta la eliminatoria sin repechaje, el grupo mundialista y la ruta fija del ejercicio.')]:
    md('### '+desc);code(funcs[name])
   md('## Simulación completa de Cabo Verde\nLa ruta eliminatoria es contrafactual y supone avance en todos los empates. La condición de tres empates usa su propio denominador.')
   code('cape_result = cape_verde()\nr = {"seed": SEED, "n": N, "cape_verde": cape_result}\nprint(json.dumps(cape_result, indent=2, ensure_ascii=False))\ndisplay(pd.DataFrame(cape_result["scenarios"]).T)')

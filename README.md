@@ -4,6 +4,8 @@ Proyecto del curso **Análisis de Datos** de la Universidad del Istmo.
 
 **Catedrático:** Juan Andrés García Porres.
 
+**Equipo 2**
+
 - Didvin Nohel Estrada Pineda · 14092
 - Jose Humberto Najar Venavente · 13661
 - Pablo Rodolfo Alexander Flores Mollinedo · 14643
@@ -16,6 +18,8 @@ Proyecto del curso **Análisis de Datos** de la Universidad del Istmo.
 - `outputs/results.json`: resultados numéricos completos.
 - `outputs/leverkusen_10000.csv` y `outputs/cape_verde_10000.csv`: simulaciones por repetición.
 - `outputs/figures/`: gráficas en PNG y SVG.
+
+Los archivos `.zip` no se versionan (`.gitignore` los excluye). `outputs/datos_colab.zip` se regenera con `docs/build_notebook.py` cuando se necesite; para compartir el proyecto empaquetado conviene una *release* en lugar de un ZIP dentro del propio repositorio.
 
 ## Repetir el análisis
 
@@ -45,6 +49,15 @@ uv run python docs/render_math.py
 uv run --group documents python docs/build_report.py
 ```
 
+Eso deja `outputs/trabajo_escrito.docx`. El PDF de entrega se obtiene con LibreOffice:
+
+```sh
+soffice --headless --convert-to pdf --outdir outputs outputs/trabajo_escrito.docx
+soffice --headless --convert-to pdf --outdir outputs outputs/presentacion.pptx
+```
+
+En macOS el ejecutable está en `/Applications/LibreOffice.app/Contents/MacOS/soffice`.
+
 ## Organización
 
 - `src/models.py`: enlace Elo–Poisson, intervalos y simulación de grupos.
@@ -60,11 +73,17 @@ uv run --group documents python docs/build_report.py
 
 La muestra histórica termina en 2022/23. El modelo de partidos usa ClubElo del 15 de agosto de 2023, conservado en el archivo de Ádám Gábor, porque la API original no respondió. La temporada 1991/92 de Curley contiene 340 de 380 partidos. Su registro de campeón se corrige con la tabla de DSFS: Stuttgart, 38 partidos, 21 victorias, 10 empates y 7 derrotas.
 
-Elo expresa `P(victoria) + 0.5 P(empate)`. Los goles se modelan con dos Poisson independientes cuyas tasas se ajustan a esa expectativa. Las fuerzas permanecen fijas. El parámetro de goles es el nivel base de equipos de igual fuerza. Los intervalos cubren error Monte Carlo y no incertidumbre del modelo.
+Elo expresa `P(victoria) + 0.5 P(empate)`. Los goles se modelan con dos Poisson independientes cuyas tasas se ajustan a esa expectativa. Las fuerzas permanecen fijas. Los intervalos cubren error Monte Carlo y no incertidumbre del modelo.
+
+El parámetro τ es el total esperado **a igualdad de fuerzas**. El enlace fija la media geométrica de las dos tasas en τ/2, no su suma, de modo que en cruces desparejos el total esperado de goles queda por encima de τ. En Bundesliga τ = 3.14248, media de goles por partido de 2018/19 a 2022/23. Para selecciones se adopta τ = 2.7, contrastado con los historiales de `data/raw/national`: los 1 972 partidos de eliminatoria y fase final mundialista jugados entre 2010 y 2025 promedian **2.6998** goles por encuentro, y los 7 883 partidos internacionales del mismo periodo promedian 2.6405. Se toma el primer subconjunto porque es el contexto que simula la Parte II. `src/analyze.py` recalcula ambas cifras en cada ejecución y las deja en `outputs/results.json` bajo `cape_verde.total_goals_reference`.
 
 El extra incluye cuatro rescates: Bayern, Hoffenheim, Dortmund y Stuttgart. Ante Bayern la desventaja comienza a 85:21. El cálculo central condiciona por duración observada y utiliza tasas históricas de la liga. `P(invicto) × Q` se reporta como índice heurístico del ejercicio, no como una corrección causal de suerte.
 
-Cabo Verde usa ratings anteriores al 15/11/2023 para la eliminatoria y al 11/06/2026 para el Mundial. Se simulan los doce grupos para determinar los mejores terceros. Los empates residuales se resuelven por sorteo, sin tarjetas ni ranking FIFA. La ruta eliminatoria es fija y todo empate implica avanzar en penales, tal como supone el ejercicio. La narración sobre arbitraje no se adopta como hecho.
+Cabo Verde usa ratings anteriores al 15/11/2023 para la eliminatoria y al 11/06/2026 para el Mundial. Se simulan los doce grupos para determinar los mejores terceros. Los empates residuales se resuelven por sorteo, sin tarjetas ni ranking FIFA. La narración sobre arbitraje no se adopta como hecho.
+
+Los dos torneos usan **órdenes de desempate distintos** y `rank_table` los distingue a propósito. La eliminatoria africana se rige por el reglamento de la fase preliminar de la Copa Mundial 2026: puntos, diferencia de goles **global**, goles a favor y solo después la minitabla entre empatados. La fase final aplica el artículo 13 del reglamento del torneo, que para 2026 colocó el **enfrentamiento directo** por delante de la diferencia de goles global, por primera vez desde 1970. Por eso el brazo del Mundial ordena por minitabla antes que por diferencia de goles y el de la eliminatoria hace lo contrario; no es una inversión accidental.
+
+La ruta eliminatoria es fija y todo empate implica avanzar en penales, tal como supone el ejercicio. `title_from_group_fixed_route` y `title_from_qualifiers_fixed_route` son **aproximaciones de ruta fija**: multiplican una probabilidad de avance incondicional por la probabilidad de una llave concreta, cuando el cuadro real depende de si Cabo Verde termina primero, segundo o mejor tercero del grupo H. No son la probabilidad de título del modelo.
 
 ## Fuentes
 
@@ -82,7 +101,7 @@ Hudl **StatsBomb Open Data**: https://github.com/statsbomb/open-data . El uso de
 
 David y Paul Goldsman (2024), **A First Course in Probability and Statistics**, capítulos 1, 4, 5 y 6. El libro completo no se redistribuye.
 
-La fuente de las diapositivas está en `docs/build_slides.mjs` y utiliza `@oai/artifact-tool`. Las fórmulas LaTeX de la presentación están en `docs/render_math.py`; los exponentes del texto permanecen legibles en PowerPoint y PDF.
+La fuente de las diapositivas está en `docs/build_slides.mjs` y utiliza `@oai/artifact-tool`, que forma parte del runtime de Codex y no se instala desde npm. El guion descubre ese runtime en `~/.cache/codex-runtimes` y `~/.codex/plugins`; si están en otra ubicación, se pueden forzar con las variables `RUNTIME_NODE_MODULES`, `PRESENTATIONS_SKILL` y `RUNTIME_PYTHON`. Las fórmulas LaTeX de la presentación están en `docs/render_math.py`; los exponentes del texto permanecen legibles en PowerPoint y PDF.
 
 `docs/notation.json` contiene los glosarios previos a la formulación matemática de Leverkusen y Cabo Verde. Los símbolos se conservan como imágenes matemáticas para mantener índices y exponentes.
 
@@ -94,7 +113,7 @@ La fuente de las diapositivas está en `docs/build_slides.mjs` y utiliza `@oai/a
 
 Es **un único notebook**, organizado en dos bloques: Leverkusen con el extra y seis gráficas; Cabo Verde con sus escenarios y tres gráficas. Cada bloque contiene sus datos, variables, modelos, ejecución, comprobaciones y conclusiones. Los archivos se guardan en `leverkusen_colab` y `cabo_verde_colab`. La última celda descarga un ZIP que contiene ambas carpetas.
 
-El notebook incorpora una proyección compacta de los datos: registros históricos pertinentes, Elo del corte, goles, autogoles y último evento del segundo tiempo. Cada archivo tiene su SHA-256 y la huella del original; los datos originales completos permanecen en `data/raw` y en el ZIP opcional. La carga de datos no consulta servidores externos: evita errores 404, cambios de fuente y la necesidad de subir archivos adicionales. La instalación inicial de bibliotecas sí necesita conexión. `outputs/datos_colab.zip` es una copia opcional para otros usos; el notebook no la requiere.
+El notebook incorpora una proyección compacta de los datos: registros históricos pertinentes, Elo del corte, goles, autogoles y último evento del segundo tiempo. Cada archivo tiene su SHA-256 y la huella del original; los datos originales completos permanecen en `data/raw` y en el ZIP opcional. La carga de datos no consulta servidores externos: evita errores 404, cambios de fuente y la necesidad de subir archivos adicionales. La instalación inicial de bibliotecas sí necesita conexión. `docs/build_notebook.py` genera además `outputs/datos_colab.zip`, una copia opcional de `data/raw` para otros usos; el notebook no la requiere y el archivo no se versiona.
 
 La URL correcta del historial de RD Congo es `https://www.eloratings.net/DR_Congo.tsv`; se comprobó que responde con el mismo SHA-256 que la copia utilizada. El manifiesto y el descargador del proyecto ya usan esa dirección.
 

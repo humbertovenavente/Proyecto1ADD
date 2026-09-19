@@ -77,3 +77,16 @@ def test_saved_event_audit():
     r = pd.read_csv(root / "data/processed/rescues.csv")
     assert (r.deficit == 1).all() and ((r.q > 0) & (r.q < 1)).all()
     assert (r.final_whistle > r.state_minute).all()
+
+
+def test_team_names_join_across_outputs():
+    # Las salidas de eventos y las de Elo comparten los nombres de ClubElo.
+    import pandas as pd
+
+    proc = Path(__file__).resolve().parents[1] / "data/processed"
+    p = pd.read_csv(proc / "leverkusen_probabilities.csv")
+    for name in ["rescues.csv", "leverkusen_85min_audit.csv", "leverkusen_goals.csv"]:
+        t = pd.read_csv(proc / name)
+        assert set(t.opponent) <= set(p.opponent), (name, set(t.opponent) - set(p.opponent))
+    r = pd.read_csv(proc / "rescues.csv")
+    assert len(r.merge(p, on=["date", "opponent"])) == len(r) == 4

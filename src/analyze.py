@@ -35,6 +35,12 @@ ALIAS = {
     "SV Darmstadt 98": "Darmstadt",
     "1. FC Heidenheim": "Heidenheim",
     "1899 Hoffenheim": "Hoffenheim",
+    # Grafías de StatsBomb: las salidas de eventos comparten nombres con las de Elo.
+    "Borussia Mönchengladbach": "MGladbach",
+    "Darmstadt 98": "Darmstadt",
+    "FC Heidenheim": "Heidenheim",
+    "FC Köln": "FC Koln",
+    "FSV Mainz 05": "Mainz",
 }
 
 
@@ -200,9 +206,9 @@ def leverkusen(df, ch):
     audit = []
     rescues = []
     for m in sorted(matches, key=lambda z: z["match_date"]):
-        hn = m["home_team"]["home_team_name"]
-        an = m["away_team"]["away_team_name"]
-        levhome = hn == "Bayer Leverkusen"
+        hn = ALIAS.get(m["home_team"]["home_team_name"], m["home_team"]["home_team_name"])
+        an = ALIAS.get(m["away_team"]["away_team_name"], m["away_team"]["away_team_name"])
+        levhome = hn == "Leverkusen"
         ours = 0
         theirs = 0
         at85 = None
@@ -388,6 +394,33 @@ def national_ratings(codes, cut):
     return frame.set_index("code").elo.to_dict()
 
 
+def national_goal_reference():
+    """Respaldo empírico de τ=2.7: goles por partido de selecciones en data/raw/national.
+
+    Los TSV de World Football Elo Ratings guardan cada partido en los dos países,
+    así que se deduplica por fecha y pareja antes de promediar. WQ, WQA y WC son
+    eliminatoria mundialista y fase final, el contexto que usa la Parte II.
+    """
+    seen = {}
+    for path in sorted((RAW / "national").glob("*.tsv")):
+        for line in path.read_text().splitlines():
+            f = line.split("\t")
+            if len(f) < 8 or not f[0].isdigit():
+                continue
+            try:
+                seen[(f[0], f[1], f[2], f[3], f[4])] = (int(f[5]) + int(f[6]), f[7], int(f[0]))
+            except ValueError:
+                continue
+    out = {}
+    for name, keep in [
+        ("mundialista_2010_2025", lambda t, y: t in ("WQ", "WQA", "WC") and 2010 <= y <= 2025),
+        ("todos_2010_2025", lambda t, y: 2010 <= y <= 2025),
+    ]:
+        vals = [g for g, t, y in seen.values() if keep(t, y)]
+        out[name] = {"n": len(vals), "mean_total_goals": float(np.mean(vals))}
+    return out
+
+
 def qualify_world(groups, ratings, n, rng, forced=False, total=2.7):
     # Mantiene solo los terceros y el grupo H, sin acumular doce torneos completos.
     keys = list(groups)
@@ -489,6 +522,7 @@ def cape_verde():
         * full,
         "knockout_mc": summarize(ko),
         "total_goals_assumption": 2.7,
+        "total_goals_reference": national_goal_reference(),
         "n": N,
     }
 

@@ -1,8 +1,31 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import {execFileSync} from 'node:child_process';
-import {Presentation,PresentationFile} from '@oai/artifact-tool';
-import {resolvePresentationFont,applyPresentationChartFont,finalizePresentation} from '/Users/pabloflores/.codex/plugins/cache/openai-primary-runtime/presentations/26.904.11930/skills/presentations/container_tools/artifact_tool_utils.mjs';
+import {createRequire} from 'node:module';
+import {pathToFileURL} from 'node:url';
+
+// El runtime de presentaciones vive fuera del repositorio y su versión cambia con
+// cada actualización de Codex. Se resuelve por descubrimiento para que el guion no
+// dependa de la máquina de un integrante; se puede forzar con variables de entorno.
+async function newest(dir){
+ const entries=await fs.readdir(dir).catch(()=>[]);
+ if(!entries.length)throw new Error('No hay versiones en '+dir);
+ return path.join(dir,entries.sort().at(-1));
+}
+const HOME=os.homedir();
+const RUNTIME_NODE_MODULES=process.env.RUNTIME_NODE_MODULES
+ ?? HOME+'/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules';
+const skill=process.env.PRESENTATIONS_SKILL
+ ?? path.join(await newest(HOME+'/.codex/plugins/cache/openai-primary-runtime/presentations'),'skills/presentations');
+const PYTHON=process.env.RUNTIME_PYTHON
+ ?? HOME+'/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3';
+process.env.RUNTIME_NODE_MODULES=RUNTIME_NODE_MODULES;
+
+const requireRuntime=createRequire(path.join(RUNTIME_NODE_MODULES,'__runtime__.cjs'));
+const {Presentation,PresentationFile}=await import(pathToFileURL(requireRuntime.resolve('@oai/artifact-tool')).href);
+const {resolvePresentationFont,applyPresentationChartFont,finalizePresentation}=
+ await import(pathToFileURL(path.join(skill,'container_tools/artifact_tool_utils.mjs')).href);
 const root=process.cwd();const R=JSON.parse(await fs.readFile(root+'/outputs/results.json','utf8'));const L=R.leverkusen,C=R.cape_verde,H=R.history;
 const family=resolvePresentationFont({fontFamily:'Arial'});const pres=Presentation.create({slideSize:{width:1280,height:720}});const P=x=>(100*x).toFixed(2)+' %';const sci=x=>{const [m,e]=x.toExponential(3).split('e');return m+' × 10'+String(Number(e)).split('').map(c=>'⁻⁰¹²³⁴⁵⁶⁷⁸⁹'['-0123456789'.indexOf(c)]).join('');};const red='#B62835',blue='#176B9A',ink='#17242C';
 let n=0;let part=1;const native=[];
@@ -31,6 +54,7 @@ function chart(s,cats,values,{name='Probabilidad (%)',x=65,y=233,w=1140,h=340,co
  const c=s.charts.add('bar',{position:{left:x,top:y,width:w,height:h},categories:cats,series:[{name,values:values.map(v=>Number(v.toFixed(2))),valuesFormatCode:name.includes('Elo')?'0':'0.00',fill:color}],barOptions:{direction:horizontal?'bar':'column',grouping:'clustered',gapWidth:80},hasLegend:false,chartFill:part===1?'#FAF7F1':'#F3F7FA',plotAreaFill:part===1?'#FAF7F1':'#F3F7FA',xAxis:{textStyle:{fontSize:24,fill:ink}},yAxis:{numberFormatCode:'0',min:0,max:name.includes('(%)')?(Math.max(...values)<=2?2:Math.max(...values)<=25?25:Math.max(...values)<=50?50:100):undefined,textStyle:{fontSize:19,fill:ink},majorGridlines:{fill:'#DCE2E3',width:0.6}},dataLabels:{showValue:cats.length<10,position:'outEnd',textStyle:{fontSize:27,fill:ink,bold:true}}});
  applyPresentationChartFont(c,{fontFamily:family});native.push(n);return c;
 }
+async function figure(s,file,x,y,w,h,alt){s.images.add({blob:new Uint8Array(await fs.readFile(root+'/outputs/figures/'+file)),contentType:'image/png',alt,fit:'contain',position:{left:x,top:y,width:w,height:h}});}
 async function image(s,file,x=0,y=0,w=1280,h=720){s.images.add({blob:new Uint8Array(await fs.readFile(root+'/assets/'+file)),contentType:'image/png',alt:'Ilustración editorial de fútbol',fit:'cover',position:{left:x,top:y,width:w,height:h}});}
 async function equationImage(s,name,x,y,w,h){
  const bytes=await fs.readFile(root+'/assets/math/'+name+'.png');
@@ -43,7 +67,7 @@ async function equationImage(s,name,x,y,w,h){
  const dw=iw*scale,dh=ih*scale;
  s.images.add({blob:new Uint8Array(bytes),contentType:'image/png',alt:'Fórmula o símbolo matemático: '+name,fit:'contain',position:{left:x+(w-dw)/2,top:y+(h-dh)/2,width:dw,height:dh}});
 }
-const sources={hist:'James P. Curley, engsoccerdata. https://github.com/jalapic/engsoccerdata . Cálculos en data/processed/champions_1964_2023.csv.',elo:'ClubElo mediante el archivo de Ádám Gábor. https://github.com/xgabora/Club-Football-Match-Data/blob/main/data/EloRatings.csv . Corte 2023-08-15. API original no disponible durante la consulta.',events:'Hudl StatsBomb Open Data. https://github.com/statsbomb/open-data . Competición 9, temporada 281, 34 partidos. Relojes de eventos con segundos.',nat:'World Football Elo Ratings. https://www.eloratings.net/ . Historiales TSV anteriores a 2023-11-15 y 2026-06-11.',rules:'CAF: https://www.cafonline.com/news/everything-you-need-to-know-about-2026-world-cup-qualifying-for-africa/ . FIFA: https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/articles/grupos-como-funcionan-clasificacion-criterios-desempate . Desempates residuales simulados por sorteo.',book:'Goldsman, David y Paul (2024). A First Course in Probability and Statistics. Capítulos 1, 4, 5 y 6.'};
+const sources={hist:'James P. Curley, engsoccerdata. https://github.com/jalapic/engsoccerdata . Cálculos en data/processed/champions_1964_2023.csv.',elo:'ClubElo mediante el archivo de Ádám Gábor. https://github.com/xgabora/Club-Football-Match-Data/blob/main/data/EloRatings.csv . Corte 2023-08-15. API original no disponible durante la consulta.',events:'Hudl StatsBomb Open Data. https://github.com/statsbomb/open-data . Competición 9, temporada 281, 34 partidos. Relojes de eventos con segundos.',nat:'World Football Elo Ratings. https://www.eloratings.net/ . Historiales TSV anteriores a 2023-11-15 y 2026-06-11.',rules:'CAF: https://www.cafonline.com/news/everything-you-need-to-know-about-2026-world-cup-qualifying-for-africa/ . FIFA: https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/articles/grupos-como-funcionan-clasificacion-criterios-desempate . Eliminatoria CAF: reglamento de la fase preliminar, diferencia de goles global antes que la minitabla. Mundial 2026: artículo 13, enfrentamiento directo primero, cambio introducido para esta edición. Desempates residuales simulados por sorteo.',book:'Goldsman, David y Paul (2024). A First Course in Probability and Statistics. Capítulos 1, 4, 5 y 6.'};
 async function notation(partNumber){
  const groups=JSON.parse(await fs.readFile(root+'/docs/notation.json','utf8'));
  for(let gi=0;gi<groups.length;gi++){
@@ -88,6 +112,7 @@ async function development(partNumber){
 let s=pres.slides.add();n++;await image(s,'football_cover.png');
 text(s,'Probabilidad de las\nhazañas del fútbol',65,80,1080,190,58,'#FFFFFF',true);
 text(s,'Leverkusen y Cabo Verde',70,297,1080,62,35,'#FFFFFF');
+text(s,'Equipo 2',70,390,1080,40,26,'#FFFFFF',true);
 text(s,'Didvin Nohel Estrada Pineda · 14092\nJose Humberto Najar Venavente · 13661\nPablo Rodolfo Alexander Flores Mollinedo · 14643',70,439,1130,132,28,'#FFFFFF');
 text(s,'Análisis de Datos · Catedrático: Juan Andrés García Porres',70,580,1130,37,24,'#FFFFFF');
 text(s,'Universidad del Istmo · Septiembre de 2026',70,635,1110,34,23,'#FFFFFF');
@@ -95,6 +120,8 @@ s.speakerNotes.textFrame.setText('Ilustración editorial. Integrantes del grupo 
 s=slide('Preguntas y estructura del análisis');paragraphs(s,['Leverkusen: probabilidad del invicto y diagnóstico de rescates','Cabo Verde: clasificación, escenarios de grupo y ruta al título','Desarrollo: eventos, supuestos, ecuaciones y cálculos','Conclusiones: estimaciones, incertidumbre y límites inferenciales'],{gap:101,size:28});
 variableSlides(0);
 s=slide('Una liga acostumbrada al mismo campeón',sources.hist);prose(s,['Antes de la temporada 2023/24, el Bayern acumulaba once campeonatos consecutivos. Ganar la Bundesliga significaba romper una continuidad que había definido la competencia durante más de una década.','La perspectiva histórica cambia con la ventana: otros clubes ganaron 28 de 60 títulos entre 1964 y 2023, pero apenas cuatro de los 19 títulos entre 2005 y 2023. Esa diferencia describe el contexto del desafío, aunque no determina por sí sola las posibilidades de Leverkusen.'],{gap:210});
+s=slide('Títulos de Bundesliga por club, 1964 a 2023',sources.hist+' Gráfica generada por src/analyze.py (champions.png).');await figure(s,'champions.png',275,200,729,400,'Títulos de Bundesliga por club entre 1964 y 2023');text(s,'Bayern Múnich acumula 32 de los 60 títulos. El resto se reparte entre once clubes.',65,618,1150,36,20,'#687780');
+s=slide('Sesenta temporadas, campeón por campeón',sources.hist+' Gráfica generada por src/analyze.py (timeline.png).');await figure(s,'timeline.png',64,213,1152,373,'Los sesenta campeones de Bundesliga, temporada por temporada');text(s,'Rojo: Bayern Múnich. Azul: cualquier otro campeón.',65,618,1150,36,20,'#687780');
 s=slide('La hazaña contiene dos preguntas distintas',sources.hist+' '+sources.elo);prose(s,['El equipo dirigido por Xabi Alonso no solo terminó con esa secuencia de campeones. Completó las 34 jornadas sin derrotas: 28 victorias y seis empates. El campeonato y el invicto son dos logros relacionados, pero no equivalentes.','Para entender el invicto, volvemos al momento anterior al torneo. Usamos las fuerzas conocidas entonces y preguntamos cuántas temporadas simuladas habrían terminado sin perder. Después contrastamos ese cálculo con las derrotas de campeones históricos y con los goles tardíos que salvaron partidos.'],{gap:210});
 
 s=slide('Leverkusen completó 34 partidos sin perder',sources.hist+' https://www.bundesliga.com/en/bundesliga/news/bayer-leverkusen-record-unbeaten-run-xabi-alonso-26289',true);text(s,'28 victorias   6 empates   0 derrotas',65,218,1150,90,46,'#FFFFFF',true);paragraphs(s,['90 puntos, 89 goles a favor y 24 en contra','Primer campeón invicto de la Bundesliga','Fin de once títulos consecutivos del Bayern'],{y:348,gap:90,size:30,color:'#FFFFFF'});
@@ -103,7 +130,7 @@ s=slide('Qué datos entran al modelo',[sources.hist,sources.elo,sources.events,s
 s=slide('Elo de pretemporada',sources.elo);chart(s,['Bayern','Dortmund','Leipzig','Leverkusen','Union Berlin','Freiburg'],[1935.63,1840.54,1825.38,1748.23,1738.94,1732.67],{name:'Elo al 15 de agosto de 2023'});text(s,'Se congelan las fuerzas para evitar usar resultados futuros',65,605,1140,48,25);
 await notation(1);
 variableSlides(1);
-s=slide('De Elo a victoria, empate y derrota',sources.book+' Modelo propio de enlace Elo–Poisson.');paragraphs(s,['E = P(victoria) + ½ P(empate)','Goles independientes con distribuciones Poisson','Se ajustan las tasas para reproducir la expectativa Elo'],{y:303,gap:93,size:31});await equationImage(s,'elo',130,207,1000,73);text(s,'τ Bundesliga = 3.142 · τ selecciones = 2.7 · localía Elo = 60 / 100',65,618,1150,36,23);
+s=slide('De Elo a victoria, empate y derrota',sources.book+' Modelo propio de enlace Elo–Poisson.');paragraphs(s,['E = P(victoria) + ½ P(empate)','Goles independientes con distribuciones Poisson','Se ajustan las tasas para reproducir la expectativa Elo'],{y:303,gap:93,size:31});await equationImage(s,'elo',130,207,1000,73);text(s,'τ Bundesliga = 3.142 · τ selecciones = 2.7 ≈ 2.6998 observado (n = 1 972) · localía Elo = 60 / 100',65,618,1150,36,23);
 await development(1);
 await numericalExamples(1);
 s=slide('El invicto requiere superar todo el calendario',sources.elo+' Cálculo en outputs/results.json.');text(s,'P(inv icto) = P(Bayern × 2) × P(otros × 32)'.replace('inv icto','invicto'),65,207,1150,80,36);paragraphs(s,[`Dos partidos ante Bayern: ${P(L.p_bayern2)}`,`Otros 32 partidos: ${sci(L.p_other32)}`,`Temporada completa: ${sci(L.p_unbeaten)}`],{y:319,gap:96,size:31});
@@ -136,7 +163,7 @@ s=slide('El grupo H se evalúa dentro de los doce grupos',sources.nat+' '+source
 s=slide('Tres empates cambian la probabilidad de avanzar',sources.nat+' '+sources.rules);chart(s,['Sin condiciones','Tres empates','Tres empates +\nUruguay no pierde','Tres empates +\ntercer puesto'],['grupo_sin_condicionar','tres_empates','tres_empates_y_uruguay_no_pierde','tres_empates_y_tercero'].map(x=>100*C.scenarios[x].p),{color:blue});text(s,'Cada barra usa el denominador de su condición',65,610,1140,45,27);
 s=slide('Obtener los empates y avanzar después',sources.nat+' Modelo condicionado a marcadores k–k.');paragraphs(s,[`P(empatar los tres partidos) = ${P(C.p_three_draws)}`,`P(avanzar | tres empates) = ${P(C.scenarios.tres_empates.p)}`,'Tres empates dejan tres puntos y diferencia de goles cero','No equivalen a una victoria y dos derrotas'],{y:211,gap:101,size:30});
 s=slide('La ruta a partir de Egipto',sources.nat+' Supuesto del ejercicio: todo empate implica avanzar en penales.');chart(s,['Egipto','Suiza','Inglaterra','España'],C.knockouts.slice(1).map(x=>100*x.p_advance),{name:'P de victoria o empate (%)',color:blue});text(s,'Se supone que Cabo Verde ya superó a Argentina',65,610,1140,45,26);
-s=slide('La probabilidad depende del punto de partida',sources.nat+' Productos para la ruta fija del ejercicio.');paragraphs(s,[`Después de Argentina: ${P(C.title_given_pass_argentina)}`,`Incluyendo Argentina: ${(100*C.title_from_argentina).toFixed(5)} %`,`Desde el grupo H: ${(100*C.title_from_group_fixed_route).toFixed(6)} %`,'La ruta está fijada y los penales siempre favorecen a Cabo Verde'],{y:211,gap:101,size:30});
+s=slide('La probabilidad depende del punto de partida',sources.nat+' Aproximación de ruta fija: el cuadro real depende de la posición final en el grupo H.');paragraphs(s,[`Después de Argentina: ${P(C.title_given_pass_argentina)}`,`Incluyendo Argentina: ${(100*C.title_from_argentina).toFixed(5)} %`,`Desde el grupo H: ${(100*C.title_from_group_fixed_route).toFixed(6)} %`,'Aproximación de ruta fija: el cuadro depende de la posición final'],{y:211,gap:101,size:30});
 await development(2);
 await numericalExamples(2);
 conclusion(2);
@@ -160,9 +187,10 @@ const linkMap={};
 for(const [title,rows] of refs){s=slide(title,rows.map(x=>x[1]).join('\n'));rows.forEach(([label,url],i)=>{text(s,label,70,210+i*133,1130,46,29,blue,true);text(s,url,70,262+i*133,1125,72,19,ink);linkMap[label]=url;linkMap[url]=url;});}
 s=slide('Referencia del curso');prose(s,['David Goldsman y Paul Goldsman. A First Course in Probability. Versión del libro proporcionada para el curso: fundamentos de probabilidad, variables aleatorias y distribuciones discretas.','Capítulos 1 y 4–6. Las capturas de las fórmulas binomial y Poisson corresponden a las páginas impresas 118 y 124. Las ecuaciones del enlace Elo–Poisson y los productos de eventos desarrollan el modelo utilizado en este estudio.'],{gap:210});
 s=pres.slides.add();n++;await image(s,'football_cover.png');text(s,'Gracias',70,190,1120,110,76,'#FFFFFF',true);text(s,'Preguntas y discusión',75,332,1100,70,37,'#FFFFFF');text(s,'Leverkusen y Cabo Verde\nUniversidad del Istmo',75,525,1100,90,28,'#FFFFFF');
+await fs.mkdir(root+'/.build/deck',{recursive:true});
 await fs.writeFile(root+'/.build/deck/links.json',JSON.stringify(linkMap));
-const skill='/Users/pabloflores/.codex/plugins/cache/openai-primary-runtime/presentations/26.904.11930/skills/presentations';await fs.mkdir(root+'/.build/deck',{recursive:true});const candidate=root+'/.build/deck/candidate.pptx';await(await PresentationFile.exportPptx(pres)).save(candidate);
-execFileSync('/Users/pabloflores/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3',[root+'/docs/add_transitions.py',candidate]);
-execFileSync('/Users/pabloflores/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3',[root+'/docs/add_links.py',candidate,root+'/.build/deck/links.json']);
+await fs.mkdir(root+'/.build/deck',{recursive:true});const candidate=root+'/.build/deck/candidate.pptx';await(await PresentationFile.exportPptx(pres)).save(candidate);
+execFileSync(PYTHON,[root+'/docs/add_transitions.py',candidate]);
+execFileSync(PYTHON,[root+'/docs/add_links.py',candidate,root+'/.build/deck/links.json']);
 for(let i=0;i<pres.slides.items.length;i++){const s=pres.slides.items[i];const png=await pres.export({slide:s,format:'png',scale:1});await fs.writeFile(root+`/.build/deck/slide-${i+1}.png`,new Uint8Array(await png.arrayBuffer()));}
-await finalizePresentation({workspaceDir:root,candidatePath:candidate,finalPath:root+'/outputs/presentacion_glosario.pptx',pythonExecutable:'/Users/pabloflores/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3',integrityValidatorPath:skill+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:skill+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit'],requiredNativeChartOwnerSlides:native,materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:[family]},verifyArtifactToolImport:true,receiptPath:root+'/.build/deck/validation-'+Date.now()+'.json'});console.log('Slides',n,'font',family);
+await finalizePresentation({workspaceDir:root,candidatePath:candidate,finalPath:root+'/outputs/presentacion_glosario.pptx',pythonExecutable:PYTHON,integrityValidatorPath:skill+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:skill+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit'],requiredNativeChartOwnerSlides:native,materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:[family]},verifyArtifactToolImport:true,receiptPath:root+'/.build/deck/validation-'+Date.now()+'.json'});console.log('Slides',n,'font',family);
